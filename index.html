@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1B5C4B">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-332wgK3pw9DU+EbChufVgBZRKARnfCa+iKdu+HKzDYk=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data: blob:; media-src blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-1m47X9RfZ+Slb2JlBFCmxi7oN9AF6WyvxVdRMoyl2BM=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data: blob:; media-src blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -111,25 +111,36 @@ main{padding-block:20px calc(var(--nav-h) + 28px + env(safe-area-inset-bottom,0p
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (min-width:900px){
   #app{display:grid;grid-template-columns:240px minmax(0,1fr)}
-  .tabs{position:sticky;top:0;align-self:start;height:100vh;border-top:0;border-left:1px solid var(--line);box-shadow:none;padding:24px 14px;display:flex;flex-direction:column}
-  .tabs ul{flex-direction:column;height:auto;gap:4px}
-  .tab{flex-direction:row;justify-content:flex-start;gap:10px;font-size:15px;padding:6px 8px;border-radius:12px;height:48px}
+  .tabs{position:sticky;top:0;align-self:start;height:100vh;height:100dvh;border-top:0;border-left:1px solid var(--line);box-shadow:none;padding:20px 12px 14px;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+  .tabs ul{flex-direction:column;height:auto;gap:2px}
+  .tabs li.grp{padding:14px 10px 4px;font-size:11px;font-weight:700;color:var(--faint);letter-spacing:0}
+  .tab{flex-direction:row;justify-content:flex-start;gap:10px;font-size:14.5px;padding:4px 8px;border-radius:11px;height:42px}
   .tab:hover{background:var(--sunken);color:var(--ink)}
   .tab[aria-current="page"]{background:color-mix(in srgb,var(--k,var(--accent)) 10%,var(--mix))}
   .tab .tab-ic{color:var(--k)}
   .tab-ic{width:36px;height:32px}
   .tab-badge{position:static;margin-inline-start:auto;border:0}
-  .rail-brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-size:21px;color:var(--ink);padding:4px 8px 24px}
+  .rail-brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-size:21px;color:var(--ink);padding:4px 8px 14px;flex-shrink:0}
   .rail-brand .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--c-home),#8B5CF6);color:var(--hero-ink);display:grid;place-items:center;flex-shrink:0}
   .rail-brand .logo svg{width:22px;height:22px}
-  .rail-foot{display:block;margin-top:auto;padding:12px 8px 0;color:var(--faint);font-size:12px}
+  .rail-foot{display:block;margin-top:auto;padding:14px 8px 0;color:var(--faint);font-size:12px;flex-shrink:0}
+}
+@media (min-width:900px) and (max-height:720px){
+  .tab{height:36px;font-size:14px} .tab-ic{height:28px} .tabs li.grp{padding:10px 10px 2px} .rail-brand{padding-bottom:8px}
   main{padding-block:32px 48px}
 }
+@media (min-width:600px) and (max-width:899px){.tabs li.md-show{display:block}}
+@media (max-width:899px){.tabs li.grp{display:none}}
+@media (max-width:899px) and (max-height:520px){:root{--nav-h:54px}.tab-ic{height:24px;width:40px}.tab svg{width:20px;height:20px}.tab{gap:1px;font-size:10px}}
+.more-h{margin:14px 2px 8px;font-size:12px;font-weight:700;color:var(--faint)}
+.more-h:first-child{margin-top:4px}
 .more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding-bottom:6px}
+@media (min-width:560px){.more-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .more-grid button{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;border:1px solid var(--line);background:var(--bg);border-radius:var(--r);padding:16px;text-align:right;font-weight:700;font-size:15px}
 .more-grid button[aria-current="page"]{border-color:var(--accent);background:var(--accent-soft)}
 .more-grid .tab-ic{background:color-mix(in srgb,var(--k) 14%,var(--mix));width:44px;height:44px;border-radius:13px;color:var(--k)}
 .more-grid small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.more-grid .tab-ic svg{width:23px;height:23px}
 .more-grid .tab-badge{top:14px;left:14px;right:auto;inset-inline-end:auto;border-color:var(--bg)}
 
 /* ---------- type & page head ---------- */
@@ -712,6 +723,10 @@ const ini = s => esc(String(s || '').trim().charAt(0) || '؟');
 const ic = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
 
 const TABS = [['home','الرئيسية','home'],['pos','البيع','pos'],['shawarma','الشاورما','shawarma'],['kfc','الكنتاكي','kfc'],['drinks','المشروبات','drinks'],['feasts','الولائم','feasts'],['social','السوشل','social'],['staff','العمال','staff'],['inv','المخزون','inv'],['dishes','الأطباق','dishes'],['exp','المصاريف','exp'],['notes','الملاحظات','notes']];
+/* sections are grouped; the computer sidebar shows the group titles, the phone «المزيد» sheet groups them the same way */
+const GROUP_OF = {pos:'prod', shawarma:'prod', kfc:'prod', drinks:'prod', feasts:'orders', social:'orders', staff:'admin', inv:'admin', dishes:'admin', exp:'admin', notes:'admin'};
+const GROUPS = [['prod','الإنتاج والبيع'],['orders','الطلبات والتسويق'],['admin','الإدارة']];
+const MD_TABS = ['drinks','feasts'];   // extra bottom-bar tabs on tablets
 /* on phones the bar shows the first four; the rest open from «المزيد» */
 const MORE = {feasts:'العزائم والأعراس والطلبيات', social:'منشورات وفيديوهات جاهزة', drinks:'الببسي والعصائر بالكارتون', staff:'الحضور والجدول والرواتب', inv:'الكميات والشراء', dishes:'الأسعار والوصفات', exp:'كل ما يخرج من الصندوق', notes:'بين المدير والمسؤول'};
 
@@ -869,7 +884,9 @@ const hasSamples = () =>
 
 /* ================= rendering ================= */
 function buildTabs(){
-  $('#tablist').innerHTML = TABS.map(([k, label, i]) => `<li class="${MORE[k] ? 'rail-only' : ''}"><button class="tab" style="--k:var(--c-${k})" data-tab="${k}" aria-current="${S.tab === k ? 'page' : 'false'}"><span class="tab-ic">${ic(i)}</span><span>${label}</span><span class="tab-badge" data-badge="${k}" hidden></span></button></li>`).join('')
+  let g = '';
+  $('#tablist').innerHTML = TABS.map(([k, label, i]) => { const head = GROUP_OF[k] && GROUP_OF[k] !== g ? `<li class="rail-only grp" aria-hidden="true">${(GROUPS.find(x => x[0] === GROUP_OF[k]) || [])[1]}</li>` : ''; g = GROUP_OF[k] || g;
+    return head + `<li class="${MORE[k] ? 'rail-only' : ''} ${MD_TABS.includes(k) ? 'md-show' : ''}"><button class="tab" style="--k:var(--c-${k})" data-tab="${k}" aria-current="${S.tab === k ? 'page' : 'false'}"><span class="tab-ic">${ic(i)}</span><span>${label}</span><span class="tab-badge" data-badge="${k}" hidden></span></button></li>`; }).join('')
     + `<li class="mob-only"><button class="tab" data-act="more" id="more-tab" aria-current="false"><span class="tab-ic">${ic('more')}</span><span>المزيد</span><span class="tab-badge" data-badge="more" hidden></span></button></li>`;
 }
 function paintTabs(){
@@ -883,7 +900,8 @@ function paintTabs(){
   const rf = $('#rail-foot'); if (rf) rf.textContent = myRole() ? roleName(myRole()) + ' · ' + dayLabel(dayKey(), false) : '';
 }
 function openMore(){
-  openSheet('المزيد', `<div class="more-grid">${TABS.filter(([k]) => MORE[k]).map(([k, label, i]) => `<button data-go="${k}" style="--k:var(--c-${k})" aria-current="${S.tab === k ? 'page' : 'false'}"><span class="tab-ic">${ic(i)}</span><span>${label}<small>${MORE[k]}</small></span><span class="tab-badge" data-badge="${k}" hidden></span></button>`).join('')}</div>`, body => {
+  openSheet('كل الأقسام', GROUPS.map(([gk, gl]) => { const xs = TABS.filter(([k]) => GROUP_OF[k] === gk);
+    return `<p class="more-h">${gl}</p><div class="more-grid">${xs.map(([k, label, i]) => `<button data-go="${k}" style="--k:var(--c-${k})" aria-current="${S.tab === k ? 'page' : 'false'}"><span class="tab-ic">${ic(i)}</span><span>${label}<small>${MORE[k] || ({pos:'الطلبات وتسجيل البيع', shawarma:'الشيش واللفات والربح', kfc:'الدجاج والقطع والوجبات'})[k] || ''}</small></span><span class="tab-badge" data-badge="${k}" hidden></span></button>`).join('')}</div>`; }).join(''), body => {
     body.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (!b) return; closeSheet(); S.tab = b.dataset.go; S.confirm = null; render(); window.scrollTo(0, 0); });
     paintTabs();
   });
