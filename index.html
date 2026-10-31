@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1B5C4B">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XksVRzvTGLhR6ZS0iZWPpe2PeAFGqR26u6aanvsoCL0=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-FmVtzcUrl95qJ9PG87aJUlQJcPKs1WLdiwHQjsuEXl0=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -437,6 +437,9 @@ table.sched{border-collapse:separate;border-spacing:0;width:100%;min-width:720px
 .type-card + .type-card{border-top:1px solid var(--line)}
 
 /* ---------- KFC ---------- */
+.steps{display:grid;gap:8px;background:var(--accent-soft);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.6}
+.steps div{display:flex;gap:10px;align-items:flex-start}
+.steps i{font-style:normal;flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-size:12px;font-weight:700}
 .meal-head,.meal-row{display:grid;grid-template-columns:minmax(0,1.6fr) 52px minmax(0,1fr) minmax(0,.9fr) 34px;gap:6px;align-items:center}
 .meal-head{font-size:12px;color:var(--faint);font-weight:600;padding:0 2px}
 .meal-row input{padding:9px 8px!important;font-size:14px!important}
@@ -1318,7 +1321,7 @@ function kfcCard(r){
   const segs = [['seg-w', c.soldPcs], ['seg-s', c.staff], ['seg-l', c.left], ['seg-x', Math.max(0, c.missing)]].filter(s => s[1] > 0);
   return `<article class="sk" data-act="edit-kfc" data-id="${esc(r.id)}" data-date="${esc(r.date)}">
     <div class="sk-top"><span class="av av3">${ic('kfc')}</span>
-      <div class="li-main"><div class="li-title">دفعة ${fmtKg(c.w)} · ${pcsW(c.pcs)}</div>
+      <div class="li-main"><div class="li-title">دفعة ${+x.hens ? NUM(fmt(x.hens)) + ' دجاجة · ' : ''}${fmtKg(c.w)} · ${pcsW(c.pcs)}</div>
         <div class="li-meta">${c.open ? 'كلفة القطعة ' + fmt(c.pcCost) + ' د.ع' : c.sold.map(m => esc(m.name) + ' ×' + m.n).join('، ')}${x.note ? ' · ' + esc(x.note) : ''}</div></div>
       ${c.open ? '<span class="pill low">بالقلي</span>' : c.missing > 0 ? `<span class="pill out">ناقص ${pcsW(c.missing)}</span>` : c.missing < 0 ? '<span class="pill out">المباع أكثر من القطع</span>' : '<span class="pill ok">مضبوطة</span>'}
       <button class="icon-btn" data-act="edit-kfc" data-id="${esc(r.id)}" data-date="${esc(r.date)}" aria-label="تعديل">${ic('edit')}</button></div>
@@ -1394,7 +1397,7 @@ function openKfc(id, date){
   const meals = kfcMeals();
   if (!meals.length && !old){ openKfcMeals(); toast('حدّد الوجبات وأسعارها أولاً'); return; }
   const st = kfcSet();
-  const x = old ? Object.assign({mats:[], sold:[]}, old) : {w:'', kgp:st.kgp || '', item:st.item || '', mats:st.mats || [], other:st.other || '', pcs:'', sold:[], staff:'', left:'', note:''};
+  const x = old ? Object.assign({mats:[], sold:[], hens:'', per:''}, old) : {w:'', kgp:st.kgp || '', item:st.item || '', mats:st.mats || [], other:st.other || '', hens:'', per:st.per || '', pcs:'', sold:[], staff:'', left:'', note:''};
   const soldBy = {}; toArr(x.sold).forEach(m => { soldBy[m.id] = m; });
   /* meals shown: current types (with any price kept from this batch's snapshot), plus snapshot meals that were since deleted */
   const list = [...meals.map(([mid, m]) => Object.assign({id:mid}, m, soldBy[mid] ? {price:soldBy[mid].price, extra:soldBy[mid].extra, pcs:soldBy[mid].pcs} : {})),
@@ -1405,11 +1408,15 @@ function openKfc(id, date){
   const v = n => (n === '' || n == null || !+n) ? '' : fmtQ(n);
   const stocked = old ? Object.keys(old.stk || {}).length > 0 : true;
   openSheet(old ? 'تعديل دفعة كنتاكي' : 'دفعة كنتاكي جديدة', `<form class="form" novalidate>
+    ${old ? '' : `<div class="steps"><div><i>1</i><span><b>الآن:</b> وزن الدجاج وسعره، وعدد الدجاجات وكم قطعة تقطّع كل دجاجة، ثم احفظ.</span></div><div><i>2</i><span><b>آخر اليوم:</b> افتح نفس الدفعة واكتب كم وجبة بعت من كل نوع، وقطع العمال والباقي.</span></div><div><i>3</i><span>التطبيق يحسب كلفة القطعة والربح، ويقول لك إذا في قطع ناقصة.</span></div></div>`}
     <div class="fsec"><b>${ic('kfc')} الدجاج</b>
       <div class="row2"><label>وزن الدجاج (كغم)<input id="f-w" inputmode="decimal" value="${v(x.w)}" placeholder="مثال: 10"></label>
         <label>سعر الكيلو (د.ع)<input id="f-kgp" inputmode="numeric" value="${v(x.kgp)}" placeholder="0"></label></div>
-      <div class="row2"><label>التاريخ<input id="f-date" type="date" value="${d0}" min="${minM}-01" max="${dayKey()}"></label>
-        <label>عدد القطع بعد التقطيع<input id="f-pcs" inputmode="numeric" value="${v(x.pcs)}" placeholder="مثال: 80"><small id="yield-hint"></small></label></div>
+      <div class="row3"><label>عدد الدجاجات<input id="f-hens" inputmode="numeric" value="${v(x.hens)}" placeholder="مثال: 10"></label>
+        <label>قطع الدجاجة الواحدة<input id="f-per" inputmode="numeric" value="${v(x.per)}" placeholder="مثال: 8"></label>
+        <label>العدد الكلي للقطع<input id="f-pcs" inputmode="numeric" value="${v(x.pcs)}" placeholder="يُحسب وحده"></label></div>
+      <p class="hint" id="yield-hint" style="margin-top:-4px"></p>
+      <label>التاريخ<input id="f-date" type="date" value="${d0}" min="${minM}-01" max="${dayKey()}"></label>
       ${hasItems ? `<label>الدجاج من المخزون<select id="f-item"><option value="">بدون، لا تخصم من المخزون</option>${items.map(([iid, it]) => `<option value="${iid}" ${x.item === iid ? 'selected' : ''}>${esc(it.name)} (${esc(it.unit)})</option>`).join('')}</select></label>` : ''}
     </div>
     <div class="fsec"><b>${ic('leaf')} التتبيلة والطحين والزيت</b>
@@ -1431,11 +1438,12 @@ function openKfc(id, date){
     const readMats = () => mats ? [...mats.querySelectorAll('.rrow')].map(r => ({i:r.querySelector('.r-i').value, q:round(num(r.querySelector('.r-q').value))})).filter(r => r.i && r.q > 0)
       .map(r => { const o = (old && old.mats || []).find(m => m.i === r.i); return Object.assign(r, {c: o && o.c != null ? o.c : Math.round(+S.items[r.i].cost || 0)}); }) : [];
     const read = () => ({w:round(num($f('#f-w').value)), kgp:Math.round(num($f('#f-kgp').value)), item:$f('#f-item') ? $f('#f-item').value : '', mats:readMats(), other:Math.round(num($f('#f-other').value)),
-      pcs:Math.round(num($f('#f-pcs').value)), staff:Math.round(num($f('#f-staff').value)), left:Math.round(num($f('#f-left').value)), note:$f('#f-note').value.trim(),
+      hens:Math.round(num($f('#f-hens').value)), per:Math.round(num($f('#f-per').value)), pcs:Math.round(num($f('#f-pcs').value)), staff:Math.round(num($f('#f-staff').value)), left:Math.round(num($f('#f-left').value)), note:$f('#f-note').value.trim(),
       sold:[...body.querySelectorAll('.ms-row')].map(r => ({id:r.dataset.mid, name:r.dataset.name, pcs:+r.dataset.pcs, price:+r.dataset.price, extra:+r.dataset.extra, n:Math.round(num(r.querySelector('.ms-n').value))})).filter(m => m.n > 0)});
     const calc = () => {
       const y = read(), c = kfcCalc(y), a = avgYield(id);
-      $f('#yield-hint').textContent = a && y.w ? 'حسب معدلك يطلع تقريباً ' + fmt(a.v * y.w) + ' قطعة' : 'كم قطعة طلعت من الدجاج';
+      $f('#yield-hint').innerHTML = y.hens && y.per ? `${NUM(fmt(y.hens))} دجاجة × ${pcsW(y.per)} = <b>${pcsW(y.hens * y.per)}</b>${y.w ? ' · وزن الدجاجة تقريباً ' + fmtKg(y.w / y.hens) : ''}`
+        : 'اكتب عدد الدجاجات وقطع كل دجاجة، أو اكتب العدد الكلي مباشرة' + (a && y.w ? ' (حسب معدلك يطلع تقريباً ' + fmt(a.v * y.w) + ' قطعة)' : '') + '.';
       $f('#sk-hint').innerHTML = !c.w ? 'اكتب وزن الدجاج حتى تظهر الحسبة.' : !c.pcs ? `الدفعة كلّفت ${IQD(c.base)}. اكتب عدد القطع حتى أحسب كلفة القطعة.`
         : `كل قطعة كلّفت <b>${IQD(c.pcCost)}</b>، و${NUM(fmtQ(c.yield))} ${Math.round(c.yield) >= 3 && Math.round(c.yield) <= 10 && c.yield % 1 === 0 ? 'قطع' : 'قطعة'} لكل كيلو.`
           + (c.open ? '' : c.missing > 0 ? `<br>المباع ${pcsW(c.soldPcs)}${c.staff ? ' + ' + pcsW(c.staff) + ' للعمال' : ''}${c.left ? ' + ' + pcsW(c.left) + ' باقية' : ''}، يعني <b style="color:var(--bad)">ناقص ${pcsW(c.missing)}${c.pcPrice ? ' ≈ ' + IQD(c.missing * c.pcPrice) : ''}</b>.`
@@ -1449,6 +1457,8 @@ function openKfc(id, date){
       mats.addEventListener('click', e => { const b = e.target.closest('.r-del'); if (b){ b.closest('.rrow').remove(); calc(); } });
     }
     body.addEventListener('click', e => { const b = e.target.closest('[data-step]'); if (!b) return; const inp = b.parentElement.querySelector('.ms-n'); inp.value = Math.max(0, Math.round(num(inp.value)) + (+b.dataset.step)) || ''; calc(); });
+    const autoPcs = () => { const h = Math.round(num($f('#f-hens').value)), pr = Math.round(num($f('#f-per').value)); if (h > 0 && pr > 0) $f('#f-pcs').value = h * pr; };
+    $f('#f-hens').addEventListener('input', autoPcs); $f('#f-per').addEventListener('input', autoPcs);
     body.addEventListener('input', calc); body.addEventListener('change', calc);
     calc();
     bindForm(body, async f => {
@@ -1468,7 +1478,7 @@ function openKfc(id, date){
       const diff = {}, prev = (old && old.stk) || {};
       new Set([...Object.keys(stk), ...Object.keys(prev)]).forEach(k => { const dq = round((stk[k] || 0) - (prev[k] || 0)); if (dq) diff[k] = dq; });
       applyStock(diff, -1);
-      const cur = S.settings.kfc, defs = {kgp:y.kgp, item:y.item, mats:y.mats.map(r => ({i:r.i, q:r.q})), other:y.other};
+      const cur = S.settings.kfc, defs = {kgp:y.kgp, item:y.item, per:y.per, mats:y.mats.map(r => ({i:r.i, q:r.q})), other:y.other};
       const full = Object.assign({}, cur || {}, defs); S.settings = Object.assign({}, S.settings, {kfc:full});
       cur ? upd('settings/kfc', defs, full) : put('settings/kfc', full);
       if (dt.slice(0, 7) !== S.month){ S.month = dt.slice(0, 7); subMonth(); }
