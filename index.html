@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1B5C4B">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-WGeZsxB4eOjenSC2Xv76D+t7zQqZ/IAM+pysfYZPr/0=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-PGKmCMsE5GY0tODO8o1ocpGclND7hgEO7DSnWC4ub2w=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -437,6 +437,34 @@ table.sched{border-collapse:separate;border-spacing:0;width:100%;min-width:720px
 .type-card{display:flex;align-items:center;gap:12px;padding:12px 16px}
 .type-card + .type-card{border-top:1px solid var(--line)}
 
+/* ---------- alerts & stores ---------- */
+.head-acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bell{position:relative;width:42px;height:42px;border-radius:13px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--muted);box-shadow:var(--shadow-sm);flex-shrink:0}
+.bell svg{width:21px;height:21px}
+.bell.hot{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 35%,var(--line))}
+.bell.hot svg{animation:ring 2.6s ease-in-out infinite;transform-origin:50% 10%}
+@keyframes ring{0%,86%,100%{transform:rotate(0)}89%{transform:rotate(14deg)}92%{transform:rotate(-12deg)}95%{transform:rotate(8deg)}}
+.bell-n{position:absolute;top:-6px;left:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--bad);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;border:2px solid var(--bg)}
+.al-list{display:grid;gap:8px}
+.al{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 14px;box-shadow:var(--shadow-sm);border-inline-start:4px solid var(--line)}
+.al-out{border-inline-start-color:var(--bad)} .al-low{border-inline-start-color:var(--warn)} .al-info{border-inline-start-color:var(--k)}
+.al-ic{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;background:color-mix(in srgb,var(--k) 14%,var(--mix));color:var(--k)}
+.al-ic svg{width:19px;height:19px}
+.stores{display:grid;gap:10px}
+@media (min-width:760px){.stores{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.store{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow-sm);border-top:4px solid var(--k)}
+.store-top{display:flex;align-items:center;gap:12px}
+.store-top .av{width:40px;height:40px;border-radius:12px}
+.store-top b{display:block} .store-top small{display:block;color:var(--muted);font-size:12px}
+.store-big{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.store-big > span:first-child{font-family:var(--f-display);font-size:30px;font-weight:600;line-height:1.1}
+.store-big small{font-size:14px;color:var(--muted);font-family:var(--f-body)}
+.store-alt{color:var(--muted);font-weight:600}
+.store .meter{max-width:none;height:7px}
+.store-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.store-acts{display:flex;gap:8px}
+.stock-hint{background:var(--sunken);border-radius:10px;padding:8px 12px;margin:0}
+
 /* ---------- drinks ---------- */
 .dk-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 .dk{display:grid;gap:6px;text-align:right;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow-sm);transition:border-color .15s,transform .08s}
@@ -565,6 +593,7 @@ const IC = {
   kfc:'<path d="M14.6 3.2a5.6 5.6 0 0 1 3.9 9.6l-2.7 2.7-6.3-6.3 2.7-2.7a5.6 5.6 0 0 1 2.4-3.3z"/><path d="M9.5 9.2l-3.6 3.6M12.8 12.5l-3.6 3.6"/><circle cx="4.6" cy="15.6" r="1.6"/><circle cx="8.4" cy="19.4" r="1.6"/>',
   drinks:'<path d="M7 4h10l-1 3H8z"/><path d="M8 7l.8 12.2A2 2 0 0 0 10.8 21h2.4a2 2 0 0 0 2-1.8L16 7"/><path d="M8.4 12h7.2"/>',
   meal:'<path d="M4 10h16l-1.5 9a2 2 0 0 1-2 1.7h-9A2 2 0 0 1 5.5 19z"/><path d="M8 10l1-6M16 10l-1-6M12 10V3"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
   sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/>'
 };
 const avc = s => { let h = 0; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) >>> 0; return 'av av' + (h % 8); };
@@ -754,7 +783,7 @@ function render(){
   if (monthKey() !== S.cur){ const wasCur = S.month === S.cur; S.cur = monthKey(); if (wasCur) S.month = S.cur; subMonth(); }
   m.innerHTML = `<div class="wrap">${VIEWS[S.tab]()}</div>`;
 }
-const head = (title, eyebrow, actions = '') => `<header class="page-head"><div><p class="eyebrow">${eyebrow}</p><h1>${title}</h1></div>${actions}</header>`;
+const head = (title, eyebrow, actions = '') => `<header class="page-head"><div><p class="eyebrow">${eyebrow}</p><h1>${title}</h1></div><div class="head-acts">${actions}${bellBtn()}</div></header>`;
 const monthNav = () => `<div class="monthnav"><button class="icon-btn" data-act="month" data-d="-1" aria-label="الشهر السابق">${ic('prev')}</button><strong>${monthLabel(S.month)}</strong><button class="icon-btn" data-act="month" data-d="1" aria-label="الشهر التالي" ${S.month >= S.cur ? 'disabled' : ''}>${ic('next')}</button></div>`;
 const confirmBtn = (key, act, id, label = 'حذف', extra = '') => S.confirm === key
   ? `<button class="btn btn-sm btn-danger" data-act="${act}" data-id="${esc(id)}" ${extra}>تأكيد الحذف</button>`
@@ -780,6 +809,7 @@ function homeView(){
   const sk = skewersOf(S.shawarma[today]).map(([, x]) => shCalc(x)).filter(c => !c.open);
   const kb = batchesOf(S.kfc[today]).map(([, x]) => kfcCalc(x)).filter(c => !c.open);
   const dr = logRows(S.drinklog[today]).map(([, r]) => r);
+  const alerts = allAlerts();
   const q = (act, i, l, cls, extra = '') => `<button data-${act} ${extra}><span class="qi ${cls}">${ic(i)}</span>${l}</button>`;
 
   return `
@@ -825,9 +855,9 @@ function homeView(){
 
   <div class="grid2">
     <section>
-      <div class="sec-head"><h2>${ic('inv')} تنبيهات المخزون</h2><button class="btn btn-ghost btn-sm" data-tab="inv">كل المخزون</button></div>
-      ${low.length ? `<div class="list">${low.slice(0, 6).map(([id, it]) => { const st = statusOf(it); return `<div class="li"><div class="li-main"><div class="li-title">${esc(it.name)}</div><div class="li-meta">باقي ${NUM(fmtQ(it.qty))} ${esc(it.unit)} · حد التنبيه ${NUM(fmtQ(it.min))}</div></div><div class="li-end"><span class="pill ${st}">${STATUS[st]}</span><button class="btn btn-sm" data-act="buy" data-id="${id}">شراء</button></div></div>`; }).join('')}</div>`
-        : `<div class="panel empty"><span>كل المواد متوفرة فوق حد التنبيه.</span></div>`}
+      <div class="sec-head"><h2>${ic('bell')} التنبيهات</h2>${alerts.length > 5 ? `<button class="btn btn-ghost btn-sm" data-act="alerts">الكل (${alerts.length})</button>` : ''}</div>
+      ${alerts.length ? `<div class="al-list">${alerts.slice(0, 5).map(alertRow).join('')}</div>`
+        : `<div class="panel empty"><span>كل شيء تمام، لا توجد مواد ناقصة ولا شيء ينتظرك.</span></div>`}
     </section>
     <section>
       <div class="sec-head"><h2>${ic('staff')} دوام اليوم · ${DAYNAME[tk]}</h2><button class="btn btn-ghost btn-sm" data-act="go-att">سجّل الحضور</button></div>
@@ -1151,8 +1181,11 @@ function shawarmaView(){
   if (!all.length) return top + `<div>${monthNav()}</div><div class="panel empty"><span class="av av1" style="width:56px;height:56px;border-radius:16px">${ic('shawarma')}</span><strong>لا يوجد شيش مسجّل في ${monthLabel(S.month)}</strong>
     <span>سجّل وزن الشيش وسعره ومواده، وبآخر اليوم اكتب عدد اللفات وكم راح لأبو البيتزا. التطبيق يحسب الكلفة والربح والفقد، وكم لفة كان المفروض يطلع منه.</span>
     <button class="btn btn-primary" data-act="add-sk">${ic('plus')} سجّل أول شيش</button></div>`;
+  const meatIds = [...new Set(Object.values(shDefaults()).map(d => d && d.item).filter(i => i && S.items[i]))];
+  const stores = meatIds.length ? `<div class="stores">${meatIds.map(i => storeCard(i, 'مخزن ' + S.items[i].name, 'shawarma')).join('')}</div>` : '';
   const byType = types.map(t => { const xs = all.filter(r => r.x.type === t && !r.c.open); return {t, n:all.filter(r => r.x.type === t).length, xs}; });
   return top + `
+  ${stores}
   <div class="sec-head" style="margin:0;flex-wrap:wrap">${monthNav()}${types.length > 1 ? `<div class="chips">${f('all', 'الكل')}${types.map(t => f(t, t)).join('')}</div>` : ''}</div>
   <section class="hero" aria-label="ملخص الشهر">
     <div><div class="lbl">ربح الشاورما · ${monthLabel(S.month)}</div><div class="big">${IQD(T(c => c.profit))}</div>
@@ -1189,7 +1222,7 @@ function openSkewer(id, date){
       <div class="chips" id="type-chips">${names.map(t => `<button type="button" class="chip-s" data-t="${esc(t)}" aria-pressed="${t === x.type}">${esc(t)}</button>`).join('')}</div>
       <div class="row2"><label>وزن الشيش (كغم)<input id="f-w" inputmode="decimal" value="${v(x.w)}" placeholder="مثال: 18"></label>
         <label>سعر كيلو اللحم (د.ع)<input id="f-kgp" inputmode="numeric" value="${v(x.kgp)}" placeholder="0"></label></div>
-      ${hasItems ? `<label>اللحم من المخزون<select id="f-item"><option value="">بدون، لا تخصم من المخزون</option>${items.map(([iid, it]) => `<option value="${iid}" ${x.item === iid ? 'selected' : ''}>${esc(it.name)} (${esc(it.unit)})</option>`).join('')}</select><small>إذا اخترت مادة، يُخصم وزن الشيش منها وتُستخدم كلفتها</small></label>` : ''}
+      ${hasItems ? `<label>اللحم من المخزون<select id="f-item"><option value="">بدون، لا تخصم من المخزون</option>${items.map(([iid, it]) => `<option value="${iid}" ${x.item === iid ? 'selected' : ''}>${esc(it.name)} (${esc(it.unit)})</option>`).join('')}</select><small>إذا اخترت مادة، يُخصم وزن الشيش منها وتُستخدم كلفتها</small></label><p class="hint stock-hint" id="stock-hint"></p>` : ''}
     </div>
     <div class="fsec"><b>${ic('leaf')} التتبيلة والمواد</b>
       ${hasItems ? `<div class="recipe" id="mats">${(x.mats || []).filter(r => S.items[r.i]).map(recipeRow).join('')}</div><button type="button" class="btn btn-sm" id="m-add" style="justify-self:start">${ic('plus')} مادة من المخزون</button>` : ''}
@@ -1227,6 +1260,10 @@ function openSkewer(id, date){
     };
     const calc = () => {
       const y = read(), c = shCalc(y), exl = shExl(y, id), ex = shExpect(y, c, exl), a = avgLoss(y.type, id);
+      const sh = $f('#stock-hint'), it = S.items[y.item];
+      if (sh) sh.innerHTML = !it ? 'بدون ربط، لن يُخصم اللحم من المخزون.' : (() => { const have = (+it.qty || 0) + (old && old.stk && old.stk[y.item] || 0), need = kgOf(it, y.w), after = have - need, hw = 0;
+        return after < 0 ? `<b style="color:var(--bad)">⚠️ المخزون ما يكفي: موجود ${fmtQ(have)} ${esc(it.unit)} والشيش يحتاج ${fmtQ(need)}</b>`
+          : `بالمخزن ${NUM(fmtQ(have))} ${esc(it.unit)}${need ? ` ← بعد الشيش يبقى <b>${NUM(fmtQ(after))} ${esc(it.unit)}</b>${hw ? ' (≈ ' + fmt(after / kgOf(it, 1) / hw) + ' دجاجة)' : ''}` : ''}${+it.min && after < +it.min ? ' · <b style="color:var(--warn)">سينزل تحت حد التنبيه</b>' : ''}`; })();
       $f('#exl-src').textContent = y.exl !== '' ? 'أنت كتبتها' : a ? 'معدل آخر ' + a.n + ' شيش ' + y.type : 'تقديري، عدّله حسب تجربتك';
       $f('#f-exl').placeholder = Math.round(a ? a.pct : 30);
       $f('#sk-hint').innerHTML = !c.w ? 'اكتب وزن الشيش حتى تظهر الحسبة.' : !c.gpw ? `الشيش كلّف ${IQD(c.base)}. اكتب غرام اللفة وسعرها حتى أحسب كم لفة يطلع وكم يسوى.`
@@ -1355,15 +1392,16 @@ function kfcView(){
   const done = all.filter(r => !r.c.open), T = f => sum(done, r => f(r.c));
   const meals = kfcMeals();
   const top = head('الكنتاكي', 'الدجاج بالكيلو، القطع، والوجبات', `<div class="chips"><button class="btn" data-act="kfc-meals">${ic('meal')} الوجبات والأسعار</button><button class="btn btn-primary" data-act="add-kfc">${ic('plus')} دفعة جديدة</button></div>`);
+  const store = kfcSet().item && S.items[kfcSet().item] ? storeCard(kfcSet().item, 'مخزن دجاج الكنتاكي', 'kfc') : linkCard('kfc', 'مخزن دجاج الكنتاكي', 'أضف دجاج كنتاكي');
   const setup = !meals.length ? `<div class="banner"><p>أولاً حدّد <b>وجباتك</b>: كم قطعة بكل وجبة وسعرها، مثل وجبة 2 قطع، 4 قطع، بوكس عائلي.</p><button class="btn btn-sm btn-primary" data-act="kfc-meals">تحديد الوجبات</button></div>` : '';
-  if (!all.length) return top + setup + `<div>${monthNav()}</div><div class="panel empty"><span class="av av3" style="width:56px;height:56px;border-radius:16px">${ic('kfc')}</span><strong>لا توجد دفعات كنتاكي في ${monthLabel(S.month)}</strong>
+  if (!all.length) return top + setup + store + `<div>${monthNav()}</div><div class="panel empty"><span class="av av3" style="width:56px;height:56px;border-radius:16px">${ic('kfc')}</span><strong>لا توجد دفعات كنتاكي في ${monthLabel(S.month)}</strong>
     <span>سجّل وزن الدجاج وسعره ومواد التتبيلة والزيت، وكم قطعة طلعت. وبآخر اليوم اكتب عدد كل وجبة وقطع العمال، فيحسب لك الربح وكلفة القطعة ويكشف أي قطع ناقصة.</span>
     <button class="btn btn-primary" data-act="add-kfc">${ic('plus')} سجّل أول دفعة</button></div>`;
   const byMeal = {}; done.forEach(r => r.c.sold.forEach(m => { const k = m.name; byMeal[k] = byMeal[k] || {n:0, rev:0, pcs:m.pcs}; byMeal[k].n += m.n; byMeal[k].rev += m.n * m.price; }));
   const bm = Object.entries(byMeal).sort((a, b) => b[1].n - a[1].n), mx = Math.max(1, ...bm.map(([, v]) => v.n));
   const groups = {}; all.forEach(r => { (groups[r.date] = groups[r.date] || []).push(r); });
   const miss = T(c => Math.max(0, c.missing));
-  return top + setup + `
+  return top + setup + store + `
   <div>${monthNav()}</div>
   <section class="hero" aria-label="ملخص الشهر">
     <div><div class="lbl">ربح الكنتاكي · ${monthLabel(S.month)}</div><div class="big">${IQD(T(c => c.profit))}</div>
@@ -1434,7 +1472,7 @@ function openKfc(id, date){
         <label>العدد الكلي للقطع<input id="f-pcs" inputmode="numeric" value="${v(x.pcs)}" placeholder="يُحسب وحده"></label></div>
       <p class="hint" id="yield-hint" style="margin-top:-4px"></p>
       <label>التاريخ<input id="f-date" type="date" value="${d0}" min="${minM}-01" max="${dayKey()}"></label>
-      ${hasItems ? `<label>الدجاج من المخزون<select id="f-item"><option value="">بدون، لا تخصم من المخزون</option>${items.map(([iid, it]) => `<option value="${iid}" ${x.item === iid ? 'selected' : ''}>${esc(it.name)} (${esc(it.unit)})</option>`).join('')}</select></label>` : ''}
+      ${hasItems ? `<label>الدجاج من المخزون<select id="f-item"><option value="">بدون، لا تخصم من المخزون</option>${items.map(([iid, it]) => `<option value="${iid}" ${x.item === iid ? 'selected' : ''}>${esc(it.name)} (${esc(it.unit)})</option>`).join('')}</select></label><p class="hint stock-hint" id="stock-hint"></p>` : ''}
     </div>
     <div class="fsec"><b>${ic('leaf')} التتبيلة والطحين والزيت</b>
       ${hasItems ? `<div class="recipe" id="mats">${(x.mats || []).filter(r => S.items[r.i]).map(recipeRow).join('')}</div><button type="button" class="btn btn-sm" id="m-add" style="justify-self:start">${ic('plus')} مادة من المخزون</button>` : ''}
@@ -1459,6 +1497,10 @@ function openKfc(id, date){
       sold:[...body.querySelectorAll('.ms-row')].map(r => ({id:r.dataset.mid, name:r.dataset.name, pcs:+r.dataset.pcs, price:+r.dataset.price, extra:+r.dataset.extra, n:Math.round(num(r.querySelector('.ms-n').value))})).filter(m => m.n > 0)});
     const calc = () => {
       const y = read(), c = kfcCalc(y), a = avgYield(id);
+      const sh = $f('#stock-hint'), it = S.items[y.item];
+      if (sh) sh.innerHTML = !it ? 'بدون ربط، لن يُخصم الدجاج من المخزون.' : (() => { const have = (+it.qty || 0) + (old && old.stk && old.stk[y.item] || 0), need = kgOf(it, y.w), after = have - need, hw = henW();
+        return after < 0 ? `<b style="color:var(--bad)">⚠️ المخزون ما يكفي: موجود ${fmtQ(have)} ${esc(it.unit)} والدفعة تحتاج ${fmtQ(need)}</b>`
+          : `بالمخزن ${NUM(fmtQ(have))} ${esc(it.unit)}${need ? ` ← بعد الدفعة يبقى <b>${NUM(fmtQ(after))} ${esc(it.unit)}</b>${hw ? ' (≈ ' + fmt(after / kgOf(it, 1) / hw) + ' دجاجة)' : ''}` : ''}${+it.min && after < +it.min ? ' · <b style="color:var(--warn)">سينزل تحت حد التنبيه</b>' : ''}`; })();
       $f('#yield-hint').innerHTML = y.hens && y.per ? `${NUM(fmt(y.hens))} دجاجة × ${pcsW(y.per)} = <b>${pcsW(y.hens * y.per)}</b>${y.w ? ' · وزن الدجاجة تقريباً ' + fmtKg(y.w / y.hens) : ''}`
         : 'اكتب عدد الدجاجات وقطع كل دجاجة، أو اكتب العدد الكلي مباشرة' + (a && y.w ? ' (حسب معدلك يطلع تقريباً ' + fmt(a.v * y.w) + ' قطعة)' : '') + '.';
       $f('#sk-hint').innerHTML = !c.w ? 'اكتب وزن الدجاج حتى تظهر الحسبة.' : !c.pcs ? `الدفعة كلّفت ${IQD(c.base)}. اكتب عدد القطع حتى أحسب كلفة القطعة.`
@@ -1678,6 +1720,90 @@ function openDrinkDay(date){
   });
 }
 
+/* ---------- usage forecast & alerts ----------
+   Daily use of each stock item over the last two weeks, taken from what actually left the store:
+   dish recipes on sales, shawarma skewers and KFC batches. Drinks use their daily sold count. */
+const USE_DAYS = 14;
+function usageLog(){
+  const out = {}, add = (d, i, q) => { if (!d || !S.items[i] || !(+q > 0)) return; (out[d] = out[d] || {})[i] = (out[d][i] || 0) + (+q); };
+  Object.keys(S.sales).forEach(k => Object.entries(consumption(ordersOfDay(k).flatMap(o => o.lines || []))).forEach(([i, q]) => add((S.sales[k] && S.sales[k].date) || k, i, q)));
+  Object.values(S.shawarma).forEach(d => skewersOf(d).forEach(([, x]) => Object.entries(x.stk || {}).forEach(([i, q]) => add(d.date, i, q))));
+  Object.values(S.kfc).forEach(d => batchesOf(d).forEach(([, x]) => Object.entries(x.stk || {}).forEach(([i, q]) => add(d.date, i, q))));
+  return out;
+}
+function avgPerDay(byDate){
+  const from = dayKey(addDays(new Date(), -(USE_DAYS - 1)));
+  const ds = Object.keys(byDate).filter(d => d >= from && d <= dayKey() && byDate[d] > 0).sort();
+  if (!ds.length) return 0;
+  const span = Math.round((dateOf(dayKey()) - dateOf(ds[0])) / 864e5) + 1;
+  return sum(ds, d => byDate[d]) / Math.min(USE_DAYS, Math.max(3, span));      // at least 3 days so one busy day doesn't scare
+}
+const itemUse = (use, id) => avgPerDay(Object.fromEntries(Object.keys(use).map(d => [d, use[d][id] || 0])));
+const drinkUse = id => avgPerDay(Object.fromEntries(Object.values(S.drinklog).filter(d => d && d.date).map(d => [d.date, +((d.rows || {})[id] || {}).sold || 0])));
+const daysText = n => !isFinite(n) ? '' : n < 1 ? 'يخلص اليوم' : n < 2 ? 'يكفي ليوم واحد' : n < 3 ? 'يكفي ليومين' : 'يكفي ~' + Math.floor(n) + ' أيام';
+const henW = () => { const xs = Object.values(S.kfc).flatMap(d => batchesOf(d)).map(([, x]) => x).filter(x => +x.hens > 0 && +x.w > 0); return xs.length ? sum(xs, x => +x.w) / sum(xs, x => +x.hens) : 0; };
+
+function allAlerts(){
+  if (!ready()) return [];
+  const A = [], use = usageLog(), today = dayKey();
+  sortByName(S.items).forEach(([id, it]) => {
+    const q = +it.qty || 0, st = statusOf(it), du = itemUse(use, id), dl = du > 0 ? q / du : Infinity;
+    const meta = `باقي ${fmtQ(q)} ${it.unit}` + (du ? ` · تستهلك ~${fmtQ(du)} ${it.unit} باليوم` : '');
+    if (st === 'out') A.push({lvl:3, k:'inv', t:it.name + ' نفد', m:meta, act:'buy', id, b:'شراء'});
+    else if (st === 'low' || dl < 3) A.push({lvl:dl < 1 ? 3 : 2, k:'inv', t:it.name + ' · ' + (dl < 3 ? daysText(dl) : 'منخفض'), m:meta, act:'buy', id, b:'شراء'});
+  });
+  drinkList().forEach(([id, d]) => {
+    const q = +d.qty || 0, du = drinkUse(id), dl = du > 0 ? q / du : Infinity, low = q > 0 && q < (+d.min || 0);
+    const meta = `باقي ${cartonsLabel(q, d.per).replace(/<[^>]+>/g, '')}` + (du ? ` · تبيع ~${Math.round(du)} قوطية باليوم` : '');
+    if (q <= 0) A.push({lvl:3, k:'drinks', t:d.name + ' خلص', m:meta, act:'drink-day', b:'تسجيل شراء'});
+    else if (low || dl < 3) A.push({lvl:dl < 1 ? 3 : 2, k:'drinks', t:d.name + ' · ' + (dl < 3 ? daysText(dl) : 'قليل'), m:meta, act:'drink-day', b:'تسجيل شراء'});
+  });
+  Object.values(S.shawarma).filter(d => d && d.date && d.date < today).forEach(d => skewersOf(d).forEach(([id, x]) => { if (shCalc(x).open)
+    A.push({lvl:2, k:'shawarma', t:'شيش ' + x.type + ' ما تسكّر', m:dayLabel(d.date) + ' · اكتب عدد اللفات حتى يُحسب ربحه', act:'edit-sk', id, date:d.date, b:'إكمال'}); }));
+  Object.values(S.kfc).filter(d => d && d.date && d.date < today).forEach(d => batchesOf(d).forEach(([id, x]) => { if (kfcCalc(x).open)
+    A.push({lvl:2, k:'kfc', t:'دفعة كنتاكي ما تسكّرت', m:dayLabel(d.date) + ' · اكتب الوجبات المباعة', act:'edit-kfc', id, date:d.date, b:'إكمال'}); }));
+  const unread = Object.values(S.notes).filter(isUnread).length;
+  if (unread) A.push({lvl:1, k:'notes', t:unread + ' ملاحظة جديدة من ' + roleName(otherRole()), m:'اقرأها وأشّر «قرأتها»', tab:'notes', b:'فتح'});
+  const on = sortByName(S.staff).filter(([sid, st]) => effShift(st, sid, today) !== 'off');
+  if (on.length && new Date().getHours() >= 12 && covered('att', today) && on.every(([sid]) => !attMark(today, sid)))
+    A.push({lvl:1, k:'staff', t:'حضور اليوم ما تسجّل', m:on.length + ' عامل بالدوام اليوم', act:'go-att', b:'تسجيل'});
+  return A.sort((a, b) => b.lvl - a.lvl);
+}
+const LVL = {3:'out', 2:'low', 1:'info'};
+const alertRow = a => `<div class="al al-${LVL[a.lvl]}" style="--k:var(--c-${a.k})"><span class="al-ic">${ic(a.k === 'inv' ? 'inv' : a.k)}</span><div class="li-main"><div class="li-title">${esc(a.t)}</div><div class="li-meta">${esc(a.m)}</div></div>
+  <button class="btn btn-sm" ${a.tab ? `data-tab="${a.tab}"` : `data-act="${a.act}"`} ${a.id ? `data-id="${esc(a.id)}"` : ''} ${a.date ? `data-date="${esc(a.date)}"` : ''}>${a.b}</button></div>`;
+function openAlerts(){
+  const A = allAlerts();
+  openSheet('التنبيهات', A.length ? `<div class="al-list">${A.map(alertRow).join('')}</div><p class="hint" style="margin-top:12px">«يكفي ~ أيام» محسوبة من استهلاكك الفعلي خلال آخر أسبوعين.</p>`
+    : `<div class="empty"><span class="av av6" style="width:56px;height:56px;border-radius:16px">${ic('check')}</span><strong>كل شيء تمام</strong><span>لا توجد مواد ناقصة ولا شيء ينتظرك.</span></div>`, body => {
+    body.addEventListener('click', e => {
+      const b = e.target.closest('button[data-act],button[data-tab]'); if (!b || b.hasAttribute('data-close')) return;
+      closeSheet();
+      if (b.dataset.tab){ S.tab = b.dataset.tab; render(); window.scrollTo(0, 0); return; }
+      const fn = ACT[b.dataset.act]; if (fn) setTimeout(() => fn(b.dataset), 0);
+    });
+  });
+}
+const bellBtn = () => { const A = allAlerts(), n = A.length, hot = A.some(a => a.lvl === 3);
+  return `<button class="bell ${hot ? 'hot' : ''}" data-act="alerts" aria-label="التنبيهات${n ? ' (' + n + ')' : ''}">${ic('bell')}${n ? `<span class="bell-n">${n > 9 ? '9+' : n}</span>` : ''}</button>`; };
+
+/* a store card for a stock item feeding a production section (KFC chicken, shawarma meat) */
+function storeCard(id, title, k){
+  const it = S.items[id]; if (!it) return '';
+  const use = usageLog(), du = itemUse(use, id), q = +it.qty || 0, dl = du > 0 ? q / du : Infinity, st = statusOf(it);
+  const hw = k === 'kfc' ? henW() : 0;
+  return `<div class="store" style="--k:var(--c-${k})"><div class="store-top"><span class="av ${k === 'kfc' ? 'av3' : 'av1'}">${ic('inv')}</span><div class="li-main"><b>${title}</b><small>${esc(it.name)}${+it.cost ? ' · ' + fmt(it.cost) + ' د.ع/' + esc(it.unit) : ''}</small></div><span class="pill ${dl < 2 || st === 'out' ? 'out' : dl < 3 ? 'low' : st}">${st === 'out' ? STATUS.out : isFinite(dl) ? daysText(dl) : STATUS[st]}</span></div>
+    <div class="store-big"><span>${NUM(fmtQ(q))} <small>${esc(it.unit)}</small></span>${hw && q > 0 ? `<span class="store-alt">≈ ${NUM(fmt(kgOf(it, 1) ? q / kgOf(it, 1) / hw : 0))} دجاجة</span>` : ''}</div>
+    <div class="meter ${dl < 2 ? 'out' : st}"><i style="width:${Math.max(3, Math.min(100, du ? dl / 7 * 100 : (+it.min ? q / (it.min * 3) * 100 : 100)))}%"></i></div>
+    <div class="store-meta">${du ? `<span>تستهلك ~${NUM(fmtQ(du))} ${esc(it.unit)} باليوم</span>` : '<span>الاستهلاك يظهر بعد أول دفعات</span>'}${+it.min ? `<span>التنبيه عند ${NUM(fmtQ(it.min))}</span>` : `<button class="btn btn-ghost btn-sm" data-act="edit-item" data-id="${id}">حدّد التنبيه</button>`}</div>
+    <div class="store-acts"><button class="btn btn-sm btn-primary" data-act="buy" data-id="${id}">${ic('buy')} شراء</button>${k === 'kfc' ? `<button class="btn btn-sm btn-ghost" data-act="kfc-unlink">تغيير المادة</button>` : ''}</div></div>`;
+}
+function linkCard(k, title, sugg){
+  const items = sortByName(S.items);
+  return `<div class="store store-link" style="--k:var(--c-${k})"><div class="store-top"><span class="av ${k === 'kfc' ? 'av3' : 'av1'}">${ic('inv')}</span><div class="li-main"><b>${title}</b><small>اربطه بمادة من المخزون حتى يُخصم تلقائياً مع كل دفعة ويُنبّهك قبل ما يخلص</small></div></div>
+    <div class="chips">${items.map(([id, it]) => `<button class="chip-s" data-act="${k}-link" data-id="${id}">${esc(it.name)}</button>`).join('')}<button class="chip-s" data-act="${k}-newitem" style="border-style:dashed">${ic('plus')} ${sugg}</button></div></div>`;
+}
+
 const VIEWS = {home:homeView, pos:posView, shawarma:shawarmaView, kfc:kfcView, drinks:drinksView, dishes:dishesView, inv:invView, staff:staffView, exp:expView, notes:notesView};
 
 /* ================= sheet & toast ================= */
@@ -1739,8 +1865,8 @@ function openSettings(){
   });
 }
 
-function openItem(id){
-  const it = id ? S.items[id] : {name:'', unit:'كغم', qty:0, min:0, cost:0};
+function openItem(id, preset, onSaved){
+  const it = id ? S.items[id] : Object.assign({name:'', unit:'كغم', qty:0, min:0, cost:0}, preset || {});
   const units = UNITS.includes(it.unit) ? UNITS : [it.unit, ...UNITS];
   const used = id ? Object.values(S.dishes).filter(d => (d.recipe || []).some(r => r.i === id)).map(d => d.name) : [];
   openSheet(id ? 'تعديل مادة' : 'مادة جديدة', `<form class="form" novalidate>
@@ -1756,7 +1882,8 @@ function openItem(id){
       const data = Object.assign({}, it, {name, unit:val(f, 'f-unit'), qty:round(num(val(f, 'f-qty'))), min:round(num(val(f, 'f-min'))), cost:Math.round(num(val(f, 'f-cost')))});
       const key = id || uid(); closeSheet();
       S.items = Object.assign({}, S.items, {[key]:data}); render();
-      if (await put('items/' + key, data)) toast('تم حفظ ' + name);
+      const saved = put('items/' + key, data); if (onSaved) onSaved(key);
+      if (await saved) toast('تم حفظ ' + name);
     });
     sheetDelete(body, 'الحذف', async () => { closeSheet(); const c = Object.assign({}, S.items); delete c[id]; S.items = c; render(); if (await del('items/' + id)) toast('تم حذف المادة'); });
   });
@@ -2090,6 +2217,10 @@ const ACT = {
   more: () => openMore(),
   'add-sk': () => openSkewer(), 'edit-sk': d => openSkewer(d.id, d.date),
   'sk-type': d => { S.shType = d.t; render(); },
+  alerts: () => openAlerts(),
+  'kfc-link': d => { const cur = S.settings.kfc, full = Object.assign({}, cur || {}, {item:d.id}); S.settings = Object.assign({}, S.settings, {kfc:full}); render(); (cur ? upd('settings/kfc', {item:d.id}, full) : put('settings/kfc', full)); toast('رُبط الكنتاكي بـ ' + S.items[d.id].name); },
+  'kfc-unlink': () => { const cur = S.settings.kfc; if (!cur) return; const full = Object.assign({}, cur, {item:''}); S.settings = Object.assign({}, S.settings, {kfc:full}); render(); upd('settings/kfc', {item:''}, full); },
+  'kfc-newitem': () => openItem(null, {name:'دجاج كنتاكي', unit:'كغم'}, key => ACT['kfc-link']({id:key})),
   'add-drink': d => openDrink(null, d.name), 'edit-drink': d => openDrink(d.id), 'drink-day': d => openDrinkDay(d.date),
   'add-kfc': () => openKfc(), 'edit-kfc': d => openKfc(d.id, d.date), 'kfc-meals': () => openKfcMeals()
 };
