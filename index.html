@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1B5C4B">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Urmn0dFHRKfqIiLkK71rqGcUpNgvVSQMlLtm0fisZGg=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-WGeZsxB4eOjenSC2Xv76D+t7zQqZ/IAM+pysfYZPr/0=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -727,7 +727,7 @@ function paintTabs(){
   const mt = $('#more-tab'); if (mt) mt.setAttribute('aria-current', MORE[S.tab] ? 'page' : 'false');
   const unread = ready() ? Object.values(S.notes).filter(isUnread).length : 0;
   const out = ready() ? Object.values(S.items).filter(it => statusOf(it) === 'out').length : 0;
-  const dlow = ready() ? Object.values(S.drinks).filter(d => (+d.qty || 0) <= (+d.min || 0)).length : 0;
+  const dlow = ready() ? Object.values(S.drinks).filter(d => (+d.qty || 0) <= 0 || (+d.qty || 0) < (+d.min || 0)).length : 0;
   const badge = {notes:unread, inv:out, drinks:dlow, more:unread + out + dlow};
   document.querySelectorAll('[data-badge]').forEach(el => { const n = badge[el.dataset.badge] || 0; el.hidden = !n; el.textContent = n > 9 ? '9+' : n; });
   const rf = $('#rail-foot'); if (rf) rf.textContent = myRole() ? roleName(myRole()) + ' · ' + dayLabel(dayKey(), false) : '';
@@ -1558,7 +1558,7 @@ function drinksView(){
   </section>
   <section><div class="sec-head"><h2>${ic('inv')} المخزون الآن</h2><span class="muted">اضغط على المشروب لتعديله</span></div>
     <div class="dk-grid">${list.map(([id, d]) => {
-      const q = +d.qty || 0, st = q <= 0 ? 'out' : q <= (+d.min || 0) ? 'low' : 'ok', per = +d.per || 0, pr = (+d.price || 0) - unitCost(d);
+      const q = +d.qty || 0, st = q <= 0 ? 'out' : q < (+d.min || 0) ? 'low' : 'ok', per = +d.per || 0, pr = (+d.price || 0) - unitCost(d);
       const tr = S.drinklog[today] && S.drinklog[today].rows && S.drinklog[today].rows[id];
       return `<button class="dk" data-act="edit-drink" data-id="${id}"><span class="dk-top"><span class="${avc(d.name)}">${ini(d.name)}</span><span class="li-main"><b>${esc(d.name)}</b><small>${per ? 'كارتون ' + NUM(per) + ' · ' : ''}${IQD(d.price)} للقوطية</small></span><span class="pill ${st}">${STATUS[st]}</span></span>
         <span class="dk-qty">${cartonsLabel(q, per)}</span><span class="dk-sub">${q !== Math.round(q) || per && q >= per ? cansW(q) + ' · ' : ''}ربح القوطية ${IQD(pr)}</span>
@@ -1586,13 +1586,14 @@ function openDrink(id, name){
     <div class="fsec"><b>${ic('inv')} الموجود الآن</b>
       <div class="row2"><label>كراتين كاملة<input id="f-qc" inputmode="numeric" value="${per && q >= per ? Math.floor(q / per) : ''}" placeholder="0"></label>
         <label>قوطيات مفردة<input id="f-qs" inputmode="numeric" value="${per ? (q >= per ? q % per : q) || '' : q || ''}" placeholder="0"></label></div>
-      <label>نبّهني إذا نزل عن (قوطية)<input id="f-min" inputmode="numeric" value="${+d.min || ''}" placeholder="مثال: 24"></label></div>
+      <label>نبّهني لما يبقى أقل من (كارتون)<input id="f-min" inputmode="decimal" value="${+d.min && per ? fmtQ(d.min / per) : ''}" placeholder="مثال: 1"><small id="min-hint">يظهر «منخفض» وتطلع علامة حمراء حتى تشتري قبل ما يخلص</small></label></div>
     <div class="calc" id="calc"></div>
     ${formActions(id ? 'حذف المشروب' : '')}</form>`, body => {
     const $f = s => body.querySelector(s);
     const read = () => { const pr = Math.round(num($f('#f-per').value)); return {name:$f('#f-name').value.trim(), per:pr, cartonCost:Math.round(num($f('#f-cc').value)), price:Math.round(num($f('#f-price').value)),
-      qty:Math.round(num($f('#f-qc').value)) * pr + Math.round(num($f('#f-qs').value)), min:Math.round(num($f('#f-min').value))}; };
+      qty:Math.round(num($f('#f-qc').value)) * pr + Math.round(num($f('#f-qs').value)), min:Math.round(num($f('#f-min').value) * pr)}; };
     const calc = () => { const y = read(), u = unitCost(y), pr = y.price - u;
+      $f('#min-hint').innerHTML = y.min > 0 ? `لما يبقى أقل من ${cansW(y.min)} يظهر «منخفض» وتطلع علامة حمراء` : 'يظهر «منخفض» وتطلع علامة حمراء حتى تشتري قبل ما يخلص';
       $f('#calc').innerHTML = `<div><span>كلفة القوطية</span><b>${IQD(u)}</b></div><div><span>ربح القوطية</span><b class="${pr < 0 ? 'neg-v' : 'pos-v'}">${IQD(pr)}</b></div><div><span>ربح الكارتون</span><b class="${pr < 0 ? 'neg-v' : 'pos-v'}">${IQD(pr * y.per)}</b></div>
         <div><span>المجموع</span><b>${cansW(y.qty)}</b></div><div><span>قيمته</span><b>${IQD(y.qty * u)}</b></div><div><span>نسبة الربح</span><b>${NUM((y.price ? Math.round(pr / y.price * 100) : 0) + '%')}</b></div>`; };
     body.addEventListener('input', calc); calc();
