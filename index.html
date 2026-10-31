@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1B5C4B">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-JZ4/mTVSzxmN7kvAwhbaQPU0wZbA9VCBmFgntdjJ/Uk=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data: blob:; media-src blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-332wgK3pw9DU+EbChufVgBZRKARnfCa+iKdu+HKzDYk=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data: blob:; media-src blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -536,6 +536,12 @@ table.sched{border-collapse:separate;border-spacing:0;width:100%;min-width:720px
 .cv-wrap canvas{width:100%;max-width:340px;height:auto;border-radius:10px;box-shadow:var(--shadow)}
 .vid{width:100%;max-width:340px;border-radius:12px;display:block;margin:0 auto 10px;background:#000}
 #s-icons .chip-s{padding:6px 10px} #s-icons svg{width:20px;height:20px;display:block}
+
+/* ---------- how it was calculated ---------- */
+.how{background:var(--sunken);border-radius:12px;padding:10px 14px;font-size:13px}
+.how summary{cursor:pointer;font-weight:700;color:var(--accent)}
+.how ol{margin:10px 0 0;padding-inline-start:20px;display:grid;gap:7px;line-height:1.7}
+.how small{color:var(--muted)}
 
 /* ---------- feasts ---------- */
 .fe-list{display:grid;gap:12px}
@@ -1312,14 +1318,14 @@ function shawarmaView(){
   ${stores}
   <div class="sec-head" style="margin:0;flex-wrap:wrap">${monthNav()}${types.length > 1 ? `<div class="chips">${f('all', 'الكل')}${types.map(t => f(t, t)).join('')}</div>` : ''}</div>
   <section class="hero" aria-label="ملخص الشهر">
-    <div><div class="lbl">ربح الشاورما · ${monthLabel(S.month)}</div><div class="big">${IQD(T(c => c.profit))}</div>
+    <div><div class="lbl">ربح الشاورما · ${monthLabel(S.month)} <span style="opacity:.75">(ربح المواد، قبل الرواتب والإيجار)</span></div><div class="big">${IQD(T(c => c.profit))}</div>
       <div class="hero-stats" style="margin-top:14px"><div><span class="lbl">الإيراد</span><b>${IQD(T(c => c.rev))}</b></div><div><span class="lbl">التكلفة</span><b>${IQD(T(c => c.cost))}</b></div><div><span class="lbl">اللفات</span><b>${NUM(fmt(T(c => c.wraps)))}</b></div></div></div>
     <div class="hero-stats"><div><span class="lbl">الشيشات</span><b>${NUM(list.length)}</b></div><div><span class="lbl">الوزن الكلي</span><b>${fmtKg(sum(list, r => r.c.w))}</b></div><div><span class="lbl">لأبو البيتزا</span><b>${fmtKg(T(c => c.pz))}</b></div>
-      <div><span class="lbl">متوسط الفقد</span><b>${NUM(Math.round(lossAvg) + '%')}</b></div><div><span class="lbl">لفات العمال</span><b>${NUM(fmt(T(c => c.staff)))} <span class="cur">· ${fmt(T(c => c.staffCost))} د.ع</span></b></div><div><span class="lbl">كلفة اللفة</span><b>${IQD(done.length ? sum(done, r => r.c.wrapCost) / done.length : 0)}</b></div></div>
+      <div><span class="lbl">متوسط الفقد</span><b>${NUM(Math.round(lossAvg) + '%')}</b></div><div><span class="lbl">لفات العمال</span><b>${NUM(fmt(T(c => c.staff)))} <span class="cur">· ${fmt(T(c => c.staffCost))} د.ع</span></b></div><div><span class="lbl">كلفة اللفة</span><b>${IQD(sum(done, r => r.c.wraps) ? sum(done, r => r.c.wrapCost * r.c.wraps) / sum(done, r => r.c.wraps) : 0)}</b></div></div>
   </section>
   ${byType.length > 1 || byType.some(b => b.xs.length) ? `<section><div class="sec-head"><h2>${ic('scale')} حسب النوع</h2><span class="muted">للشيشات المكتملة</span></div><div class="list">${byType.map(b => { const n = b.xs.length || 1;
     return `<div class="type-card"><span class="${avc(b.t)}">${ini(b.t)}</span><div class="li-main"><div class="li-title">${esc(b.t)} · ${NUM(b.n)} شيش</div>
-      <div class="li-meta">معدل ${NUM(fmt(sum(b.xs, r => r.c.wraps) / n))} لفة للشيش · فقد ${NUM(Math.round(sum(b.xs, r => r.c.lossPct) / n) + '%')} · كلفة اللفة ${IQD(sum(b.xs, r => r.c.wrapCost) / n)}</div></div>
+      <div class="li-meta">معدل ${NUM(fmt(sum(b.xs, r => r.c.wraps) / n))} لفة للشيش · فقد ${NUM(Math.round(sum(b.xs, r => r.c.lossPct) / n) + '%')} · كلفة اللفة ${IQD(sum(b.xs, r => r.c.wraps) ? sum(b.xs, r => r.c.wrapCost * r.c.wraps) / sum(b.xs, r => r.c.wraps) : 0)}</div></div>
       <div class="li-end"><b class="${sum(b.xs, r => r.c.profit) < 0 ? 'neg-v' : 'pos-v'}">${IQD(sum(b.xs, r => r.c.profit))}</b></div></div>`; }).join('')}</div></section>` : ''}
   ${Object.entries(groups).map(([d, rs]) => `<section><div class="sec-head"><h2>${d === dayKey() ? 'اليوم · ' : ''}${dayLabel(d)}</h2><span class="muted">${rs.some(r => !r.c.open) ? 'الربح ' + fmt(sum(rs.filter(r => !r.c.open), r => r.c.profit)) + ' د.ع' : ''}</span></div>
     <div class="sk-list">${rs.map(skCard).join('')}</div></section>`).join('')}`;
@@ -1369,7 +1375,8 @@ function openSkewer(id, date){
       <label>ملاحظة<input id="f-note" maxlength="80" value="${esc(x.note || '')}" placeholder="اختياري"></label>
       ${hasItems ? `<label class="check"><input type="checkbox" id="f-stock" ${stocked ? 'checked' : ''}> اخصم اللحم والمواد من المخزون</label>` : ''}
     </div>
-    <div class="sk-calc"><div class="sk-hint" id="sk-hint"></div><div class="calc" id="calc"></div></div>
+    <div class="sk-calc"><div class="sk-hint" id="sk-hint"></div><div class="calc" id="calc"></div>
+      <details class="how"><summary>كيف انحسب؟ (خطوة بخطوة)</summary><ol id="how"></ol></details></div>
     ${formActions(old ? 'حذف الشيش' : '')}</form>`, body => {
     const $f = s => body.querySelector(s);
     const mats = $f('#mats');
@@ -1395,7 +1402,17 @@ function openSkewer(id, date){
           + (c.over ? `<br><span style="color:var(--bad)">اللفات والبيتزا والباقي أكثر من وزن الشيش بـ ${fmtKg(c.over)}. راجع الأرقام.</span>`
             : !c.open && ex.gap > 0 ? `<br>المباع ${lafa(c.wraps)}${c.staff ? ' + ' + lafa(c.staff) + ' للعمال' : ''}، يعني <b style="color:var(--bad)">ناقص ${lafa(ex.gap)} ≈ ${IQD(ex.gap * y.price)}</b>.`
             : !c.open && ex.gap < 0 ? `<br>المباع أكثر من المتوقع بـ ${lafa(-ex.gap)}. ممتاز، أو أن غرام اللفة أقل من المكتوب.` : '');
-      const p = c.open ? ex.worth - c.base : c.profit;
+      const p = c.open ? ex.worth - c.base : c.profit, K = n => fmtQ(n) + ' كغم', D = n => fmt(n) + ' د.ع';
+      $f('#how').innerHTML = !c.w ? '<li>اكتب وزن الشيش.</li>' : [
+        `<b>كلفة الشيش كله</b> = ${K(c.w)} × ${D(y.kgp)} + مواد ${D(c.mats)} = <b>${D(c.base)}</b>`,
+        c.left ? `<b>الباقي على الشيش</b> ${K(c.left)} ينتقل لباچر بكلفته، فالمستعمل اليوم = ${D(c.base)} × ${fmtQ(c.w - c.left)} ÷ ${fmtQ(c.w)} = <b>${D(c.cost - (c.wraps + c.staff) * (+y.extra || 0))}</b>` : '',
+        c.open ? '' : `<b>اللحم اللي طلع</b> = لفات ${K(c.wrapsKg)}${c.staff ? ' + عمال ' + K(c.staffKg) : ''}${c.pz ? ' + بيتزا ' + K(c.pz) : ''} = <b>${K(c.served)}</b>، والفقد ${K(c.loss)}`,
+        c.open ? '' : `<b>كلفة كيلو اللحم الجاهز</b> = المستعمل ÷ ${K(c.served)} = <b>${D(c.kgCost)}</b> <small>(هنا يدخل الفقد بالكلفة)</small>`,
+        c.gpw ? `<b>كلفة اللفة</b> = ${D(c.kgCost)} × ${fmt(c.gpw)} غ ÷ 1000${+y.extra ? ' + خبز وصوص ' + D(y.extra) : ''} = <b>${D(c.wrapCost)}</b>` : '',
+        c.open ? '' : `<b>الإيراد</b> = ${fmt(c.wraps)} لفة × ${D(y.price)}${c.pz ? ' + بيتزا ' + K(c.pz) + ' × ' + D(c.pzp) + (+y.pzp ? '' : ' (بسعر الكلفة)') : ''} = <b>${D(c.rev)}</b>`,
+        c.open ? '' : `<b>الربح</b> = ${D(c.rev)} − ${D(c.cost)} = <b>${D(c.profit)}</b>${c.staff ? ' <small>(بعد كلفة ' + c.staff + ' لفات للعمال بدون إيراد)</small>' : ''}`,
+        '<small>هذا ربح المواد فقط. الرواتب والإيجار والكهرباء والغاز العام تظهر في المصاريف.</small>'
+      ].filter(Boolean).map(x => `<li>${x}</li>`).join('');
       $f('#calc').innerHTML = `<div><span>${c.open ? 'كلفة الشيش' : 'التكلفة'}</span><b>${IQD(c.open ? c.base : c.cost)}</b></div><div><span>${c.open ? 'يسوى' : 'الإيراد'}</span><b>${IQD(c.open ? ex.worth : c.rev)}</b></div><div><span>${c.open ? 'الربح المتوقع' : 'الربح'}</span><b class="${p < 0 ? 'neg-v' : 'pos-v'}">${IQD(p)}</b></div>
         <div><span>كلفة اللفة</span><b>${IQD(c.wrapCost)}</b></div><div><span>الفقد</span><b>${c.open ? '—' : fmtKg(c.loss) + ' · ' + NUM(Math.round(c.lossPct) + '%')}</b></div><div><span>${c.staff ? 'عشاء العمال' : 'البيتزا'}</span><b>${IQD(c.staff ? c.staffCost : c.pzRev)}</b></div>`;
     };
