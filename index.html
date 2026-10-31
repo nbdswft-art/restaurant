@@ -6,14 +6,14 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1B5C4B">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-PGKmCMsE5GY0tODO8o1ocpGclND7hgEO7DSnWC4ub2w=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-JZ4/mTVSzxmN7kvAwhbaQPU0wZbA9VCBmFgntdjJ/Uk=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data: blob:; media-src blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
 <title>دفتر المطعم</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;600;700&family=Aref+Ruqaa:wght@400;700&display=swap">
 <style>
 /* Layout: phone-first ledger. One content column with a fixed bottom tab bar; from 900px the bar becomes a rail on the right (RTL start). */
 :root{
@@ -23,7 +23,7 @@
   --good:#0E9F6E; --good-soft:#DDF7EC; --warn:#B45309; --warn-soft:#FEF0D7; --bad:#DC2626; --bad-soft:#FDE4E4;
   --sh-m:#D9F5EF; --sh-m-ink:#0F766E; --sh-e:#ECE7FE; --sh-e-ink:#5B3FD0;
   --sh-f:#FEF0D7; --sh-f-ink:#9A4A07; --sh-off:#EEF0F6; --sh-off-ink:#8E94AA;
-  --c-home:#5B4CF0; --c-pos:#059669; --c-shawarma:#EA580C; --c-kfc:#DC2626; --c-staff:#2563EB; --c-inv:#0D9488; --c-dishes:#DB2777; --c-exp:#D97706; --c-notes:#7C3AED; --c-drinks:#0891B2;
+  --c-home:#5B4CF0; --c-pos:#059669; --c-shawarma:#EA580C; --c-kfc:#DC2626; --c-staff:#2563EB; --c-inv:#0D9488; --c-dishes:#DB2777; --c-exp:#D97706; --c-notes:#7C3AED; --c-drinks:#0891B2; --c-feasts:#B7791F; --c-social:#DB2777; --hero-mix:#8B5CF6;
   --on-accent:#FFFFFF; --mix:#FFFFFF;
   --c:var(--c-home);
   --accent:var(--c); --accent-hover:color-mix(in srgb,var(--c) 85%,#000);
@@ -37,13 +37,23 @@
   --f-body:"IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
   --r:18px; --nav-h:68px;
 }
+/* skins: «زعفران» (warm, default), «ملوّن» (the plain :root above), «ليل ذهبي» (dark luxe, ignores the light/dark switch) */
+:root[data-skin="saffron"]{
+  --bg:#FAF4EA; --surface:#FFFDF8; --sunken:#F2E9DA; --line:#E7DAC4;
+  --ink:#2A1C10; --muted:#75604B; --faint:#A8937B;
+  --good:#2F7D4F; --good-soft:#E2F1E2; --warn:#A35A0C; --warn-soft:#FBEBD2; --bad:#B83227; --bad-soft:#F9E0DA;
+  --c-home:#B4532A; --c-pos:#2F7D5B; --c-shawarma:#D2691E; --c-kfc:#B8322A; --c-drinks:#1F7A8C; --c-staff:#3B5BA5; --c-inv:#5B7B36;
+  --c-dishes:#A23B6B; --c-exp:#A8740F; --c-notes:#7A4FA0; --c-feasts:#B8860B; --c-social:#C2185B;
+  --mix:#FFFDF8; --hero-mix:#6B2410;
+  --shadow:0 1px 2px rgba(60,35,10,.06),0 12px 30px rgba(60,35,10,.09); --shadow-sm:0 1px 2px rgba(60,35,10,.05),0 3px 10px rgba(60,35,10,.05);
+}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0E1020; --surface:#171A2E; --sunken:#20243A; --line:#2C3150;
   --ink:#ECEEF8; --muted:#A6ABC4; --faint:#717794;
   --good:#4ADE80; --good-soft:#143323; --warn:#FBBF24; --warn-soft:#3A2D10; --bad:#F87171; --bad-soft:#3D1B1F;
   --sh-m:#163A33; --sh-m-ink:#5EEAD4; --sh-e:#2A2550; --sh-e-ink:#C4B5FD;
   --sh-f:#3A2D10; --sh-f-ink:#FBBF24; --sh-off:#20243A; --sh-off-ink:#717794;
-  --c-home:#818CF8; --c-pos:#34D399; --c-shawarma:#FB923C; --c-kfc:#F87171; --c-staff:#60A5FA; --c-inv:#2DD4BF; --c-dishes:#F472B6; --c-exp:#FBBF24; --c-notes:#A78BFA; --c-drinks:#22D3EE;
+  --c-home:#818CF8; --c-pos:#34D399; --c-shawarma:#FB923C; --c-kfc:#F87171; --c-staff:#60A5FA; --c-inv:#2DD4BF; --c-dishes:#F472B6; --c-exp:#FBBF24; --c-notes:#A78BFA; --c-drinks:#22D3EE; --c-feasts:#F6C453; --c-social:#F472B6; --hero-mix:#6D28D9;
   --on-accent:#0E1020; --mix:#0E1020;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.3); --shadow-sm:0 1px 2px rgba(0,0,0,.35);
   --backdrop:rgba(0,0,0,.62); --hero-ink:#FFFFFF; --hero-k:58%; color-scheme:dark;
@@ -54,10 +64,21 @@
   --good:#4ADE80; --good-soft:#143323; --warn:#FBBF24; --warn-soft:#3A2D10; --bad:#F87171; --bad-soft:#3D1B1F;
   --sh-m:#163A33; --sh-m-ink:#5EEAD4; --sh-e:#2A2550; --sh-e-ink:#C4B5FD;
   --sh-f:#3A2D10; --sh-f-ink:#FBBF24; --sh-off:#20243A; --sh-off-ink:#717794;
-  --c-home:#818CF8; --c-pos:#34D399; --c-shawarma:#FB923C; --c-kfc:#F87171; --c-staff:#60A5FA; --c-inv:#2DD4BF; --c-dishes:#F472B6; --c-exp:#FBBF24; --c-notes:#A78BFA; --c-drinks:#22D3EE;
+  --c-home:#818CF8; --c-pos:#34D399; --c-shawarma:#FB923C; --c-kfc:#F87171; --c-staff:#60A5FA; --c-inv:#2DD4BF; --c-dishes:#F472B6; --c-exp:#FBBF24; --c-notes:#A78BFA; --c-drinks:#22D3EE; --c-feasts:#F6C453; --c-social:#F472B6; --hero-mix:#6D28D9;
   --on-accent:#0E1020; --mix:#0E1020;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.3); --shadow-sm:0 1px 2px rgba(0,0,0,.35);
   --backdrop:rgba(0,0,0,.62); --hero-ink:#FFFFFF; --hero-k:58%; color-scheme:dark;
+}
+:root[data-skin="night"]{
+  --bg:#0E0C09; --surface:#18150F; --sunken:#221D15; --line:#352B1E;
+  --ink:#F4EADB; --muted:#BBA88E; --faint:#7F6F59;
+  --good:#8BC78A; --good-soft:#1C2A17; --warn:#E8B04A; --warn-soft:#33260F; --bad:#E77B6A; --bad-soft:#371B16;
+  --sh-m:#1F2A1A; --sh-m-ink:#A9D39A; --sh-e:#2A2236; --sh-e-ink:#CDB7F0; --sh-f:#33260F; --sh-f-ink:#E8B04A; --sh-off:#221D15; --sh-off-ink:#7F6F59;
+  --c-home:#D9AE55; --c-pos:#93C58A; --c-shawarma:#E9A25A; --c-kfc:#E57B66; --c-drinks:#71C6D2; --c-staff:#93ABE3; --c-inv:#ACC283;
+  --c-dishes:#E390B6; --c-exp:#E6B847; --c-notes:#C6A6EA; --c-feasts:#E8CB72; --c-social:#F07FA2;
+  --on-accent:#0E0C09; --mix:#18150F; --hero-mix:#3A2A0E; --hero-k:62%; --hero-ink:#FFF8EC;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 12px 30px rgba(0,0,0,.4); --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --backdrop:rgba(0,0,0,.65); color-scheme:dark;
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -169,7 +190,7 @@ h1,h2,h3{margin:0;text-wrap:balance;line-height:1.3}
 .tag{font-size:11px;font-weight:600;border-radius:6px;padding:1px 7px;background:var(--sunken);color:var(--muted);white-space:nowrap}
 
 /* ---------- home ---------- */
-.hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 0% 0%,rgba(255,255,255,.22),transparent 55%),radial-gradient(80% 80% at 100% 100%,rgba(0,0,0,.14),transparent 60%),linear-gradient(140deg,color-mix(in srgb,var(--c) var(--hero-k),#000),color-mix(in srgb,color-mix(in srgb,var(--c) 55%,#8B5CF6) var(--hero-k),#000));color:var(--hero-ink);border-radius:24px;padding:20px;display:grid;gap:18px;box-shadow:0 14px 34px color-mix(in srgb,var(--c) 30%,transparent)}
+.hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 0% 0%,rgba(255,255,255,.22),transparent 55%),radial-gradient(80% 80% at 100% 100%,rgba(0,0,0,.14),transparent 60%),linear-gradient(140deg,color-mix(in srgb,var(--c) var(--hero-k),#000),color-mix(in srgb,color-mix(in srgb,var(--c) 55%,var(--hero-mix)) var(--hero-k),#000));color:var(--hero-ink);border-radius:24px;padding:20px;display:grid;gap:18px;box-shadow:0 14px 34px color-mix(in srgb,var(--c) 30%,transparent)}
 .hero > *{position:relative}
 .hero .lbl{opacity:.82;font-size:13px;font-weight:500}
 .hero .big{font-family:var(--f-display);font-size:40px;line-height:1.15;font-weight:600}
@@ -211,7 +232,7 @@ h1,h2,h3{margin:0;text-wrap:balance;line-height:1.3}
 .dish-btn .nm{font-weight:600;line-height:1.35;overflow-wrap:anywhere;display:flex;align-items:center;gap:8px}
 .av{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-weight:700;font-size:14px;flex-shrink:0}
 .av{--k:var(--c-home);background:color-mix(in srgb,var(--k) 14%,var(--mix));color:var(--k)}
-.av0{--k:var(--c-pos)} .av1{--k:var(--c-shawarma)} .av2{--k:var(--c-notes)} .av3{--k:var(--c-kfc)} .av4{--k:var(--c-staff)} .av5{--k:var(--c-dishes)} .av6{--k:var(--c-inv)} .av7{--k:var(--c-exp)} .av8{--k:var(--c-drinks)}
+.av0{--k:var(--c-pos)} .av1{--k:var(--c-shawarma)} .av2{--k:var(--c-notes)} .av3{--k:var(--c-kfc)} .av4{--k:var(--c-staff)} .av5{--k:var(--c-dishes)} .av6{--k:var(--c-inv)} .av7{--k:var(--c-exp)} .av8{--k:var(--c-drinks)} .av-f{--k:var(--c-feasts)} .av-s{--k:var(--c-social)}
 .dish-btn .pr{color:var(--muted);font-size:13px}
 .dish-btn.in{border-color:var(--accent);background:var(--accent-soft)}
 .badge{position:absolute;top:8px;left:8px;min-width:24px;height:24px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:700;display:grid;place-items:center;padding:0 6px}
@@ -295,12 +316,41 @@ table.sched{border-collapse:separate;border-spacing:0;width:100%;min-width:720px
 .day-head{padding:8px 16px;background:var(--sunken);font-size:12px;font-weight:600;color:var(--muted);display:flex;justify-content:space-between}
 
 /* ---------- notes ---------- */
-.notes{display:grid;gap:10px}
+.notes{display:grid;gap:22px 18px;padding:8px 2px 4px}
 @media (min-width:700px){.notes{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.note{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
-.note.pinned{border-color:var(--warn);background:linear-gradient(var(--warn-soft),var(--warn-soft)) top/100% 4px no-repeat,var(--surface)}
-.note p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
-.note-foot{display:flex;justify-content:space-between;align-items:center;color:var(--faint);font-size:12px}
+@media (min-width:1100px){.notes{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* sticky paper: stays paper-coloured in dark mode too, like a real note on the fridge */
+.note{--paper:#FFF1A8;--pink:#E8D27A;position:relative;background:linear-gradient(135deg,transparent 0 0),var(--paper);color:#2B2416;border-radius:3px 3px 3px 18px;padding:26px 18px 12px;display:flex;flex-direction:column;gap:10px;
+  box-shadow:0 1px 1px rgba(0,0,0,.08),0 10px 20px -8px rgba(60,40,0,.35);transform:rotate(var(--tilt,-1deg));transition:transform .2s ease,box-shadow .2s ease;min-height:150px}
+.note:nth-child(3n+2){--tilt:1.2deg} .note:nth-child(3n){--tilt:-.4deg}
+.note:hover{transform:rotate(0) translateY(-3px);box-shadow:0 1px 1px rgba(0,0,0,.08),0 16px 28px -10px rgba(60,40,0,.4)}
+.note::before{content:"";position:absolute;top:-10px;left:50%;width:84px;height:24px;transform:translateX(-50%) rotate(-2deg);background:rgba(255,255,255,.55);box-shadow:0 1px 2px rgba(0,0,0,.12);backdrop-filter:blur(1px)}
+.note::after{content:"";position:absolute;left:0;bottom:0;width:22px;height:22px;background:linear-gradient(45deg,rgba(0,0,0,.12) 0 50%,transparent 50%);border-radius:0 0 0 18px}
+.note.pinned::before{width:20px;height:20px;top:-8px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FF8A80,#C62828 60%,#7F1010);box-shadow:0 3px 4px rgba(0,0,0,.35);transform:translateX(-50%)}
+.note.c-y{--paper:#FFF1A8} .note.c-p{--paper:#FFD9E2} .note.c-b{--paper:#D3E9FF} .note.c-g{--paper:#D8F3D2} .note.c-v{--paper:#E7DCFF} .note.c-o{--paper:#FFE0BF}
+.note p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-family:"Aref Ruqaa",var(--f-body);font-size:21px;line-height:1.55}
+.note .author{background:rgba(0,0,0,.08)!important;color:#2B2416!important}
+.note-foot{display:flex;justify-content:space-between;align-items:center;color:rgba(43,36,22,.6);font-size:12px;margin-top:auto;border-top:1px dashed rgba(43,36,22,.2);padding-top:8px}
+.note .icon-btn{color:rgba(43,36,22,.65)} .note .icon-btn:hover{background:rgba(0,0,0,.07);color:#2B2416} .note .icon-btn.on{color:#C62828}
+.note .btn-danger{background:#C62828;border-color:#C62828;color:#fff}
+.note.unfold{animation:unfold .6s cubic-bezier(.2,.8,.25,1.1)}
+@keyframes unfold{0%{transform:perspective(700px) rotateX(-80deg) scale(.9);opacity:0}100%{transform:rotate(var(--tilt,-1deg));opacity:1}}
+/* a new note arrives as a sealed envelope */
+.env{position:relative;min-height:250px;border-radius:10px;background:#EFD9B4;color:#4A3214;box-shadow:0 12px 24px -10px rgba(80,50,10,.45);overflow:hidden;display:grid;place-items:end center;padding:18px;text-align:center;transform:rotate(var(--tilt,.8deg))}
+.env::before{content:"";position:absolute;inset:0;background:linear-gradient(to top right,transparent calc(50% - 1px),rgba(120,80,30,.25) 50%,transparent calc(50% + 1px)) left/50% 100% no-repeat,linear-gradient(to top left,transparent calc(50% - 1px),rgba(120,80,30,.25) 50%,transparent calc(50% + 1px)) right/50% 100% no-repeat}
+.env-flap{position:absolute;inset:0 0 auto 0;height:42%;background:#E3C796;clip-path:polygon(0 0,100% 0,50% 100%);filter:drop-shadow(0 2px 2px rgba(0,0,0,.15))}
+.env-seal{position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#E5534B,#A61E1E 65%,#6E0F0F);color:#FFE9D6;display:grid;place-items:center;font-weight:700;font-size:18px;box-shadow:0 3px 6px rgba(0,0,0,.35),inset 0 0 0 3px rgba(255,255,255,.12);animation:seal 2.4s ease-in-out infinite}
+@keyframes seal{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.07)}}
+.env-txt{position:relative;display:grid;gap:6px;justify-items:center}
+.env-txt b{font-family:"Aref Ruqaa",var(--f-body);font-size:22px}
+.env-txt small{font-size:12px;opacity:.75}
+.env .btn{background:#4A3214;border-color:#4A3214;color:#FFF3E0}
+.note-colors{display:flex;gap:10px;flex-wrap:wrap}
+.note-colors label{display:inline-flex!important}
+.note-colors input{position:absolute;opacity:0;width:1px;height:1px;min-height:0!important}
+.note-colors span{width:38px;height:38px;border-radius:10px 10px 10px 4px;border:2px solid rgba(0,0,0,.1);box-shadow:0 2px 4px rgba(0,0,0,.1);transition:transform .15s}
+.note-colors input:checked + span{transform:scale(1.12) rotate(-4deg);border-color:var(--ink)}
+.note-colors input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
 
 /* ---------- sheet ---------- */
 .sheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
@@ -377,7 +427,6 @@ table.sched{border-collapse:separate;border-spacing:0;width:100%;min-width:720px
 .author{font-size:11px;font-weight:700;border-radius:6px;padding:1px 8px;white-space:nowrap}
 .author.manager{background:var(--accent-soft);color:var(--accent)}
 .author.sup{background:var(--sh-e);color:var(--sh-e-ink)}
-.note.unread{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 .new-dot{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--accent)}
 .new-dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
 .count{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:700;margin-inline-start:6px;vertical-align:middle}
@@ -391,6 +440,16 @@ table.sched{border-collapse:separate;border-spacing:0;width:100%;min-width:720px
   .stats b{font-size:16px}
   .cat-row{grid-template-columns:88px minmax(0,1fr) auto}
 }
+
+/* ---------- skin picker ---------- */
+.skins{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.skin{display:grid!important;gap:6px;justify-items:center;cursor:pointer}
+.skin input{position:absolute;opacity:0;width:1px;height:1px;min-height:0!important}
+.skin-sw{width:100%;height:64px;border-radius:14px;border:2px solid var(--line);display:flex;align-items:flex-end;justify-content:center;gap:6px;padding:10px;transition:border-color .15s,transform .15s}
+.skin-sw i{width:22px;height:22px;border-radius:50%;display:block;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.skin input:checked + .skin-sw{border-color:var(--accent);transform:scale(1.04);box-shadow:0 0 0 3px var(--accent-soft)}
+.skin b{font-size:13px;color:var(--ink)}
+.skin input:focus-visible + .skin-sw{outline:2px solid var(--accent);outline-offset:2px}
 
 /* ---------- quick actions ---------- */
 .quick{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
@@ -465,6 +524,49 @@ table.sched{border-collapse:separate;border-spacing:0;width:100%;min-width:720px
 .store-acts{display:flex;gap:8px}
 .stock-hint{background:var(--sunken);border-radius:10px;padding:8px 12px;margin:0}
 
+/* ---------- social ---------- */
+.idea-list{display:grid;gap:12px}
+@media (min-width:900px){.idea-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.idea{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow-sm);border-top:4px solid var(--k)}
+.idea-top{display:flex;gap:10px;align-items:center} .idea-top b{display:block} .idea-top small{display:block;color:var(--muted);font-size:12px}
+.cap{margin:0;white-space:pre-wrap;font:inherit;font-size:14px;line-height:1.7;background:var(--sunken);border-radius:12px;padding:10px 12px;max-height:190px;overflow:auto}
+.shots{margin:0;padding-inline-start:20px;display:grid;gap:4px;font-size:14px}
+.auto-pub{display:grid;gap:6px} .auto-pub > b{display:flex;gap:8px;align-items:center} .auto-pub svg{width:18px;height:18px;color:var(--accent)}
+.cv-wrap{background:var(--sunken);border-radius:14px;padding:10px;display:grid;place-items:center}
+.cv-wrap canvas{width:100%;max-width:340px;height:auto;border-radius:10px;box-shadow:var(--shadow)}
+.vid{width:100%;max-width:340px;border-radius:12px;display:block;margin:0 auto 10px;background:#000}
+#s-icons .chip-s{padding:6px 10px} #s-icons svg{width:20px;height:20px;display:block}
+
+/* ---------- feasts ---------- */
+.fe-list{display:grid;gap:12px}
+@media (min-width:900px){.fe-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.fe{display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow-sm)}
+.fe.soon{border-color:var(--c-feasts);box-shadow:0 0 0 2px color-mix(in srgb,var(--c-feasts) 30%,transparent),var(--shadow-sm)}
+.fe.cancel{opacity:.6}
+.fe-top{display:flex;gap:12px;align-items:flex-start}
+.fe-date{flex-shrink:0;width:62px;border-radius:14px;overflow:hidden;text-align:center;background:var(--surface);border:1px solid var(--line);display:grid}
+.fe-date b{font-family:var(--f-display);font-size:24px;line-height:1.1;padding-top:6px}
+.fe-date span{background:var(--c-feasts);color:#fff;font-size:11px;font-weight:700;padding:2px 0;order:-1}
+.fe-date small{font-size:10px;color:var(--muted);padding-bottom:5px}
+.fe-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.fe-money{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.fe-money > div > span{display:block;font-size:12px;color:var(--muted)} .fe-money b{font-size:14px;white-space:nowrap}
+.fe-plan{display:grid;gap:8px;background:var(--sunken);border-radius:12px;padding:10px 12px}
+.fe-plan > b{display:flex;align-items:center;gap:6px;font-size:13px} .fe-plan > b svg{width:16px;height:16px}
+.fe-pi{display:flex;align-items:center;gap:10px} .fe-pi .al-ic{width:30px;height:30px;border-radius:9px} .fe-pi .al-ic svg{width:16px;height:16px}
+.fe-acts{display:flex;gap:8px;flex-wrap:wrap}
+.fe-acts a.btn{text-decoration:none;color:inherit}
+.fi-head,.fi-row{display:grid;grid-template-columns:minmax(0,1.8fr) 64px 84px 34px;gap:6px;align-items:center}
+.fi-head{font-size:12px;color:var(--faint);font-weight:600}
+.fi-row .fi-name{grid-column:1/-1;order:5}
+.fi-row select,.fi-row input{padding:9px 8px!important;font-size:14px!important}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal-d{position:relative;background:rgba(255,255,255,.12);border-radius:10px;padding:5px 2px;text-align:center;display:grid;line-height:1.2}
+.cal-d small{font-size:10px;opacity:.8} .cal-d b{font-size:15px}
+.cal-d.has{background:rgba(255,255,255,.95);color:var(--c-feasts)}
+.cal-d.today{outline:2px solid rgba(255,255,255,.8)}
+.cal-d i{position:absolute;top:-5px;left:-4px;min-width:17px;height:17px;border-radius:999px;background:var(--bad);color:#fff;font-size:10px;font-style:normal;font-weight:700;display:grid;place-items:center}
+
 /* ---------- drinks ---------- */
 .dk-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 .dk{display:grid;gap:6px;text-align:right;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow-sm);transition:border-color .15s,transform .08s}
@@ -531,6 +633,7 @@ table.sched{border-collapse:separate;border-spacing:0;width:100%;min-width:720px
 /* ================= helpers ================= */
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nn = v => Math.max(0, num(v));
 const num = v => {
   if (v == null) return 0;
   const s = String(v).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/٫/g,'.').replace(/[,،\s]/g,'');
@@ -592,6 +695,8 @@ const IC = {
   leaf:'<path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l7-7"/>',
   kfc:'<path d="M14.6 3.2a5.6 5.6 0 0 1 3.9 9.6l-2.7 2.7-6.3-6.3 2.7-2.7a5.6 5.6 0 0 1 2.4-3.3z"/><path d="M9.5 9.2l-3.6 3.6M12.8 12.5l-3.6 3.6"/><circle cx="4.6" cy="15.6" r="1.6"/><circle cx="8.4" cy="19.4" r="1.6"/>',
   drinks:'<path d="M7 4h10l-1 3H8z"/><path d="M8 7l.8 12.2A2 2 0 0 0 10.8 21h2.4a2 2 0 0 0 2-1.8L16 7"/><path d="M8.4 12h7.2"/>',
+  feasts:'<path d="M4 11h16v2a8 8 0 0 1-16 0z"/><path d="M12 11V8M9.5 8h5"/><path d="M8 5.5c0-1 1-1.5 1-2.5M12 5c0-1 1-1.5 1-2.5M16 5.5c0-1 1-1.5 1-2.5"/>',
+  social:'<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1"/>',
   meal:'<path d="M4 10h16l-1.5 9a2 2 0 0 1-2 1.7h-9A2 2 0 0 1 5.5 19z"/><path d="M8 10l1-6M16 10l-1-6M12 10V3"/>',
   bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
   sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/>'
@@ -600,20 +705,20 @@ const avc = s => { let h = 0; for (const c of String(s)) h = (h * 31 + c.charCod
 const ini = s => esc(String(s || '').trim().charAt(0) || '؟');
 const ic = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
 
-const TABS = [['home','الرئيسية','home'],['pos','البيع','pos'],['shawarma','الشاورما','shawarma'],['kfc','الكنتاكي','kfc'],['drinks','المشروبات','drinks'],['staff','العمال','staff'],['inv','المخزون','inv'],['dishes','الأطباق','dishes'],['exp','المصاريف','exp'],['notes','الملاحظات','notes']];
+const TABS = [['home','الرئيسية','home'],['pos','البيع','pos'],['shawarma','الشاورما','shawarma'],['kfc','الكنتاكي','kfc'],['drinks','المشروبات','drinks'],['feasts','الولائم','feasts'],['social','السوشل','social'],['staff','العمال','staff'],['inv','المخزون','inv'],['dishes','الأطباق','dishes'],['exp','المصاريف','exp'],['notes','الملاحظات','notes']];
 /* on phones the bar shows the first four; the rest open from «المزيد» */
-const MORE = {drinks:'الببسي والعصائر بالكارتون', staff:'الحضور والجدول والرواتب', inv:'الكميات والشراء', dishes:'الأسعار والوصفات', exp:'كل ما يخرج من الصندوق', notes:'بين المدير والمسؤول'};
+const MORE = {feasts:'العزائم والأعراس والطلبيات', social:'منشورات وفيديوهات جاهزة', drinks:'الببسي والعصائر بالكارتون', staff:'الحضور والجدول والرواتب', inv:'الكميات والشراء', dishes:'الأسعار والوصفات', exp:'كل ما يخرج من الصندوق', notes:'بين المدير والمسؤول'};
 
 /* ================= state ================= */
 const S = {
-  items:{}, dishes:{}, staff:{}, notes:{}, settings:{}, sales:{}, expenses:{}, shawarma:{}, kfc:{}, drinks:{}, drinklog:{}, payroll:null,
+  items:{}, dishes:{}, staff:{}, notes:{}, settings:{}, sales:{}, expenses:{}, shawarma:{}, kfc:{}, drinks:{}, drinklog:{}, feasts:{}, payroll:null,
   loaded:new Set(), offline:false,
   tab:'home', cur:monthKey(), month:monthKey(),
   staffSeg:'att', invFilter:'all', cart:{}, confirm:null, noteFilter:'all', att:{}, attDate:dayKey(), cov:{}, me:null, canWrite:null, choosing:false,
   payMode:'month', week:weekStart(), sched:{}, payrollFor:null, shType:'all'
 };
 let db = null, unsubMonth = [], unsubPay = null, renderQueued = false, confirmTimer = null, wq = Promise.resolve();
-const BASE = ['items','dishes','staff','notes','settings','sales','expenses','sched','att','payroll','shawarma','kfc','drinks','drinklog'];
+const BASE = ['items','dishes','staff','notes','settings','sales','expenses','sched','att','payroll','shawarma','kfc','drinks','drinklog','feasts'];
 const ready = () => BASE.every(k => S.loaded.has(k));
 
 /* ================= data layer ================= */
@@ -635,6 +740,10 @@ function commit(path, next, op){
 const put = (path, data) => commit(path, data, () => db.doc(path).set(data));
 const upd = (path, patch, full) => commit(path, full, () => db.doc(path).update(patch));
 const del = path => commit(path, null, () => db.doc(path).delete());
+/* merge into a document, creating it only if it really doesn't exist yet: a "new" day document may already exist
+   on the server (written by the other phone a moment ago), and a plain set would wipe that */
+const notFound = e => /not_found/.test(String((e && (e.message || e.code)) || ''));
+const ups = (path, patch, full) => commit(path, full, () => db.doc(path).update(patch).catch(e => notFound(e) ? db.doc(path).set(full) : Promise.reject(e)));
 function overlay(col, o){
   const pre = col + '/';
   for (const p in pend){
@@ -673,7 +782,7 @@ function subPay(){
   }, onErr);
 }
 async function init(){
-  themeSet(themeGet());
+  themeSet(themeGet()); skinSet(skinGet());
   buildTabs();
   let user = null;
   try {
@@ -684,7 +793,7 @@ async function init(){
     try { S.me = await user.id(); } catch(e){}
     try { S.canWrite = await user.can('data.write'); } catch(e){}
   }
-  ['items','dishes','staff','notes','settings','drinks'].forEach(k => subCol(k, db.collection(k)));
+  ['items','dishes','staff','notes','settings','drinks','feasts'].forEach(k => subCol(k, db.collection(k)));
   subMonth();
 }
 const covered = (key, date) => (S.cov[key] || []).includes(date.slice(0, 7));
@@ -722,7 +831,13 @@ const periodRange = () => {
 };
 const sortByName = obj => Object.entries(obj).sort((a, b) => String(a[1].name).localeCompare(String(b[1].name), 'ar'));
 const toArr = o => !o ? [] : Array.isArray(o) ? o : Object.values(o).filter(Boolean);
-const LS_ROLE = 'restaurant-role', LS_THEME = 'restaurant-theme';
+const LS_ROLE = 'restaurant-role', LS_THEME = 'restaurant-theme', LS_SKIN = 'restaurant-skin';
+const SKINS = [['saffron','زعفران','#FAF4EA','#B4532A','#D2691E'],['fresh','ملوّن','#F4F5FA','#5B4CF0','#EA580C'],['night','ليل ذهبي','#0E0C09','#D9AE55','#E9A25A']];
+const skinGet = () => { try { return localStorage.getItem(LS_SKIN) || 'saffron'; } catch(e){ return 'saffron'; } };
+function skinSet(v){
+  try { localStorage.setItem(LS_SKIN, v); } catch(e){}
+  if (v === 'fresh') delete document.documentElement.dataset.skin; else document.documentElement.dataset.skin = v;
+}
 const themeGet = () => { try { return localStorage.getItem(LS_THEME) || 'auto'; } catch(e){ return 'auto'; } };
 function themeSet(v){
   try { localStorage.setItem(LS_THEME, v); } catch(e){}
@@ -809,7 +924,10 @@ function homeView(){
   const sk = skewersOf(S.shawarma[today]).map(([, x]) => shCalc(x)).filter(c => !c.open);
   const kb = batchesOf(S.kfc[today]).map(([, x]) => kfcCalc(x)).filter(c => !c.open);
   const dr = logRows(S.drinklog[today]).map(([, r]) => r);
-  const alerts = allAlerts();
+  const alerts = allAlerts().filter(a => !a.open);
+  const openW = [
+    ...Object.values(S.shawarma).filter(d => d && d.date).flatMap(d => skewersOf(d).filter(([, x]) => shCalc(x).open).map(([id, x]) => ({lvl:d.date < today ? 2 : 1, k:'shawarma', t:'شيش ' + x.type + ' · ' + fmtKgT(x.w), m:(d.date === today ? 'اليوم' : dayLabel(d.date)) + (x.t ? ' · من ' + timeLabel(x.t) : '') + ' · على النار', act:'edit-sk', id, date:d.date, b:'إكمال'}))),
+    ...Object.values(S.kfc).filter(d => d && d.date).flatMap(d => batchesOf(d).filter(([, x]) => kfcCalc(x).open).map(([id, x]) => ({lvl:d.date < today ? 2 : 1, k:'kfc', t:'دفعة كنتاكي · ' + (+x.hens ? x.hens + ' دجاجة' : fmtKgT(x.w)), m:(d.date === today ? 'اليوم' : dayLabel(d.date)) + (x.t ? ' · من ' + timeLabel(x.t) : '') + ' · بالقلي', act:'edit-kfc', id, date:d.date, b:'إكمال'})))];
   const q = (act, i, l, cls, extra = '') => `<button data-${act} ${extra}><span class="qi ${cls}">${ic(i)}</span>${l}</button>`;
 
   return `
@@ -830,6 +948,8 @@ function homeView(){
       <div class="week">${days.map((d, i) => `<div class="bar ${i === 6 ? 'today' : ''}" title="${d.wd}: ${fmt(d.v)} د.ع"><div class="track"><div class="fill" style="height:${Math.max(3, d.v / maxV * 100)}%"></div></div><span class="d">${i === 6 ? 'اليوم' : d.wd.replace(/^ال/, '')}</span></div>`).join('')}</div>
     </div>
   </section>
+
+  ${openW.length ? `<section><div class="sec-head"><h2>${ic('scale')} شغل مفتوح</h2><span class="muted">اكتب المبيع آخر اليوم حتى يُحسب الربح</span></div><div class="al-list">${openW.map(alertRow).join('')}</div></section>` : ''}
 
   <nav class="quick" aria-label="إجراءات سريعة">
     ${q('tab="pos"', 'pos', 'بيع', 'av av0')}${q('act="add-sk"', 'shawarma', 'شيش', 'av av1')}${q('act="add-kfc"', 'kfc', 'كنتاكي', 'av av3')}${q('act="drink-day"', 'drinks', 'مشروبات', 'av av8')}${q('act="add-exp"', 'exp', 'مصروف', 'av av7')}${q('act="add-note"', 'notes', 'ملاحظة', 'av av2')}
@@ -1055,12 +1175,16 @@ function expView(){
 }
 
 /* ---------- notes ---------- */
+const NOTE_COLORS = [['y','#FFF1A8','أصفر'],['p','#FFD9E2','وردي'],['b','#D3E9FF','أزرق'],['g','#D8F3D2','أخضر'],['v','#E7DCFF','بنفسجي'],['o','#FFE0BF','برتقالي']];
+const noteColor = n => n.color || (n.by === 'sup' ? 'b' : 'y');
 function noteCard(id, n){
-  const un = isUnread(n);
-  return `<article class="note ${n.pinned ? 'pinned' : ''} ${un ? 'unread' : ''}">
-    <div class="li-end" style="justify-content:space-between">${n.by ? `<span class="author ${n.by}">من ${esc(roleName(n.by))}</span>` : '<span></span>'}${un ? '<span class="new-dot">جديدة</span>' : ''}</div>
+  if (isUnread(n)) return `<article class="env"><div class="env-flap"></div><span class="env-seal">${ini(roleName(n.by))}</span>
+    <div class="env-txt"><b>رسالة من ${esc(roleName(n.by))}</b><small>${n.t ? dayLabel(dayKey(new Date(n.t)), false) + ' · ' + timeLabel(n.t) : ''}</small>
+    <button class="btn btn-sm" data-act="open-note" data-id="${id}">${ic('notes')} افتح الرسالة</button></div></article>`;
+  return `<article class="note c-${noteColor(n)} ${n.pinned ? 'pinned' : ''} ${S.opened === id ? 'unfold' : ''}">
+    <div class="li-end" style="justify-content:space-between">${n.by ? `<span class="author">من ${esc(roleName(n.by))}</span>` : '<span></span>'}${n.sample ? '<span class="small">مثال</span>' : ''}</div>
     <p>${esc(n.text)}</p>
-    <div class="note-foot"><span>${n.t ? dayLabel(dayKey(new Date(n.t)), false) + ' · ' + timeLabel(n.t) : ''}${n.sample ? ' · مثال' : ''}</span><span class="li-end">${un ? `<button class="btn btn-sm" data-act="read-note" data-id="${id}">${ic('check')} قرأتها</button>` : ''}<button class="icon-btn ${n.pinned ? 'on' : ''}" data-act="pin" data-id="${id}" aria-label="${n.pinned ? 'إلغاء التثبيت' : 'تثبيت'}" aria-pressed="${!!n.pinned}">${ic('pin')}</button><button class="icon-btn" data-act="edit-note" data-id="${id}" aria-label="تعديل">${ic('edit')}</button>${confirmBtn('note:' + id, 'del-note', id)}</span></div></article>`;
+    <div class="note-foot"><span>${n.t ? dayLabel(dayKey(new Date(n.t)), false) + ' · ' + timeLabel(n.t) : ''}</span><span class="li-end"><button class="icon-btn ${n.pinned ? 'on' : ''}" data-act="pin" data-id="${id}" aria-label="${n.pinned ? 'إلغاء التثبيت' : 'تثبيت'}" aria-pressed="${!!n.pinned}">${ic('pin')}</button><button class="icon-btn" data-act="edit-note" data-id="${id}" aria-label="تعديل">${ic('edit')}</button>${confirmBtn('note:' + id, 'del-note', id)}</span></div></article>`;
 }
 function notesView(){
   const all = sortNotes(Object.entries(S.notes));
@@ -1249,14 +1373,14 @@ function openSkewer(id, date){
     ${formActions(old ? 'حذف الشيش' : '')}</form>`, body => {
     const $f = s => body.querySelector(s);
     const mats = $f('#mats');
-    const readMats = () => mats ? [...mats.querySelectorAll('.rrow')].map(r => ({i:r.querySelector('.r-i').value, q:round(num(r.querySelector('.r-q').value))})).filter(r => r.i && r.q > 0)
+    const readMats = () => mats ? [...mats.querySelectorAll('.rrow')].map(r => ({i:r.querySelector('.r-i').value, q:round(nn(r.querySelector('.r-q').value))})).filter(r => r.i && r.q > 0)
       .map(r => { const o = (old && old.mats || []).find(m => m.i === r.i); return Object.assign(r, {c: o && o.c != null ? o.c : Math.round(+S.items[r.i].cost || 0)}); }) : [];
     const read = () => {
-      const pzRaw = num($f('#f-pz').value);
-      return {type:$f('#f-type').value.trim(), w:round(num($f('#f-w').value)), kgp:Math.round(num($f('#f-kgp').value)), item:$f('#f-item') ? $f('#f-item').value : '',
-        mats:readMats(), other:Math.round(num($f('#f-other').value)), gpw:round(num($f('#f-gpw').value), 1), price:Math.round(num($f('#f-price').value)),
-        extra:Math.round(num($f('#f-extra').value)), wraps:Math.round(num($f('#f-wraps').value)), staff:Math.round(num($f('#f-staff').value)), pz:round($f('#f-pzu').value === 'g' ? pzRaw / 1000 : pzRaw),
-        pzp:Math.round(num($f('#f-pzp').value)), left:round(num($f('#f-left').value)), exl:$f('#f-exl').value.trim() === '' ? '' : round(num($f('#f-exl').value), 1), note:$f('#f-note').value.trim()};
+      const pzRaw = nn($f('#f-pz').value);
+      return {type:$f('#f-type').value.trim(), w:round(nn($f('#f-w').value)), kgp:Math.round(nn($f('#f-kgp').value)), item:$f('#f-item') ? $f('#f-item').value : '',
+        mats:readMats(), other:Math.round(nn($f('#f-other').value)), gpw:round(nn($f('#f-gpw').value), 1), price:Math.round(nn($f('#f-price').value)),
+        extra:Math.round(nn($f('#f-extra').value)), wraps:Math.round(nn($f('#f-wraps').value)), staff:Math.round(nn($f('#f-staff').value)), pz:round($f('#f-pzu').value === 'g' ? pzRaw / 1000 : pzRaw),
+        pzp:Math.round(nn($f('#f-pzp').value)), left:round(nn($f('#f-left').value)), exl:$f('#f-exl').value.trim() === '' ? '' : round(nn($f('#f-exl').value), 1), note:$f('#f-note').value.trim()};
     };
     const calc = () => {
       const y = read(), c = shCalc(y), exl = shExl(y, id), ex = shExpect(y, c, exl), a = avgLoss(y.type, id);
@@ -1282,7 +1406,7 @@ function openSkewer(id, date){
     $f('#type-chips').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; $f('#f-type').value = b.dataset.t; markT(); fill(b.dataset.t); calc(); });
     $f('#f-type').addEventListener('change', () => { markT(); if (shDefaults()[$f('#f-type').value.trim()]) fill($f('#f-type').value.trim()); calc(); });
     $f('#f-type').addEventListener('input', markT);
-    if ($f('#f-item')) $f('#f-item').addEventListener('change', () => { const it = S.items[$f('#f-item').value]; if (it && +it.cost && !num($f('#f-kgp').value)) $f('#f-kgp').value = Math.round(it.unit === 'غرام' ? it.cost * 1000 : it.cost); calc(); });
+    if ($f('#f-item')) $f('#f-item').addEventListener('change', () => { const it = S.items[$f('#f-item').value]; if (it && +it.cost && !nn($f('#f-kgp').value)) $f('#f-kgp').value = Math.round(it.unit === 'غرام' ? it.cost * 1000 : it.cost); calc(); });
     if (mats){
       $f('#m-add').addEventListener('click', () => { mats.insertAdjacentHTML('beforeend', recipeRow(null)); calc(); });
       mats.addEventListener('click', e => { const b = e.target.closest('.r-del'); if (b){ b.closest('.rrow').remove(); calc(); } });
@@ -1331,7 +1455,7 @@ function skWrite(date, sid, data){
   } else {
     if (!data) return Promise.resolve(true);
     body = {date, month:date.slice(0, 7), skewers:{[sid]:data}};
-    p = put(path, body);
+    p = ups(path, body, body);
   }
   S.shawarma = Object.assign({}, S.shawarma, {[date]:body});
   return p;
@@ -1341,7 +1465,7 @@ function saveShDefaults(y){
   const cur = S.settings.shawarma;
   const full = {types:Object.assign({}, (cur && cur.types) || {}, {[y.type]:d}), last:y.type};
   S.settings = Object.assign({}, S.settings, {shawarma:full});
-  return cur ? upd('settings/shawarma', {types:{[y.type]:d}, last:y.type}, full) : put('settings/shawarma', full);
+  return cur ? upd('settings/shawarma', {types:{[y.type]:d}, last:y.type}, full) : ups('settings/shawarma', full, full);
 }
 
 /* ---------- KFC ----------
@@ -1441,7 +1565,7 @@ function openKfcMeals(){
       const removed = Object.fromEntries(Object.keys(kfcSet().meals || {}).filter(k => !meals[k]).map(k => [k, null]));
       const cur = S.settings.kfc, full = Object.assign({}, cur || {}, {meals});
       closeSheet(); S.settings = Object.assign({}, S.settings, {kfc:full}); render();
-      if (await (cur ? upd('settings/kfc', {meals:Object.assign({}, removed, meals)}, full) : put('settings/kfc', full))) toast('تم حفظ الوجبات');
+      if (await (cur ? upd('settings/kfc', {meals:Object.assign({}, removed, meals)}, full) : ups('settings/kfc', full, full))) toast('تم حفظ الوجبات');
     });
   });
 }
@@ -1490,11 +1614,11 @@ function openKfc(id, date){
     <div class="sk-calc"><div class="sk-hint" id="sk-hint"></div><div class="calc" id="calc"></div></div>
     ${formActions(old ? 'حذف الدفعة' : '')}</form>`, body => {
     const $f = s => body.querySelector(s), mats = $f('#mats');
-    const readMats = () => mats ? [...mats.querySelectorAll('.rrow')].map(r => ({i:r.querySelector('.r-i').value, q:round(num(r.querySelector('.r-q').value))})).filter(r => r.i && r.q > 0)
+    const readMats = () => mats ? [...mats.querySelectorAll('.rrow')].map(r => ({i:r.querySelector('.r-i').value, q:round(nn(r.querySelector('.r-q').value))})).filter(r => r.i && r.q > 0)
       .map(r => { const o = (old && old.mats || []).find(m => m.i === r.i); return Object.assign(r, {c: o && o.c != null ? o.c : Math.round(+S.items[r.i].cost || 0)}); }) : [];
-    const read = () => ({w:round(num($f('#f-w').value)), kgp:Math.round(num($f('#f-kgp').value)), item:$f('#f-item') ? $f('#f-item').value : '', mats:readMats(), other:Math.round(num($f('#f-other').value)),
-      hens:Math.round(num($f('#f-hens').value)), per:Math.round(num($f('#f-per').value)), pcs:Math.round(num($f('#f-pcs').value)), staff:Math.round(num($f('#f-staff').value)), left:Math.round(num($f('#f-left').value)), note:$f('#f-note').value.trim(),
-      sold:[...body.querySelectorAll('.ms-row')].map(r => ({id:r.dataset.mid, name:r.dataset.name, pcs:+r.dataset.pcs, price:+r.dataset.price, extra:+r.dataset.extra, n:Math.round(num(r.querySelector('.ms-n').value))})).filter(m => m.n > 0)});
+    const read = () => ({w:round(nn($f('#f-w').value)), kgp:Math.round(nn($f('#f-kgp').value)), item:$f('#f-item') ? $f('#f-item').value : '', mats:readMats(), other:Math.round(nn($f('#f-other').value)),
+      hens:Math.round(nn($f('#f-hens').value)), per:Math.round(nn($f('#f-per').value)), pcs:Math.round(nn($f('#f-pcs').value)), staff:Math.round(nn($f('#f-staff').value)), left:Math.round(nn($f('#f-left').value)), note:$f('#f-note').value.trim(),
+      sold:[...body.querySelectorAll('.ms-row')].map(r => ({id:r.dataset.mid, name:r.dataset.name, pcs:+r.dataset.pcs, price:+r.dataset.price, extra:+r.dataset.extra, n:Math.round(nn(r.querySelector('.ms-n').value))})).filter(m => m.n > 0)});
     const calc = () => {
       const y = read(), c = kfcCalc(y), a = avgYield(id);
       const sh = $f('#stock-hint'), it = S.items[y.item];
@@ -1510,13 +1634,13 @@ function openKfc(id, date){
       $f('#calc').innerHTML = `<div><span>التكلفة</span><b>${IQD(c.open ? c.base : c.cost)}</b></div><div><span>الإيراد</span><b>${IQD(c.rev)}</b></div><div><span>الربح</span><b class="${c.profit < 0 && !c.open ? 'neg-v' : 'pos-v'}">${c.open ? '—' : IQD(c.profit)}</b></div>
         <div><span>الوجبات</span><b>${NUM(fmt(c.meals))}</b></div><div><span>كلفة القطعة</span><b>${IQD(c.pcCost)}</b></div><div><span>عشاء العمال</span><b>${IQD(c.staffCost)}</b></div>`;
     };
-    if ($f('#f-item')) $f('#f-item').addEventListener('change', () => { const it = S.items[$f('#f-item').value]; if (it && +it.cost && !num($f('#f-kgp').value)) $f('#f-kgp').value = Math.round(it.unit === 'غرام' ? it.cost * 1000 : it.cost); calc(); });
+    if ($f('#f-item')) $f('#f-item').addEventListener('change', () => { const it = S.items[$f('#f-item').value]; if (it && +it.cost && !nn($f('#f-kgp').value)) $f('#f-kgp').value = Math.round(it.unit === 'غرام' ? it.cost * 1000 : it.cost); calc(); });
     if (mats){
       $f('#m-add').addEventListener('click', () => { mats.insertAdjacentHTML('beforeend', recipeRow(null)); calc(); });
       mats.addEventListener('click', e => { const b = e.target.closest('.r-del'); if (b){ b.closest('.rrow').remove(); calc(); } });
     }
     body.addEventListener('click', e => { const b = e.target.closest('[data-step]'); if (!b) return; const inp = b.parentElement.querySelector('.ms-n'); inp.value = Math.max(0, Math.round(num(inp.value)) + (+b.dataset.step)) || ''; calc(); });
-    const autoPcs = () => { const h = Math.round(num($f('#f-hens').value)), pr = Math.round(num($f('#f-per').value)); if (h > 0 && pr > 0) $f('#f-pcs').value = h * pr; };
+    const autoPcs = () => { const h = Math.round(nn($f('#f-hens').value)), pr = Math.round(nn($f('#f-per').value)); if (h > 0 && pr > 0) $f('#f-pcs').value = h * pr; };
     $f('#f-hens').addEventListener('input', autoPcs); $f('#f-per').addEventListener('input', autoPcs);
     body.addEventListener('input', calc); body.addEventListener('change', calc);
     calc();
@@ -1539,7 +1663,7 @@ function openKfc(id, date){
       applyStock(diff, -1);
       const cur = S.settings.kfc, defs = {kgp:y.kgp, item:y.item, per:y.per, mats:y.mats.map(r => ({i:r.i, q:r.q})), other:y.other};
       const full = Object.assign({}, cur || {}, defs); S.settings = Object.assign({}, S.settings, {kfc:full});
-      cur ? upd('settings/kfc', defs, full) : put('settings/kfc', full);
+      cur ? upd('settings/kfc', defs, full) : ups('settings/kfc', full, full);
       if (dt.slice(0, 7) !== S.month){ S.month = dt.slice(0, 7); subMonth(); }
       render();
       if ((await Promise.all(jobs)).every(Boolean)){ const c = kfcCalc(data); toast(c.open ? 'تم حفظ الدفعة · ' + fmtKgT(y.w) : 'تم الحفظ · الربح ' + fmt(c.profit) + ' د.ع'); }
@@ -1560,7 +1684,7 @@ function kfcWrite(date, bid, data){
   } else {
     if (!data) return Promise.resolve(true);
     body = {date, month:date.slice(0, 7), batches:{[bid]:data}};
-    p = put(path, body);
+    p = ups(path, body, body);
   }
   S.kfc = Object.assign({}, S.kfc, {[date]:body});
   return p;
@@ -1632,8 +1756,8 @@ function openDrink(id, name){
     <div class="calc" id="calc"></div>
     ${formActions(id ? 'حذف المشروب' : '')}</form>`, body => {
     const $f = s => body.querySelector(s);
-    const read = () => { const pr = Math.round(num($f('#f-per').value)); return {name:$f('#f-name').value.trim(), per:pr, cartonCost:Math.round(num($f('#f-cc').value)), price:Math.round(num($f('#f-price').value)),
-      qty:Math.round(num($f('#f-qc').value)) * pr + Math.round(num($f('#f-qs').value)), min:Math.round(num($f('#f-min').value) * pr)}; };
+    const read = () => { const pr = Math.round(nn($f('#f-per').value)); return {name:$f('#f-name').value.trim(), per:pr, cartonCost:Math.round(nn($f('#f-cc').value)), price:Math.round(nn($f('#f-price').value)),
+      qty:Math.round(nn($f('#f-qc').value)) * pr + Math.round(nn($f('#f-qs').value)), min:Math.round(nn($f('#f-min').value) * pr)}; };
     const calc = () => { const y = read(), u = unitCost(y), pr = y.price - u;
       $f('#min-hint').innerHTML = y.min > 0 ? `لما يبقى أقل من ${cansW(y.min)} يظهر «منخفض» وتطلع علامة حمراء` : 'يظهر «منخفض» وتطلع علامة حمراء حتى تشتري قبل ما يخلص';
       $f('#calc').innerHTML = `<div><span>كلفة القوطية</span><b>${IQD(u)}</b></div><div><span>ربح القوطية</span><b class="${pr < 0 ? 'neg-v' : 'pos-v'}">${IQD(pr)}</b></div><div><span>ربح الكارتون</span><b class="${pr < 0 ? 'neg-v' : 'pos-v'}">${IQD(pr * y.per)}</b></div>
@@ -1675,8 +1799,8 @@ function openDrinkDay(date){
     const read = () => [...body.querySelectorAll('.dd')].map(el => {
       const id = el.dataset.id, d = S.drinks[id], old = rows[id], per = +d.per || 0;
       const start = old ? +old.start : (+d.qty || 0);
-      const sold = Math.round(num(el.querySelector('.d-sold').value)), cartons = round(num(el.querySelector('.d-buy').value), 2), bought = Math.round(cartons * per);
-      const cRaw = el.querySelector('.d-count').value.trim(), count = cRaw === '' ? null : Math.round(num(cRaw));
+      const sold = Math.round(nn(el.querySelector('.d-sold').value)), cartons = round(nn(el.querySelector('.d-buy').value), 2), bought = Math.round(cartons * per);
+      const cRaw = el.querySelector('.d-count').value.trim(), count = cRaw === '' ? null : Math.round(nn(cRaw));
       const expected = start + bought - sold, end = count == null ? expected : count;
       return {id, d, el, old, row:{name:d.name, per, start, sold, cartons, bought, count, expected, end, missing: count == null ? 0 : expected - count, price:+d.price || 0, unit:Math.round(unitCost(d))},
         used: sold > 0 || cartons > 0 || count != null};
@@ -1707,7 +1831,7 @@ function openDrinkDay(date){
       Object.keys(patch).forEach(k => { if (patch[k] === null) delete keep[k]; });
       let p;
       if (log){ const body2 = Object.assign({}, log, {rows:Object.assign({}, log.rows, patch)}); S.drinklog = Object.assign({}, S.drinklog, {[date]:body2}); p = upd(path, {rows:patch}, body2); }
-      else if (any){ const body2 = {date, month:date.slice(0, 7), rows:full}; S.drinklog = Object.assign({}, S.drinklog, {[date]:body2}); p = put(path, body2); }
+      else if (any){ const body2 = {date, month:date.slice(0, 7), rows:full}; S.drinklog = Object.assign({}, S.drinklog, {[date]:body2}); p = ups(path, body2, body2); }
       else p = Promise.resolve(true);
       const buy = Math.round(sum(xs.filter(x => x.used), x => x.row.cartons * (+x.d.cartonCost || 0)));
       if (wantExp && buy > 0){
@@ -1716,6 +1840,345 @@ function openDrinkDay(date){
       } else if (hadExp){ const c = Object.assign({}, S.expenses); delete c[expId]; S.expenses = c; del('expenses/' + expId); }
       render();
       if (await p){ const u = Object.values(keep); const miss = sum(u, r => Math.max(0, +r.missing || 0)); toast(miss ? 'تم الحفظ · ناقص ' + miss + (miss >= 3 && miss <= 10 ? ' قوطيات' : ' قوطية') : 'تم الحفظ · ربح ' + fmt(sum(u, drinkProfit)) + ' د.ع'); }
+    });
+  });
+}
+
+/* ---------- feasts & big orders ----------
+   feasts/{id} {name, phone, occ, date, time, place, mode, items:[{k, ref, name, q, price}], disc, paid, status, toSales, note, t, sale:{day,id}, dstk}
+   status: booked → prep → done (or cancel). On «done» the order can land in that day's sales and drinks leave the drinks stock. */
+const OCC = ['عرس','عزيمة','فاتحة','دائرة أو شركة','تخرج','عيد ميلاد','أخرى'];
+const FST = {booked:'محجوزة', prep:'قيد التحضير', done:'تم التسليم', cancel:'ملغاة'};
+const feastTotal = f => Math.max(0, Math.round(sum(toArr(f.items), i => (+i.q || 0) * (+i.price || 0)) - (+f.disc || 0)));
+const feastLeft = f => Math.max(0, feastTotal(f) - (+f.paid || 0));
+function feastCatalog(){
+  const c = [];
+  Object.entries(shDefaults()).forEach(([t, d]) => { if (d && +d.price) c.push({k:'sh', ref:t, name:'لفة شاورما ' + t, price:+d.price}); });
+  kfcMeals().forEach(([id, m]) => c.push({k:'kfc', ref:id, name:m.name, price:+m.price}));
+  sortByName(S.dishes).forEach(([id, d]) => c.push({k:'dish', ref:id, name:d.name, price:+d.price || 0}));
+  drinkList().forEach(([id, d]) => c.push({k:'drink', ref:id, name:d.name + ' (قوطية)', price:+d.price || 0}));
+  return c;
+}
+/* what the kitchen has to prepare, checked against the stores */
+function feastPlan(f){
+  const P = [];
+  toArr(f.items).forEach(i => {
+    const q = +i.q || 0; if (!q) return;
+    if (i.k === 'sh'){
+      const d = shDefaults()[i.ref] || {}, gpw = +d.gpw || 0; if (!gpw) return;
+      const a = avgLoss(i.ref), loss = a ? a.pct : 30, raw = q * gpw / 1000 / (1 - loss / 100), it = d.item && S.items[d.item];
+      P.push({ic:'shawarma', k:'shawarma', t:`شيش ${i.ref} ~${fmtQ(Math.ceil(raw * 2) / 2)} كغم`, m:`${fmt(q)} لفة × ${fmt(gpw)} غ، بعد فقد ${Math.round(loss)}%`, short: it && kgOf(it, raw) > (+it.qty || 0) ? `بالمخزن ${fmtQ(it.qty)} ${it.unit} فقط` : ''});
+    } else if (i.k === 'kfc'){
+      const m = (kfcSet().meals || {})[i.ref]; if (!m) return;
+      const pcs = q * (+m.pcs || 0), per = +kfcSet().per || 8, hens = Math.ceil(pcs / per), hw = henW(), it = kfcSet().item && S.items[kfcSet().item];
+      P.push({ic:'kfc', k:'kfc', t:`${fmt(hens)} دجاجة (${fmt(pcs)} قطعة)`, m:`${fmt(q)} × ${m.name}${hw ? ' · ~' + fmtQ(hens * hw) + ' كغم' : ''}`, short: it && hw && kgOf(it, hens * hw) > (+it.qty || 0) ? `بالمخزن ${fmtQ(it.qty)} ${it.unit} فقط` : ''});
+    } else if (i.k === 'drink'){
+      const d = S.drinks[i.ref]; if (!d) return;
+      P.push({ic:'drinks', k:'drinks', t:`${fmt(q)} ${d.name}`, m:+d.per ? `≈ ${fmtQ(Math.ceil(q / d.per * 10) / 10)} كارتون` : '', short: f.status !== 'done' && q > (+d.qty || 0) ? `الموجود ${fmt(d.qty)} قوطية فقط` : ''});
+    }
+  });
+  return P;
+}
+const daysTo = date => Math.round((dateOf(date) - dateOf(dayKey())) / 864e5);
+const countdown = date => { const n = daysTo(date); return n < 0 ? 'فات موعدها' : n === 0 ? 'اليوم 🔥' : n === 1 ? 'غداً' : n === 2 ? 'بعد يومين' : 'بعد ' + n + ' أيام'; };
+function feastCard(id, f){
+  const tot = feastTotal(f), paid = +f.paid || 0, left = feastLeft(f), n = daysTo(f.date), plan = f.status === 'done' || f.status === 'cancel' ? [] : feastPlan(f);
+  const dt = dateOf(f.date), live = f.status === 'booked' || f.status === 'prep';
+  return `<article class="fe ${f.status} ${live && n <= 1 ? 'soon' : ''}">
+    <div class="fe-top"><div class="fe-date"><b>${dt.getDate()}</b><span>${MONTHS[dt.getMonth()]}</span><small>${DAYNAME[JSDAY[dt.getDay()]]}${f.time ? ' · ' + esc(f.time) : ''}</small></div>
+      <div class="li-main"><div class="li-title">${esc(f.name)} <span class="tag">${esc(f.occ || '')}</span></div>
+        <div class="li-meta">${toArr(f.items).filter(i => +i.q).map(i => esc(i.name) + ' ×' + fmt(i.q)).join('، ')}</div>
+        <div class="fe-chips">${live ? `<span class="pill ${n < 0 ? 'out' : n <= 1 ? 'low' : 'ok'}">${countdown(f.date)}</span>` : ''}<span class="pill plain ${f.status === 'done' ? 'ok' : f.status === 'cancel' ? 'out' : 'low'}">${FST[f.status]}</span>${f.mode === 'delivery' ? '<span class="tag">توصيل</span>' : '<span class="tag">استلام</span>'}${f.place ? `<span class="tag">${esc(f.place)}</span>` : ''}</div></div>
+      <button class="icon-btn" data-act="edit-feast" data-id="${id}" aria-label="تعديل">${ic('edit')}</button></div>
+    <div class="fe-money"><div><span>المجموع</span><b>${IQD(tot)}</b></div><div><span>المدفوع</span><b class="pos-v">${IQD(paid)}</b></div><div><span>الباقي</span><b class="${left ? 'neg-v' : 'pos-v'}">${left ? IQD(left) : 'مسدّد ✓'}</b></div></div>
+    <div class="meter ${left ? 'low' : 'ok'}" style="max-width:none"><i style="width:${tot ? Math.min(100, paid / tot * 100) : 100}%"></i></div>
+    ${plan.length ? `<div class="fe-plan"><b>${ic('meal')} التحضير</b>${plan.map(p => `<div class="fe-pi" style="--k:var(--c-${p.k})"><span class="al-ic">${ic(p.ic)}</span><div class="li-main"><div class="li-title">${esc(p.t)}</div><div class="li-meta">${esc(p.m)}${p.short ? ` · <b style="color:var(--bad)">${esc(p.short)}</b>` : ''}</div></div></div>`).join('')}</div>` : ''}
+    <div class="fe-acts">${f.phone ? `<a class="btn btn-sm" href="tel:${esc(f.phone.replace(/[^\d+]/g, ''))}">اتصال</a><a class="btn btn-sm" href="https://wa.me/${esc(waNum(f.phone))}" target="_blank" rel="noopener noreferrer">واتساب</a>` : ''}
+      ${left && f.status !== 'cancel' ? `<button class="btn btn-sm" data-act="feast-pay" data-id="${id}">${ic('coin')} دفعة</button>` : ''}
+      ${f.status === 'booked' ? `<button class="btn btn-sm" data-act="feast-status" data-id="${id}" data-s="prep">بدء التحضير</button>` : ''}
+      ${live ? `<button class="btn btn-sm btn-primary" data-act="feast-status" data-id="${id}" data-s="done">${ic('check')} تم التسليم</button>` : ''}
+      ${f.status === 'done' ? `<button class="btn btn-sm btn-ghost" data-act="feast-status" data-id="${id}" data-s="booked">إرجاع</button>` : ''}</div>
+  </article>`;
+}
+const waNum = ph => { let d = String(ph || '').replace(/\D/g, ''); if (d.startsWith('00')) d = d.slice(2); if (d.startsWith('0')) d = '964' + d.slice(1); return d; };
+function feastsView(){
+  const all = Object.entries(S.feasts).filter(([, f]) => f && f.date);
+  const live = all.filter(([, f]) => f.status === 'booked' || f.status === 'prep').sort((a, b) => (a[1].date + (a[1].time || '')).localeCompare(b[1].date + (b[1].time || '')));
+  const dday = f => f.doneDay || f.date;          // delivered feasts belong to the day they were handed over
+  const month = all.filter(([, f]) => dday(f).slice(0, 7) === S.month && (f.status === 'done' || f.status === 'cancel')).sort((a, b) => dday(b[1]).localeCompare(dday(a[1])));
+  const doneM = all.filter(([, f]) => dday(f).slice(0, 7) === S.month && f.status === 'done');
+  const owed = all.filter(([, f]) => f.status !== 'cancel').map(([, f]) => feastLeft(f));
+  const top = head('الولائم والطلبيات', 'العزائم والأعراس وطلبيات الدوائر', `<button class="btn btn-primary" data-act="add-feast">${ic('plus')} طلبية جديدة</button>`);
+  if (!all.length) return top + `<div class="panel empty"><span class="av av-f" style="width:56px;height:56px;border-radius:16px">${ic('feasts')}</span><strong>لا توجد طلبيات بعد</strong>
+    <span>سجّل الطلبية الكبيرة: الزبون، الموعد، الأصناف والكميات، والعربون. التطبيق يحسب كم شيش وكم دجاجة تحتاج، ويقارنها بالمخزن، ويذكّرك قبل الموعد.</span>
+    <button class="btn btn-primary" data-act="add-feast">${ic('plus')} أول طلبية</button></div>`;
+  const cal = []; for (let i = 0; i < 14; i++){ const k = dayKey(addDays(new Date(), i)), fs = live.filter(([, f]) => f.date === k); cal.push(`<div class="cal-d ${fs.length ? 'has' : ''} ${i === 0 ? 'today' : ''}"><small>${i === 0 ? 'اليوم' : DAYNAME[JSDAY[dateOf(k).getDay()]].replace(/^ال/, '')}</small><b>${dateOf(k).getDate()}</b>${fs.length ? `<i>${fs.length}</i>` : ''}</div>`); }
+  return top + `
+  <section class="hero" aria-label="ملخص الطلبيات">
+    <div><div class="lbl">طلبيات قادمة</div><div class="big">${NUM(live.length)} <span class="cur">طلبية</span></div>
+      <div class="hero-stats" style="margin-top:14px"><div><span class="lbl">قيمتها</span><b>${IQD(sum(live, ([, f]) => feastTotal(f)))}</b></div><div><span class="lbl">العرابين</span><b>${IQD(sum(live, ([, f]) => +f.paid || 0))}</b></div><div><span class="lbl">باقي للتحصيل</span><b>${IQD(sum(owed, v => v))}</b></div></div></div>
+    <div><div class="lbl" style="margin-bottom:8px">الأسبوعين القادمين</div><div class="cal">${cal.join('')}</div></div>
+  </section>
+  ${live.length ? `<section><div class="sec-head"><h2>${ic('feasts')} القادمة</h2><span class="muted">الأقرب أولاً</span></div><div class="fe-list">${live.map(([id, f]) => feastCard(id, f)).join('')}</div></section>` : `<div class="panel empty"><span>لا توجد طلبيات قادمة.</span></div>`}
+  <section><div class="sec-head"><h2>${ic('check')} المسلّمة</h2>${monthNav()}</div>
+    ${doneM.length ? `<div class="stats" style="margin-bottom:12px"><div><span>عدد</span><b>${NUM(doneM.length)}</b></div><div><span>المجموع</span><b>${IQD(sum(doneM, ([, f]) => feastTotal(f)))}</b></div><div><span>غير مسدّد</span><b class="${sum(doneM, ([, f]) => feastLeft(f)) ? 'bad' : ''}">${IQD(sum(doneM, ([, f]) => feastLeft(f)))}</b></div></div>` : ''}
+    ${month.length ? `<div class="fe-list">${month.map(([id, f]) => feastCard(id, f)).join('')}</div>` : `<div class="panel empty"><span>لا توجد طلبيات مسلّمة في ${monthLabel(S.month)}.</span></div>`}</section>`;
+}
+function feastItemRow(i){
+  const cat = feastCatalog(), key = i ? i.k + ':' + i.ref : '';
+  const groups = [['sh','الشاورما'],['kfc','الكنتاكي'],['dish','الأطباق'],['drink','المشروبات']];
+  return `<div class="fi-row"><select class="fi-pick" aria-label="الصنف"><option value="">صنف آخر (اكتبه)…</option>${groups.map(([g, l]) => { const xs = cat.filter(c => c.k === g); return xs.length ? `<optgroup label="${l}">${xs.map(c => `<option value="${c.k}:${esc(c.ref)}" data-price="${c.price}" data-name="${esc(c.name)}" ${key === c.k + ':' + c.ref ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}</optgroup>` : ''; }).join('')}</select>
+    <input class="fi-name" maxlength="40" placeholder="اسم الصنف" value="${i && i.k === 'x' ? esc(i.name) : ''}" ${i && i.k !== 'x' ? 'hidden' : ''} aria-label="اسم الصنف">
+    <input class="fi-q" inputmode="numeric" placeholder="العدد" value="${i && +i.q ? i.q : ''}" aria-label="العدد"><input class="fi-p" inputmode="numeric" placeholder="السعر" value="${i && +i.price ? i.price : ''}" aria-label="سعر الواحد">
+    <button type="button" class="icon-btn fi-del" aria-label="حذف">${ic('x')}</button></div>`;
+}
+function openFeast(id){
+  const f = id ? S.feasts[id] : {name:'', phone:'', occ:'عزيمة', date:dayKey(addDays(new Date(), 1)), time:'', place:'', mode:'pickup', items:[], disc:'', paid:'', status:'booked', toSales:true, note:''};
+  if (id && !f) return;
+  openSheet(id ? 'تعديل طلبية' : 'طلبية جديدة', `<form class="form" novalidate>
+    <div class="fsec"><b>${ic('staff')} الزبون والموعد</b>
+      <div class="row2"><label>اسم الزبون<input id="f-name" maxlength="50" value="${esc(f.name)}" placeholder="مثال: أبو علي"></label><label>الهاتف<input id="f-phone" inputmode="tel" dir="ltr" maxlength="20" value="${esc(f.phone || '')}" placeholder="07xx xxx xxxx"></label></div>
+      <div class="chips" id="occ">${OCC.map(o => `<button type="button" class="chip-s" data-o="${o}" aria-pressed="${f.occ === o}">${o}</button>`).join('')}</div>
+      <div class="row3"><label>التاريخ<input id="f-date" type="date" value="${f.date}"></label><label>الساعة<input id="f-time" type="time" value="${esc(f.time || '')}"></label>
+        <label>الاستلام<select id="f-mode"><option value="pickup" ${f.mode !== 'delivery' ? 'selected' : ''}>من المطعم</option><option value="delivery" ${f.mode === 'delivery' ? 'selected' : ''}>توصيل</option></select></label></div>
+      <label>المكان / العنوان<input id="f-place" maxlength="60" value="${esc(f.place || '')}" placeholder="اختياري"></label></div>
+    <div class="fsec"><b>${ic('meal')} الأصناف</b>
+      <div class="fi-head"><span>الصنف</span><span>العدد</span><span>سعر الواحد</span><span></span></div>
+      <div id="fitems" class="recipe">${toArr(f.items).length ? toArr(f.items).map(feastItemRow).join('') : feastItemRow(null)}</div>
+      <button type="button" class="btn btn-sm" id="fi-add" style="justify-self:start">${ic('plus')} صنف</button></div>
+    <div class="fsec"><b>${ic('coin')} الحساب</b>
+      <div class="row2"><label>خصم (د.ع)<input id="f-disc" inputmode="numeric" value="${+f.disc || ''}" placeholder="0"></label><label>العربون / المدفوع<input id="f-paid" inputmode="numeric" value="${+f.paid || ''}" placeholder="0"></label></div>
+      <label>ملاحظات<input id="f-note" maxlength="120" value="${esc(f.note || '')}" placeholder="مثال: بدون مخلل، صحون إضافية"></label>
+      <label class="check"><input type="checkbox" id="f-sales" ${f.toSales !== false ? 'checked' : ''}> عند التسليم أضفها لمبيعات ذلك اليوم</label></div>
+    <div class="calc" id="calc"></div><div id="plan"></div>
+    ${formActions(id ? (f.status === 'cancel' ? 'حذف الطلبية' : 'إلغاء الطلبية') : '')}</form>`, body => {
+    const $f = s => body.querySelector(s), box = $f('#fitems');
+    let occ = f.occ;
+    const read = () => ({items:[...box.querySelectorAll('.fi-row')].map(r => { const o = r.querySelector('.fi-pick').selectedOptions[0], v = r.querySelector('.fi-pick').value, [k, ...ref] = v ? v.split(':') : ['x'];
+        return {k, ref:ref.join(':'), name: v ? o.dataset.name : r.querySelector('.fi-name').value.trim(), q:Math.round(nn(r.querySelector('.fi-q').value)), price:Math.round(nn(r.querySelector('.fi-p').value))}; }).filter(i => i.name && i.q > 0),
+      disc:Math.round(nn($f('#f-disc').value)), paid:Math.round(nn($f('#f-paid').value))});
+    const calc = () => { const y = Object.assign({}, f, read()), tot = feastTotal(y), left = feastLeft(y), pl = feastPlan(y);
+      $f('#calc').innerHTML = `<div><span>المجموع</span><b>${IQD(tot)}</b></div><div><span>المدفوع</span><b class="pos-v">${IQD(y.paid)}</b></div><div><span>الباقي</span><b class="${left ? 'neg-v' : 'pos-v'}">${IQD(left)}</b></div>`;
+      $f('#plan').innerHTML = pl.length ? `<div class="fe-plan"><b>${ic('meal')} تحتاج تحضّر</b>${pl.map(p => `<div class="fe-pi" style="--k:var(--c-${p.k})"><span class="al-ic">${ic(p.ic)}</span><div class="li-main"><div class="li-title">${esc(p.t)}</div><div class="li-meta">${esc(p.m)}${p.short ? ` · <b style="color:var(--bad)">${esc(p.short)}</b>` : ''}</div></div></div>`).join('')}</div>` : ''; };
+    $f('#occ').addEventListener('click', e => { const b = e.target.closest('[data-o]'); if (!b) return; occ = b.dataset.o; body.querySelectorAll('[data-o]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); });
+    $f('#fi-add').addEventListener('click', () => { box.insertAdjacentHTML('beforeend', feastItemRow(null)); calc(); });
+    box.addEventListener('click', e => { const b = e.target.closest('.fi-del'); if (b){ b.closest('.fi-row').remove(); calc(); } });
+    box.addEventListener('change', e => { const sel = e.target.closest('.fi-pick'); if (!sel) return; const r = sel.closest('.fi-row'), o = sel.selectedOptions[0];
+      r.querySelector('.fi-name').hidden = !!sel.value; if (sel.value && o.dataset.price && +o.dataset.price) r.querySelector('.fi-p').value = o.dataset.price; calc(); });
+    body.addEventListener('input', calc); calc();
+    bindForm(body, async form => {
+      const y = read(), name = $f('#f-name').value.trim(), date = $f('#f-date').value;
+      if (!name) return setErr(form, 'اكتب اسم الزبون.');
+      if (!date) return setErr(form, 'اختر تاريخ الطلبية.');
+      if (!y.items.length) return setErr(form, 'أضف صنفاً واحداً على الأقل مع العدد.');
+      const data = Object.assign({}, f, y, {name, phone:$f('#f-phone').value.trim(), occ, date, time:$f('#f-time').value, place:$f('#f-place').value.trim(), mode:$f('#f-mode').value, note:$f('#f-note').value.trim(), toSales:$f('#f-sales').checked, t:f.t || Date.now(), by:f.by || myRole() || ''});
+      const key = id || uid(); closeSheet();
+      S.feasts = Object.assign({}, S.feasts, {[key]:data}); render();
+      if (await put('feasts/' + key, data)) toast(id ? 'تم حفظ الطلبية' : 'تم حجز طلبية ' + name + ' · ' + countdown(date));
+    });
+    sheetDelete(body, f.status === 'cancel' ? 'الحذف' : 'الإلغاء', async () => {
+      closeSheet();
+      if (f.status === 'cancel'){ const c = Object.assign({}, S.feasts); delete c[id]; S.feasts = c; render(); if (await del('feasts/' + id)) toast('حُذفت الطلبية'); return; }
+      await setFeastStatus(id, 'cancel'); toast('أُلغيت الطلبية');
+    });
+  });
+}
+async function setFeastStatus(id, st){
+  const f = S.feasts[id]; if (!f) return;
+  const was = f.status, full = Object.assign({}, f, {status:st});
+  if (st === 'done' && was !== 'done'){
+    if (f.toSales !== false){
+      const day = dayKey(), oid = 'feast-' + id, total = feastTotal(f);
+      const order = {id:oid, t:Date.now(), lines:toArr(f.items).filter(i => +i.q).map(i => ({d:i.k === 'dish' ? i.ref : '', n:i.name, q:i.q, p:i.price})), total, feast:id, note:'طلبية ' + f.name};
+      if (+f.disc) order.lines.push({d:'', n:'خصم', q:1, p:-(+f.disc)});
+      const cur = S.sales[day], body = Object.assign({date:day, month:day.slice(0, 7)}, cur || {}, {orders:Object.assign({}, (cur && !Array.isArray(cur.orders) && cur.orders) || {}, {[oid]:order})});
+      S.sales = Object.assign({}, S.sales, {[day]:body});
+      cur ? upd('sales/' + day, {orders:{[oid]:order}}, body) : ups('sales/' + day, {date:day, month:day.slice(0, 7), orders:{[oid]:order}}, body);
+      full.sale = {day, id:oid};
+      applyStock(consumption(order.lines.filter(l => S.dishes[l.d])), -1);
+    }
+    const dstk = {};
+    toArr(f.items).forEach(i => { if (i.k === 'drink' && S.drinks[i.ref]) dstk[i.ref] = (dstk[i.ref] || 0) + (+i.q || 0); });
+    Object.entries(dstk).forEach(([did, q]) => { const d = S.drinks[did], nd = Object.assign({}, d, {qty:(+d.qty || 0) - q}); S.drinks = Object.assign({}, S.drinks, {[did]:nd}); upd('drinks/' + did, {qty:nd.qty}, nd); });
+    full.dstk = dstk; full.doneDay = dayKey();
+  } else if (was === 'done' && st !== 'done'){
+    if (f.sale && S.sales[f.sale.day]){
+      const doc = S.sales[f.sale.day], o = toArr(doc.orders).find(x => x.id === f.sale.id);
+      if (o){ const body = Object.assign({}, doc, {orders:Object.assign({}, doc.orders, {[f.sale.id]:null})}); S.sales = Object.assign({}, S.sales, {[f.sale.day]:body}); upd('sales/' + f.sale.day, {orders:{[f.sale.id]:null}}, body); applyStock(consumption(o.lines.filter(l => S.dishes[l.d])), +1); }
+    }
+    Object.entries(f.dstk || {}).forEach(([did, q]) => { const d = S.drinks[did]; if (!d) return; const nd = Object.assign({}, d, {qty:(+d.qty || 0) + q}); S.drinks = Object.assign({}, S.drinks, {[did]:nd}); upd('drinks/' + did, {qty:nd.qty}, nd); });
+    full.sale = null; full.dstk = {}; full.doneDay = '';
+  }
+  S.feasts = Object.assign({}, S.feasts, {[id]:full}); render();
+  return put('feasts/' + id, full);
+}
+function openFeastPay(id){
+  const f = S.feasts[id]; if (!f) return;
+  openSheet('دفعة · ' + f.name, `<form class="form" novalidate><p class="hint">المجموع ${fmt(feastTotal(f))} · المدفوع ${fmt(f.paid || 0)} · الباقي <b>${fmt(feastLeft(f))} د.ع</b></p>
+    <label>المبلغ المستلم (د.ع)<input id="f-amt" inputmode="numeric" value="${feastLeft(f)}"></label>${formActions()}</form>`, body => {
+    bindForm(body, async form => {
+      const a = Math.round(nn(val(form, 'f-amt'))); if (a <= 0) return setErr(form, 'اكتب المبلغ.');
+      const full = Object.assign({}, f, {paid:(+f.paid || 0) + a}); closeSheet();
+      S.feasts = Object.assign({}, S.feasts, {[id]:full}); render();
+      if (await put('feasts/' + id, full)) toast(feastLeft(full) ? 'استلمت ' + fmt(a) + ' · الباقي ' + fmt(feastLeft(full)) : 'الطلبية مسدّدة بالكامل ✓');
+    });
+  });
+}
+
+/* ---------- social media studio ----------
+   Ideas come from the restaurant's own numbers; the designer draws a post (image) or a 6-second animated clip on a canvas.
+   Publishing is done by the person from their phone (share sheet); automatic posting needs a linked Meta business account. */
+const socialSet = () => S.settings.social || {};
+const tagsOf = () => { const st = socialSet(), city = (st.city || 'بغداد').replace(/\s+/g, '_'); return (st.tags || `#${city} #مطاعم_${city} #شاورما #كنتاكي #اكل_عراقي`).trim(); };
+function socialIdeas(){
+  const R = restName(), st = socialSet(), ph = st.phone ? '\n📞 ' + st.phone : '', T = '\n\n' + tagsOf(), today = dayKey(), I = [];
+  const shOpen = skewersOf(S.shawarma[today]).map(([, x]) => x).find(x => shCalc(x).open);
+  const shTypes = Object.entries(shDefaults()).filter(([, d]) => d && +d.price);
+  const meals = kfcMeals(), big = meals.length ? meals[meals.length - 1][1] : null;
+  const monthSk = Object.values(S.shawarma).filter(d => d && d.month === S.cur).flatMap(d => skewersOf(d).map(([, x]) => shCalc(x)));
+  const wrapsM = sum(monthSk, c => c.wraps), mealsM = sum(Object.values(S.kfc).filter(d => d && d.month === S.cur).flatMap(d => batchesOf(d).map(([, x]) => kfcCalc(x))), c => c.meals);
+  const byMeal = {}; Object.values(S.kfc).filter(d => d && d.month === S.cur).forEach(d => batchesOf(d).forEach(([, x]) => toArr(x.sold).forEach(m => { byMeal[m.name] = (byMeal[m.name] || 0) + (+m.n || 0); })));
+  const best = Object.entries(byMeal).sort((a, b) => b[1] - a[1])[0];
+  const avgW = (() => { const xs = monthSk.filter(c => c.wraps && c.w); return xs.length ? {w:Math.round(sum(xs, c => c.w) / xs.length), n:Math.round(sum(xs, c => c.wraps) / xs.length)} : null; })();
+  if (shOpen || shTypes.length){ const t = shOpen ? shOpen.type : shTypes[0][0], pr = shOpen ? shOpen.price : shTypes[0][1].price;
+    I.push({k:'shawarma', ic:'shawarma', why: shOpen ? 'عندك شيش ' + t + ' على النار الآن' : 'منشور يومي يجيب زبائن وقت الذروة', t:'شيش طازج نزل هسه', d:{h:'شيش ' + t + ' طازج 🔥', s:'نزل هسه، لحگ قبل لا يخلص', p:+pr ? fmt(pr) + ' د.ع' : '', icon:'shawarma'},
+      cap:`🔥 شيش ${t} طازج نزل هسه!\nلحگ قبل لا يخلص 😋${+pr ? '\nاللفة بس ' + fmt(pr) + ' دينار' : ''}\n📍 ${R}${ph}${T}`}); }
+  if (big) I.push({k:'kfc', ic:'kfc', why:'الوجبة العائلية أعلى قيمة بالطلب الواحد', t:'لمّة العائلة', d:{h:big.name, s:big.pcs + ' قطع مقرمشة للعائلة كلها', p:fmt(big.price) + ' د.ع', icon:'kfc'},
+    cap:`🍗 لمّة العائلة تحلى ويه ${big.name}\n${big.pcs} قطع مقرمشة وذهبية بـ ${fmt(big.price)} دينار بس!\nاطلب هسه وخلّي العشا علينا 😍\n📍 ${R}${ph}${T}`});
+  if (best) I.push({k:'kfc', ic:'meal', why:'الأكثر مبيعاً عندك هالشهر: ' + best[0] + ' (' + fmt(best[1]) + ' مرة)', t:'الأكثر طلباً', d:{h:'الأكثر طلباً 👑', s:best[0], p:'', icon:'kfc'},
+    cap:`👑 الأكثر طلباً عدنا هالشهر: ${best[0]}\nانطلبت ${fmt(best[1])} مرة، يعني الناس مجرّبة وراضية 😉\nجرّبتها لو بعد؟\n📍 ${R}${ph}${T}`});
+  if (wrapsM >= 20) I.push({k:'shawarma', ic:'scale', why:'أرقامك الحقيقية محتوى يصدّقه الناس', t:'رقم الشهر', d:{h:fmt(wrapsM) + ' لفة', s:'سوّيناها هالشهر بإيدينا… وبعدنا مكمّلين', p:'', icon:'shawarma'},
+    cap:`📊 هالشهر لفّينا ${fmt(wrapsM)} لفة شاورما${mealsM ? ' و' + fmt(mealsM) + ' وجبة كنتاكي' : ''}!\nشكراً لكل واحد وثق بينا ❤️\n📍 ${R}${T}`});
+  I.push({k:'feasts', ic:'feasts', why:'الطلبيات الكبيرة أكبر ربح بمرة وحدة', t:'عندك عزيمة؟', d:{h:'عندك عزيمة؟ 🎉', s:'عرس، فاتحة، دائرة… احنا نجهّز كلشي', p:'', icon:'feasts'},
+    cap:`🎉 عندك عزيمة؟ عرس؟ فاتحة؟ طلبية دائرة؟\nاحنا نجهزلك لفات شاورما، كنتاكي، ومشروبات بالكمية اللي تريدها\nاحجز من وكت وارتاح 📞${st.phone ? ' ' + st.phone : ''}\n📍 ${R}${T}`});
+  const dow = new Date().getDay();
+  if (dow === 4 || dow === 5 || dow === 3) I.push({k:'social', ic:'sun', why:'الخميس والجمعة أعلى أيام الطلب عادةً', t:'ويكند', d:{h:'الويكند يحلى 😍', s:'جمعة الأهل تكمل بأكلنا', p:'', icon:'meal'},
+    cap:`😍 الخميس والجمعة غير…\nجمعة الأهل والأصدقاء تكمل بأكلة حلوة من ${R}\nمفتوحين لآخر الليل 🌙${ph}${T}`});
+  return I;
+}
+function reelIdeas(){
+  const sk = Object.values(S.shawarma).flatMap(d => skewersOf(d).map(([, x]) => shCalc(x))).filter(c => c.wraps && c.w);
+  const a = sk.length ? {w:Math.round(sum(sk, c => c.w) / sk.length), n:Math.round(sum(sk, c => c.wraps) / sk.length)} : null;
+  return [
+    {t:'صوت الشيش (ASMR)', hook:'بدون كلام، بس صوت السكين على الشيش', shots:['لقطة قريبة جداً للشيش يدور والدهن يلمع','السكين تقص شرايح، خلّي الصوت عالي','اللفة تنلف وتنقص بالنص'], tip:'صوّر عمودي، والهاتف ثابت. بدون موسيقى، الصوت هو البطل.'},
+    {t: a ? `شيش ${a.w} كيلو = كم لفة؟` : 'شيش كامل = كم لفة؟', hook: a ? `خمّن: شيش ${a.w} كيلو يطلع كم لفة؟ (الجواب ${a.n})` : 'خمّن كم لفة يطلع من شيش كامل', shots:['الشيش الكامل الصبح مع ميزان','تسريع (timelapse) لليوم كله','الشيش فارغ بالليل والرقم على الشاشة'], tip:'اكتب السؤال على أول ثانية، والجواب بآخر ثانية. يزيد التعليقات.'},
+    {t:'من الدجاجة للوجبة', hook:'15 ثانية من التتبيلة للصندوق', shots:['الدجاج بالتتبيلة','بالطحين','بالزيت يطقطق','بالصندوق مع البطاطا'], tip:'كل لقطة ثانيتين، والانتقال مع إيقاع الموسيقى.'},
+    {t:'يوم مع حسن', hook:'شنو يصير بمطعمنا من 10 الصبح لـ 12 بالليل؟', shots:['فتح المحل','تحضير الشيش','زحمة الليل','آخر لفة بالليل'], tip:'وجه إنسان حقيقي يبني ثقة أكثر من أي إعلان.'},
+  ];
+}
+function socialView(){
+  const ideas = socialIdeas(), reels = reelIdeas(), st = socialSet();
+  return head('السوشل ميديا', 'أفكار ومنشورات وفيديوهات من أرقام مطعمك', `<button class="btn" data-act="social-set">${ic('edit')} بيانات الحساب</button><button class="btn btn-primary" data-act="social-design">${ic('plus')} تصميم منشور</button>`) + `
+  ${!st.handle && !st.phone ? `<div class="banner"><p>اكتب <b>رقم الطلبات</b> و<b>مدينتك</b> و<b>اسم حسابك</b> حتى تطلع بكل منشور تلقائياً.</p><button class="btn btn-sm btn-primary" data-act="social-set">إضافة</button></div>` : ''}
+  <section><div class="sec-head"><h2>${ic('sun')} أفكار منشورات اليوم</h2><span class="muted">مبنية على أرقامك</span></div>
+    <div class="idea-list">${ideas.map((x, i) => `<article class="idea" style="--k:var(--c-${x.k})"><div class="idea-top"><span class="al-ic">${ic(x.ic)}</span><div class="li-main"><b>${esc(x.t)}</b><small>${esc(x.why)}</small></div></div>
+      <pre class="cap">${esc(x.cap)}</pre><div class="fe-acts"><button class="btn btn-sm btn-primary" data-act="social-design" data-i="${i}">${ic('edit')} صمّم الصورة والفيديو</button><button class="btn btn-sm" data-act="social-copy" data-i="${i}">نسخ الكلام</button></div></article>`).join('')}</div></section>
+  <section><div class="sec-head"><h2>${ic('pos')} أفكار ريلز تصوّرها بالهاتف</h2></div>
+    <div class="idea-list">${reels.map(r => `<article class="idea" style="--k:var(--c-social)"><div class="idea-top"><span class="al-ic">${ic('sun')}</span><div class="li-main"><b>${esc(r.t)}</b><small>${esc(r.hook)}</small></div></div>
+      <ol class="shots">${r.shots.map(x => `<li>${esc(x)}</li>`).join('')}</ol><p class="hint">💡 ${esc(r.tip)}</p></article>`).join('')}</div></section>
+  <section><div class="panel pad auto-pub"><b>${ic('bell')} النشر التلقائي</b><p class="hint">الآن تنزّل الصورة أو الفيديو وتنشره بضغطة «مشاركة» من هاتفك على إنستغرام وفيسبوك والواتساب. للنشر التلقائي بدون تدخل، يلزم ربط حساب <b>إنستغرام بزنس</b> مع <b>صفحة فيسبوك</b> عن طريق Meta، وأقدر أجهّزه لك كخطوة قادمة.</p></div></section>`;
+}
+function openSocialSet(){
+  const st = socialSet();
+  openSheet('بيانات الحساب', `<form class="form" novalidate>
+    <div class="row2"><label>اسم الحساب<input id="f-h" dir="ltr" maxlength="40" value="${esc(st.handle || '')}" placeholder="@family_time"></label><label>رقم الطلبات<input id="f-ph" dir="ltr" inputmode="tel" maxlength="20" value="${esc(st.phone || '')}" placeholder="07xx xxx xxxx"></label></div>
+    <label>المدينة<input id="f-city" maxlength="30" value="${esc(st.city || '')}" placeholder="مثال: بغداد"></label>
+    <label>الهاشتاگات<input id="f-tags" maxlength="200" value="${esc(st.tags || '')}" placeholder="${esc(tagsOf())}"><small>اتركها فارغة وتنعمل تلقائياً من المدينة</small></label>
+    ${formActions()}</form>`, body => bindForm(body, async f => {
+      const patch = {handle:val(f, 'f-h').trim(), phone:val(f, 'f-ph').trim(), city:val(f, 'f-city').trim(), tags:val(f, 'f-tags').trim()};
+      const cur = S.settings.social, full = Object.assign({}, cur || {}, patch); closeSheet();
+      S.settings = Object.assign({}, S.settings, {social:full}); render();
+      if (await (cur ? upd('settings/social', patch, full) : ups('settings/social', full, full))) toast('تم الحفظ');
+    }));
+}
+async function copyText(t){ try { await navigator.clipboard.writeText(t); toast('تم نسخ الكلام، الصقه بالمنشور'); } catch(e){ toast('ما قدرت أنسخ، حدّد الكلام وانسخه يدوياً', true); } }
+
+/* drawing: icons come from the same IC paths the app uses */
+function iconPaths(k){ const src = IC[k] || IC.meal, P = [];
+  src.replace(/d="([^"]+)"/g, (m, d) => { P.push(new Path2D(d)); return m; });
+  src.replace(/<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)"/g, (m, x, y, r) => { const p = new Path2D(); p.arc(+x, +y, +r, 0, Math.PI * 2); P.push(p); return m; });
+  return P; }
+const STYLES = {fire:['#170B05','#5A1D08','#FFB347','#FFFFFF','#FF7A1A'], clean:['#FFF8EE','#F4E3C9','#B4532A','#2A1C10','#D2691E'], pop:['#5B2BD6','#E1306C','#FFE14D','#FFFFFF','#FFE14D']};
+function wrapLines(ctx, text, maxW){ const words = String(text).split(/\s+/), L = []; let line = '';
+  words.forEach(w => { const t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > maxW && line){ L.push(line); line = w; } else line = t; }); if (line) L.push(line); return L; }
+function drawPost(cv, d, style, t){        // t: 0..1 animation progress (1 = still image)
+  const ctx = cv.getContext('2d'), W = cv.width, H = cv.height, [bg1, bg2, acc, ink, glow] = STYLES[style] || STYLES.fire;
+  const ease = (a, b) => Math.max(0, Math.min(1, (t - a) / (b - a))), out = x => 1 - Math.pow(1 - x, 3);
+  const g = ctx.createLinearGradient(0, 0, W, H); g.addColorStop(0, bg1); g.addColorStop(1, bg2); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const rg = ctx.createRadialGradient(W * .5, H * .36, 10, W * .5, H * .36, W * (.55 + .05 * Math.sin(t * 6))); rg.addColorStop(0, glow + (style === 'clean' ? '33' : '66')); rg.addColorStop(1, glow + '00'); ctx.fillStyle = rg; ctx.fillRect(0, 0, W, H);
+  if (style === 'pop'){ ctx.save(); ctx.globalAlpha = .08; ctx.fillStyle = '#fff'; for (let x = -H; x < W; x += 70){ ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + 34, 0); ctx.lineTo(x + 34 + H, H); ctx.lineTo(x + H, H); ctx.fill(); } ctx.restore(); }
+  const iS = W * .3 * (0.85 + .15 * out(ease(0, .25))), cx = W / 2, cy = H * .33;
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(Math.sin(t * Math.PI * 2) * .05); ctx.scale(iS / 24, iS / 24); ctx.translate(-12, -12);
+  ctx.lineWidth = 1.4; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = acc; ctx.shadowColor = glow; ctx.shadowBlur = style === 'clean' ? 0 : 6;
+  iconPaths(d.icon).forEach(p => ctx.stroke(p)); ctx.restore();
+  ctx.direction = 'rtl'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  const a1 = out(ease(.12, .35)); ctx.globalAlpha = a1; ctx.fillStyle = ink; ctx.font = `700 ${Math.round(W * .085)}px "Readex Pro", sans-serif`;
+  let y = H * .6 + (1 - a1) * 60; wrapLines(ctx, d.h, W * .84).slice(0, 2).forEach(l => { ctx.fillText(l, cx, y); y += W * .1; });
+  const a2 = out(ease(.25, .5)); ctx.globalAlpha = a2 * .9; ctx.font = `500 ${Math.round(W * .042)}px "IBM Plex Sans Arabic", sans-serif`;
+  wrapLines(ctx, d.s, W * .8).slice(0, 2).forEach(l => { ctx.fillText(l, cx, y); y += W * .055; });
+  if (d.p){ const a3 = ease(.4, .6), sc = a3 < 1 ? out(a3) * (1 + .15 * Math.sin(a3 * Math.PI)) : 1; ctx.globalAlpha = Math.min(1, a3 * 2);
+    ctx.save(); ctx.translate(cx, y + W * .07); ctx.scale(sc, sc); ctx.font = `700 ${Math.round(W * .06)}px "Readex Pro", sans-serif`;
+    const pw = ctx.measureText(d.p).width + W * .1, ph = W * .1; ctx.fillStyle = acc; ctx.beginPath(); ctx.roundRect(-pw / 2, -ph / 2, pw, ph, ph / 2); ctx.fill();
+    ctx.fillStyle = style === 'clean' ? '#fff' : bg1; ctx.textBaseline = 'middle'; ctx.fillText(d.p, 0, 2); ctx.restore(); }
+  ctx.globalAlpha = out(ease(.5, .7)); ctx.textBaseline = 'alphabetic'; ctx.fillStyle = ink; ctx.font = `600 ${Math.round(W * .04)}px "Readex Pro", sans-serif`;
+  ctx.fillText(restName(), cx, H - W * .1); const st = socialSet();
+  if (st.handle || st.phone){ ctx.globalAlpha *= .75; ctx.font = `500 ${Math.round(W * .032)}px "IBM Plex Sans Arabic", sans-serif`; ctx.direction = 'ltr'; ctx.fillText([st.handle, st.phone].filter(Boolean).join('   ·   '), cx, H - W * .055); ctx.direction = 'rtl'; }
+  ctx.globalAlpha = 1;
+}
+function openSocialDesign(i){
+  const idea = i != null ? socialIdeas()[+i] : null;
+  const d0 = idea ? idea.d : {h:restName(), s:'أطيب أكل بالمنطقة', p:'', icon:'meal'};
+  let style = 'fire', fmtK = 'post', videoUrl = null;
+  openSheet('تصميم منشور', `<form class="form" novalidate>
+    <div class="row2"><label>العنوان<input id="s-h" maxlength="40" value="${esc(d0.h)}"></label><label>السعر (اختياري)<input id="s-p" maxlength="20" value="${esc(d0.p)}" placeholder="مثال: 2,500 د.ع"></label></div>
+    <label>السطر الثاني<input id="s-s" maxlength="70" value="${esc(d0.s)}"></label>
+    <div class="row2"><div class="seg" role="group" aria-label="الشكل">${[['fire','نار 🔥'],['clean','هادئ'],['pop','ملوّن']].map(([k, l]) => `<button type="button" data-st="${k}" aria-pressed="${k === style}">${l}</button>`).join('')}</div>
+      <div class="seg" role="group" aria-label="المقاس">${[['post','منشور'],['story','ستوري']].map(([k, l]) => `<button type="button" data-fm="${k}" aria-pressed="${k === fmtK}">${l}</button>`).join('')}</div></div>
+    <div class="chips" id="s-icons">${['shawarma','kfc','meal','drinks','feasts','pos'].map(k => `<button type="button" class="chip-s" data-icon="${k}" aria-pressed="${k === d0.icon}">${ic(k)}</button>`).join('')}</div>
+    <div class="cv-wrap"><canvas id="cv" width="1080" height="1350"></canvas></div>
+    <div class="fe-acts"><button type="button" class="btn btn-primary" id="s-save">${ic('buy')} تنزيل الصورة</button><button type="button" class="btn" id="s-share">مشاركة</button><button type="button" class="btn" id="s-vid">🎬 فيديو 6 ثواني</button>${idea ? '<button type="button" class="btn" id="s-copy">نسخ الكلام</button>' : ''}</div>
+    <div id="vid-out"></div>
+    </form>`, body => {
+    const $f = s => body.querySelector(s), cv = $f('#cv');
+    let icon = d0.icon;
+    const data = () => ({h:$f('#s-h').value.trim() || restName(), s:$f('#s-s').value.trim(), p:$f('#s-p').value.trim(), icon});
+    const draw = () => { cv.height = fmtK === 'story' ? 1920 : 1350; drawPost(cv, data(), style, 1); };
+    Promise.all([document.fonts.load('700 80px "Readex Pro"'), document.fonts.load('500 40px "IBM Plex Sans Arabic"')]).catch(() => {}).then(draw);
+    body.addEventListener('input', draw);
+    body.addEventListener('click', e => {
+      const b = e.target.closest('[data-st],[data-fm],[data-icon]'); if (!b) return;
+      if (b.dataset.st){ style = b.dataset.st; body.querySelectorAll('[data-st]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); }
+      if (b.dataset.fm){ fmtK = b.dataset.fm; body.querySelectorAll('[data-fm]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); }
+      if (b.dataset.icon){ icon = b.dataset.icon; body.querySelectorAll('[data-icon]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); }
+      draw();
+    });
+    const fileName = ext => (restName() + '-' + dayKey()).replace(/\s+/g, '-') + '.' + ext;
+    const blobOf = () => new Promise(r => cv.toBlob(r, 'image/png'));
+    const save = (blob, name) => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); };
+    const share = async (blob, name) => { const file = new File([blob], name, {type:blob.type});
+      if (navigator.canShare && navigator.canShare({files:[file]})){ try { await navigator.share({files:[file], text:idea ? idea.cap : ''}); } catch(e){} }
+      else { save(blob, name); toast('المشاركة المباشرة غير مدعومة هنا، نزّلت الملف بدلها'); } };
+    $f('#s-save').addEventListener('click', async () => { draw(); save(await blobOf(), fileName('png')); toast('نزلت الصورة'); });
+    $f('#s-share').addEventListener('click', async () => { draw(); if (idea) copyText(idea.cap); share(await blobOf(), fileName('png')); });
+    if ($f('#s-copy')) $f('#s-copy').addEventListener('click', () => copyText(idea.cap));
+    $f('#s-vid').addEventListener('click', async () => {
+      const out = $f('#vid-out'), btn = $f('#s-vid');
+      if (!cv.captureStream || !window.MediaRecorder){ out.innerHTML = '<p class="hint">هذا المتصفح لا يدعم صنع الفيديو. جرّب Chrome.</p>'; return; }
+      const type = ['video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9','video/webm'].find(t => MediaRecorder.isTypeSupported(t));
+      if (!type){ out.innerHTML = '<p class="hint">هذا المتصفح لا يدعم صنع الفيديو.</p>'; return; }
+      btn.disabled = true; btn.textContent = '🎬 جاري التسجيل…';
+      const rec = new MediaRecorder(cv.captureStream(30), {mimeType:type, videoBitsPerSecond:5e6}), chunks = [];
+      rec.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+      const done = new Promise(r => { rec.onstop = r; });
+      const d = data(), t0 = performance.now(), DUR = 6000; rec.start();
+      await new Promise(res => { const step = () => { const p = (performance.now() - t0) / DUR; drawPost(cv, d, style, Math.min(1, p * 1.25)); if (p < 1) requestAnimationFrame(step); else res(); }; step(); });
+      rec.stop(); await done;
+      const blob = new Blob(chunks, {type:type.split(';')[0]}), ext = type.includes('mp4') ? 'mp4' : 'webm';
+      if (videoUrl) URL.revokeObjectURL(videoUrl); videoUrl = URL.createObjectURL(blob);
+      out.innerHTML = `<video src="${videoUrl}" controls playsinline loop class="vid"></video><div class="fe-acts"><button type="button" class="btn btn-primary" id="v-save">${ic('buy')} تنزيل الفيديو</button><button type="button" class="btn" id="v-share">مشاركة الفيديو</button></div>${ext === 'webm' ? '<p class="hint">هذا الجهاز يسجّل بصيغة webm. للآيفون والإنستغرام الأفضل تصنعه من Chrome على أندرويد أو حاسوب حديث.</p>' : ''}`;
+      out.querySelector('#v-save').addEventListener('click', () => save(blob, fileName(ext)));
+      out.querySelector('#v-share').addEventListener('click', () => { if (idea) copyText(idea.cap); share(blob, fileName(ext)); });
+      btn.disabled = false; btn.textContent = '🎬 فيديو 6 ثواني'; draw();
     });
   });
 }
@@ -1759,9 +2222,12 @@ function allAlerts(){
     else if (low || dl < 3) A.push({lvl:dl < 1 ? 3 : 2, k:'drinks', t:d.name + ' · ' + (dl < 3 ? daysText(dl) : 'قليل'), m:meta, act:'drink-day', b:'تسجيل شراء'});
   });
   Object.values(S.shawarma).filter(d => d && d.date && d.date < today).forEach(d => skewersOf(d).forEach(([id, x]) => { if (shCalc(x).open)
-    A.push({lvl:2, k:'shawarma', t:'شيش ' + x.type + ' ما تسكّر', m:dayLabel(d.date) + ' · اكتب عدد اللفات حتى يُحسب ربحه', act:'edit-sk', id, date:d.date, b:'إكمال'}); }));
+    A.push({lvl:2, open:true, k:'shawarma', t:'شيش ' + x.type + ' ما تسكّر', m:dayLabel(d.date) + ' · اكتب عدد اللفات حتى يُحسب ربحه', act:'edit-sk', id, date:d.date, b:'إكمال'}); }));
   Object.values(S.kfc).filter(d => d && d.date && d.date < today).forEach(d => batchesOf(d).forEach(([id, x]) => { if (kfcCalc(x).open)
-    A.push({lvl:2, k:'kfc', t:'دفعة كنتاكي ما تسكّرت', m:dayLabel(d.date) + ' · اكتب الوجبات المباعة', act:'edit-kfc', id, date:d.date, b:'إكمال'}); }));
+    A.push({lvl:2, open:true, k:'kfc', t:'دفعة كنتاكي ما تسكّرت', m:dayLabel(d.date) + ' · اكتب الوجبات المباعة', act:'edit-kfc', id, date:d.date, b:'إكمال'}); }));
+  Object.entries(S.feasts).forEach(([id, f]) => { if (!f || !f.date) return; const n = daysTo(f.date), live = f.status === 'booked' || f.status === 'prep';
+    if (live && n <= 2) A.push({lvl:n <= 0 ? 3 : 2, k:'feasts', t:'طلبية ' + f.name + ' ' + countdown(f.date), m:toArr(f.items).filter(i => +i.q).map(i => i.name + ' ×' + i.q).join('، ') + (feastLeft(f) ? ' · باقي ' + fmt(feastLeft(f)) + ' د.ع' : ''), tab:'feasts', b:'فتح'});
+    else if (f.status === 'done' && feastLeft(f) > 0) A.push({lvl:2, k:'feasts', t:'باقي فلوس على ' + f.name, m:fmt(feastLeft(f)) + ' د.ع من طلبية ' + dayLabel(f.date, false), act:'feast-pay', id, b:'استلام'}); });
   const unread = Object.values(S.notes).filter(isUnread).length;
   if (unread) A.push({lvl:1, k:'notes', t:unread + ' ملاحظة جديدة من ' + roleName(otherRole()), m:'اقرأها وأشّر «قرأتها»', tab:'notes', b:'فتح'});
   const on = sortByName(S.staff).filter(([sid, st]) => effShift(st, sid, today) !== 'off');
@@ -1792,7 +2258,7 @@ function storeCard(id, title, k){
   const it = S.items[id]; if (!it) return '';
   const use = usageLog(), du = itemUse(use, id), q = +it.qty || 0, dl = du > 0 ? q / du : Infinity, st = statusOf(it);
   const hw = k === 'kfc' ? henW() : 0;
-  return `<div class="store" style="--k:var(--c-${k})"><div class="store-top"><span class="av ${k === 'kfc' ? 'av3' : 'av1'}">${ic('inv')}</span><div class="li-main"><b>${title}</b><small>${esc(it.name)}${+it.cost ? ' · ' + fmt(it.cost) + ' د.ع/' + esc(it.unit) : ''}</small></div><span class="pill ${dl < 2 || st === 'out' ? 'out' : dl < 3 ? 'low' : st}">${st === 'out' ? STATUS.out : isFinite(dl) ? daysText(dl) : STATUS[st]}</span></div>
+  return `<div class="store" style="--k:var(--c-${k})"><div class="store-top"><span class="av ${k === 'kfc' ? 'av3' : 'av1'}">${ic('inv')}</span><div class="li-main"><b>${esc(title)}</b><small>${esc(it.name)}${+it.cost ? ' · ' + fmt(it.cost) + ' د.ع/' + esc(it.unit) : ''}</small></div><span class="pill ${dl < 2 || st === 'out' ? 'out' : dl < 3 ? 'low' : st}">${st === 'out' ? STATUS.out : isFinite(dl) ? daysText(dl) : STATUS[st]}</span></div>
     <div class="store-big"><span>${NUM(fmtQ(q))} <small>${esc(it.unit)}</small></span>${hw && q > 0 ? `<span class="store-alt">≈ ${NUM(fmt(kgOf(it, 1) ? q / kgOf(it, 1) / hw : 0))} دجاجة</span>` : ''}</div>
     <div class="meter ${dl < 2 ? 'out' : st}"><i style="width:${Math.max(3, Math.min(100, du ? dl / 7 * 100 : (+it.min ? q / (it.min * 3) * 100 : 100)))}%"></i></div>
     <div class="store-meta">${du ? `<span>تستهلك ~${NUM(fmtQ(du))} ${esc(it.unit)} باليوم</span>` : '<span>الاستهلاك يظهر بعد أول دفعات</span>'}${+it.min ? `<span>التنبيه عند ${NUM(fmtQ(it.min))}</span>` : `<button class="btn btn-ghost btn-sm" data-act="edit-item" data-id="${id}">حدّد التنبيه</button>`}</div>
@@ -1804,7 +2270,7 @@ function linkCard(k, title, sugg){
     <div class="chips">${items.map(([id, it]) => `<button class="chip-s" data-act="${k}-link" data-id="${id}">${esc(it.name)}</button>`).join('')}<button class="chip-s" data-act="${k}-newitem" style="border-style:dashed">${ic('plus')} ${sugg}</button></div></div>`;
 }
 
-const VIEWS = {home:homeView, pos:posView, shawarma:shawarmaView, kfc:kfcView, drinks:drinksView, dishes:dishesView, inv:invView, staff:staffView, exp:expView, notes:notesView};
+const VIEWS = {home:homeView, pos:posView, shawarma:shawarmaView, kfc:kfcView, drinks:drinksView, feasts:feastsView, social:socialView, dishes:dishesView, inv:invView, staff:staffView, exp:expView, notes:notesView};
 
 /* ================= sheet & toast ================= */
 let lastFocus = null;
@@ -1845,7 +2311,7 @@ function saveSettings(patch){
   const cur = S.settings.main;
   const full = Object.assign({}, cur || {}, patch);
   S.settings = Object.assign({}, S.settings, {main:full}); render();
-  return cur ? upd('settings/main', patch, full) : put('settings/main', full);
+  return cur ? upd('settings/main', patch, full) : ups('settings/main', full, full);
 }
 function openSettings(){
   const m = S.settings.main || {};
@@ -1854,10 +2320,13 @@ function openSettings(){
     <div class="row2"><label>اسم المدير<input id="f-mgr" maxlength="30" value="${esc(m.mgrName || '')}" placeholder="المدير"></label>
       <label>اسم المسؤول<input id="f-sup" maxlength="30" value="${esc(m.supName || '')}" placeholder="حسن"></label></div>
     <p class="hint">الاسمان يظهران على الملاحظات وسجل الحضور.</p>
-    <fieldset style="border:0;padding:0;margin:0"><legend class="small" style="font-weight:600;color:var(--muted);padding:0;margin-bottom:6px">المظهر (على هذا الجهاز)</legend>
+    <fieldset style="border:0;padding:0;margin:0"><legend class="small" style="font-weight:600;color:var(--muted);padding:0;margin-bottom:8px">الألوان (على هذا الجهاز)</legend>
+      <div class="skins">${SKINS.map(([k, l, bg, a, b]) => `<label class="skin"><input type="radio" name="skin" value="${k}" ${skinGet() === k ? 'checked' : ''}><span class="skin-sw" style="background:${bg}"><i style="background:${a}"></i><i style="background:${b}"></i></span><b>${l}</b></label>`).join('')}</div></fieldset>
+    <fieldset style="border:0;padding:0;margin:0"><legend class="small" style="font-weight:600;color:var(--muted);padding:0;margin-bottom:6px">فاتح / داكن</legend>
       <div class="radio-chips">${[['auto','تلقائي'],['light','فاتح'],['dark','داكن']].map(([k, l]) => `<label><input type="radio" name="theme" value="${k}" ${themeGet() === k ? 'checked' : ''}><span>${l}</span></label>`).join('')}</div></fieldset>
     ${formActions()}</form>`, body => {
     body.querySelectorAll('input[name=theme]').forEach(r => r.addEventListener('change', () => themeSet(r.value)));
+    body.querySelectorAll('input[name=skin]').forEach(r => r.addEventListener('change', () => { skinSet(r.value); render(); }));
     bindForm(body, async f => {
       const patch = {name:val(f, 'f-name').trim(), mgrName:val(f, 'f-mgr').trim(), supName:val(f, 'f-sup').trim()};
       closeSheet(); if (await saveSettings(patch)) toast('تم حفظ الإعدادات');
@@ -2040,13 +2509,15 @@ function openNote(id){
     <fieldset style="border:0;padding:0;margin:0"><legend class="small" style="font-weight:600;color:var(--muted);padding:0;margin-bottom:6px">من يكتب الملاحظة؟</legend>
       <div class="radio-chips">${['sup','manager'].map(r => `<label><input type="radio" name="by" value="${r}" ${by === r ? 'checked' : ''}><span>${esc(roleName(r))}</span></label>`).join('')}</div></fieldset>
     <label>الملاحظة<textarea id="f-text" maxlength="1000" placeholder="مثال: نقص الغاز، لازم نطلب قنينتين باچر">${esc(n.text)}</textarea></label>
-    <label class="check"><input type="checkbox" id="f-pin" ${n.pinned ? 'checked' : ''}> تثبيت في الأعلى</label>
+    <fieldset style="border:0;padding:0;margin:0"><legend class="small" style="font-weight:600;color:var(--muted);padding:0;margin-bottom:8px">لون الورقة</legend>
+      <div class="note-colors">${NOTE_COLORS.map(([k, c, l]) => `<label><input type="radio" name="nc" value="${k}" ${noteColor(n) === k ? 'checked' : ''} aria-label="${l}"><span style="background:${c}"></span></label>`).join('')}</div></fieldset>
+    <label class="check"><input type="checkbox" id="f-pin" ${n.pinned ? 'checked' : ''}> تثبيت بدبوس في الأعلى</label>
     ${formActions()}</form>`, body => {
     bindForm(body, async f => {
       const text = val(f, 'f-text').trim(); if (!text) return setErr(f, 'اكتب الملاحظة.');
       const nb = f.querySelector('input[name=by]:checked').value;
       const changed = !id || text !== n.text || nb !== n.by;
-      const data = Object.assign({}, n, {text, by:nb, pinned:f.querySelector('#f-pin').checked, t:n.t || Date.now(), seen:changed ? false : !!n.seen});
+      const data = Object.assign({}, n, {text, by:nb, pinned:f.querySelector('#f-pin').checked, color:f.querySelector('input[name=nc]:checked').value, t:n.t || Date.now(), seen:changed ? false : !!n.seen});
       const key = id || uid(); closeSheet();
       S.notes = Object.assign({}, S.notes, {[key]:data}); render();
       if (await put('notes/' + key, data)) toast(id ? 'تم حفظ الملاحظة' : 'وصلت الملاحظة إلى ' + roleName(nb === 'sup' ? 'manager' : 'sup'));
@@ -2077,7 +2548,7 @@ function savePay(sid, entry, wasPaid){
   const cur = S.payroll;
   const doc = {period:pk, kind:S.payMode, month:S.payMode === 'week' ? S.week.slice(0, 7) : S.month, staff:Object.assign({}, (cur && cur.staff) || {}, {[sid]:entry})};
   S.payroll = doc; queueRender();
-  if (cur) upd('payroll/' + pk, {staff:{[sid]:entry}}, doc); else put('payroll/' + pk, doc);
+  if (cur) upd('payroll/' + pk, {staff:{[sid]:entry}}, doc); else ups('payroll/' + pk, {period:doc.period, kind:doc.kind, month:doc.month, staff:{[sid]:entry}}, doc);
   const eid = 'pay-' + pk + '-' + sid, st = S.staff[sid];
   if (entry.paid){
     const [a, b] = periodRange(), t = dayKey();
@@ -2099,7 +2570,7 @@ function saveAtt(date, patch){
   days[date] = Object.assign({}, days[date] || {}, patch);
   const full = {month:m, days, meta:Object.assign({}, (cur && cur.meta) || {}, meta)};
   S.att = Object.assign({}, S.att, {[m]:full}); render();
-  return cur ? upd('att/' + m, {days:{[date]:patch}, meta}, full) : put('att/' + m, full);
+  return cur ? upd('att/' + m, {days:{[date]:patch}, meta}, full) : ups('att/' + m, {month:m, days:{[date]:patch}, meta}, full);
 }
 
 async function applyStock(map, sign){
@@ -2124,7 +2595,7 @@ async function sell(){
   } else {
     const map = {}; toArr(cur && cur.orders).forEach(o => { map[o.id] = o; }); map[order.id] = order;
     body = {date:day, month:day.slice(0, 7), orders:map};
-    saved = put('sales/' + day, body);
+    saved = cur ? put('sales/' + day, body) : ups('sales/' + day, {date:day, month:day.slice(0, 7), orders:{[order.id]:order}}, body);
   }
   S.sales = Object.assign({}, S.sales, {[day]:body});
   S.cart = {};
@@ -2177,6 +2648,7 @@ const ACT = {
   'switch-role': () => { S.choosing = true; render(); },
   logout: () => { if (window.__logout) window.__logout(); },
   'cancel-role': () => { S.choosing = false; render(); },
+  'open-note': d => { const n = S.notes[d.id]; if (!n) return; const full = Object.assign({}, n, {seen:true}); S.notes = Object.assign({}, S.notes, {[d.id]:full}); S.opened = d.id; render(); setTimeout(() => { if (S.opened === d.id) S.opened = null; }, 900); upd('notes/' + d.id, {seen:true}, full); },
   'read-note': d => { const n = S.notes[d.id]; if (!n) return; const full = Object.assign({}, n, {seen:true}); S.notes = Object.assign({}, S.notes, {[d.id]:full}); render(); upd('notes/' + d.id, {seen:true}, full); },
   'note-filter': d => { S.noteFilter = d.f; render(); },
   'go-att': () => { S.tab = 'staff'; S.staffSeg = 'att'; S.attDate = dayKey(); render(); window.scrollTo(0, 0); },
@@ -2218,7 +2690,10 @@ const ACT = {
   'add-sk': () => openSkewer(), 'edit-sk': d => openSkewer(d.id, d.date),
   'sk-type': d => { S.shType = d.t; render(); },
   alerts: () => openAlerts(),
-  'kfc-link': d => { const cur = S.settings.kfc, full = Object.assign({}, cur || {}, {item:d.id}); S.settings = Object.assign({}, S.settings, {kfc:full}); render(); (cur ? upd('settings/kfc', {item:d.id}, full) : put('settings/kfc', full)); toast('رُبط الكنتاكي بـ ' + S.items[d.id].name); },
+  'social-set': () => openSocialSet(), 'social-design': d => openSocialDesign(d.i), 'social-copy': d => { const x = socialIdeas()[+d.i]; if (x) copyText(x.cap); },
+  'add-feast': () => openFeast(), 'edit-feast': d => openFeast(d.id), 'feast-pay': d => openFeastPay(d.id),
+  'feast-status': async d => { if (await setFeastStatus(d.id, d.s)) toast(d.s === 'done' ? 'تم التسليم ✓' + (S.feasts[d.id] && S.feasts[d.id].sale ? ' وأُضيفت للمبيعات' : '') : d.s === 'prep' ? 'بدأ التحضير' : 'رجعت الطلبية'); },
+  'kfc-link': d => { const cur = S.settings.kfc, full = Object.assign({}, cur || {}, {item:d.id}); S.settings = Object.assign({}, S.settings, {kfc:full}); render(); (cur ? upd('settings/kfc', {item:d.id}, full) : ups('settings/kfc', full, full)); toast('رُبط الكنتاكي بـ ' + S.items[d.id].name); },
   'kfc-unlink': () => { const cur = S.settings.kfc; if (!cur) return; const full = Object.assign({}, cur, {item:''}); S.settings = Object.assign({}, S.settings, {kfc:full}); render(); upd('settings/kfc', {item:''}, full); },
   'kfc-newitem': () => openItem(null, {name:'دجاج كنتاكي', unit:'كغم'}, key => ACT['kfc-link']({id:key})),
   'add-drink': d => openDrink(null, d.name), 'edit-drink': d => openDrink(d.id), 'drink-day': d => openDrinkDay(d.date),
