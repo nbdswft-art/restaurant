@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1B5C4B">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-1m47X9RfZ+Slb2JlBFCmxi7oN9AF6WyvxVdRMoyl2BM=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data: blob:; media-src blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-OHPz3xIKXyxWKoXoX0w0W34DpfjiV3oTimdikmhBEDM=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data: blob:; media-src blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -553,6 +553,34 @@ table.sched{border-collapse:separate;border-spacing:0;width:100%;min-width:720px
 .how summary{cursor:pointer;font-weight:700;color:var(--accent)}
 .how ol{margin:10px 0 0;padding-inline-start:20px;display:grid;gap:7px;line-height:1.7}
 .how small{color:var(--muted)}
+
+/* ---------- clearer entry: phases, units inside inputs, recipe box ---------- */
+.phases{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:sticky;top:52px;z-index:2;background:var(--surface);padding:4px 0 8px}
+.phases button{display:grid;gap:1px;text-align:right;border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:9px 12px;color:var(--muted);transition:border-color .15s,background .15s}
+.phases button b{font-size:14px;color:inherit} .phases button small{font-size:11px;opacity:.85}
+.phases button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
+.phases button[aria-pressed="true"] b{color:var(--accent)}
+.ph-sum{display:flex;align-items:center;gap:10px;background:var(--sunken);border-radius:14px;padding:10px 12px}
+.ph-sum .av{width:38px;height:38px;border-radius:12px} .ph-sum .av svg{width:20px;height:20px}
+.ph-sum b{display:block;font-size:14px} .ph-sum small{display:block;font-size:12px;color:var(--muted)}
+.uin{position:relative;display:block}
+.uin input{padding-inline-end:58px!important}
+.uin i{position:absolute;inset-inline-end:10px;top:50%;transform:translateY(-50%);font-style:normal;font-size:12px;font-weight:700;color:var(--faint);pointer-events:none;background:var(--sunken);border-radius:6px;padding:2px 6px}
+.form input.big-in{font-size:20px;font-weight:700;min-height:52px}
+.mini-set{background:var(--sunken);border-radius:12px;padding:8px 12px}
+.mini-set summary{cursor:pointer;font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.mini-set summary b{color:var(--ink)} .mini-set summary span{margin-inline-start:auto;color:var(--accent);font-weight:700}
+.mini-set[open] summary{margin-bottom:10px}
+.tipbox{margin:0;background:var(--accent-soft);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.7;color:var(--ink)}
+.rb{display:grid;background:var(--sunken);border-radius:12px;padding:6px 12px}
+.rb-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:6px 0;font-size:13px}
+.rb-row + .rb-row{border-top:1px dashed var(--line)}
+.rb-row b{white-space:nowrap;min-width:84px;text-align:left}
+.rb-tot{font-weight:700;font-size:14px}
+.rec-row{display:grid;grid-template-columns:minmax(0,1fr) 84px 104px 34px;gap:6px;align-items:center}
+.rec-row select,.rec-row input{padding:9px 8px!important;font-size:14px!important}
+@media (max-width:480px){.rec-row{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) 34px;grid-template-areas:"i i d" "q p p";background:var(--sunken);border-radius:12px;padding:8px}
+  .rec-row .r-i{grid-area:i}.rec-row .r-q{grid-area:q}.rec-row .r-per{grid-area:p}.rec-row .r-del{grid-area:d}}
 
 /* ---------- feasts ---------- */
 .fe-list{display:grid;gap:12px}
@@ -1325,7 +1353,7 @@ function shawarmaView(){
   const lossAvg = done.filter(r => r.c.w).length ? sum(done.filter(r => r.c.w), r => r.c.lossPct) / done.filter(r => r.c.w).length : 0;
   const f = (k, l) => `<button class="chip" data-act="sk-type" data-t="${esc(k)}" aria-pressed="${S.shType === k}">${esc(l)}</button>`;
   const groups = {}; list.forEach(r => { (groups[r.date] = groups[r.date] || []).push(r); });
-  const top = head('الشاورما', 'الوزن واللفات وحصة البيتزا والربح', `<button class="btn btn-primary" data-act="add-sk">${ic('plus')} شيش جديد</button>`);
+  const top = head('الشاورما', 'الوزن واللفات وحصة البيتزا والربح', `<div class="chips"><button class="btn" data-act="sh-recipe">${ic('leaf')} الوصفات</button><button class="btn btn-primary" data-act="add-sk">${ic('plus')} شيش جديد</button></div>`);
   if (!all.length) return top + `<div>${monthNav()}</div><div class="panel empty"><span class="av av1" style="width:56px;height:56px;border-radius:16px">${ic('shawarma')}</span><strong>لا يوجد شيش مسجّل في ${monthLabel(S.month)}</strong>
     <span>سجّل وزن الشيش وسعره ومواده، وبآخر اليوم اكتب عدد اللفات وكم راح لأبو البيتزا. التطبيق يحسب الكلفة والربح والفقد، وكم لفة كان المفروض يطلع منه.</span>
     <button class="btn btn-primary" data-act="add-sk">${ic('plus')} سجّل أول شيش</button></div>`;
@@ -1363,35 +1391,34 @@ function openSkewer(id, date){
   const v = n => (n === '' || n == null || !+n) ? '' : fmtQ(n);
   const pzG = old && +x.pz > 0 && +x.pz < 1;
   const stocked = old ? Object.keys(old.stk || {}).length > 0 : true;
-  openSheet(old ? 'تعديل شيش ' + x.type : 'شيش جديد', `<form class="form" novalidate>
-    <div class="fsec"><b>${ic('shawarma')} الشيش</b>
+  openSheet(old ? 'شيش ' + x.type + (shCalc(x).open ? ' · على النار' : '') : 'شيش جديد', `<form class="form" novalidate>
+    ${phaseTabs('بداية الشيش', 'الوزن والسعر والوصفة', 'آخر اليوم', 'اللفات والبيتزا والباقي')}
+    <div class="fsec" data-ph="1"><b>${ic('shawarma')} الشيش</b>
+      <div class="chips" id="type-chips">${names.map(t => `<button type="button" class="chip-s" data-t="${esc(t)}" aria-pressed="${t === x.type}">${esc(t)}</button>`).join('')}</div>
       <div class="row2"><label>النوع<input id="f-type" maxlength="30" value="${esc(x.type)}" list="sk-types" autocomplete="off"><datalist id="sk-types">${names.map(t => `<option value="${esc(t)}">`).join('')}</datalist></label>
         <label>التاريخ<input id="f-date" type="date" value="${d0}" min="${minM}-01" max="${dayKey()}"></label></div>
-      <div class="chips" id="type-chips">${names.map(t => `<button type="button" class="chip-s" data-t="${esc(t)}" aria-pressed="${t === x.type}">${esc(t)}</button>`).join('')}</div>
-      <div class="row2"><label>وزن الشيش (كغم)<input id="f-w" inputmode="decimal" value="${v(x.w)}" placeholder="مثال: 18"></label>
-        <label>سعر كيلو اللحم (د.ع)<input id="f-kgp" inputmode="numeric" value="${v(x.kgp)}" placeholder="0"></label></div>
-      ${hasItems ? `<label>اللحم من المخزون<select id="f-item"><option value="">بدون، لا تخصم من المخزون</option>${items.map(([iid, it]) => `<option value="${iid}" ${x.item === iid ? 'selected' : ''}>${esc(it.name)} (${esc(it.unit)})</option>`).join('')}</select><small>إذا اخترت مادة، يُخصم وزن الشيش منها وتُستخدم كلفتها</small></label><p class="hint stock-hint" id="stock-hint"></p>` : ''}
+      <div class="row2"><label>وزن الشيش وهو نيّ${uin('f-w', v(x.w), 'كغم', 'مثال: 18', 'decimal', 'class="big-in"')}</label>
+        <label>سعر كيلو اللحم${uin('f-kgp', v(x.kgp), 'د.ع', '0', 'numeric')}</label></div>
+      ${hasItems ? `<label>اللحم من المخزون<select id="f-item"><option value="">بدون، لا تخصم من المخزون</option>${items.map(([iid, it]) => `<option value="${iid}" ${x.item === iid ? 'selected' : ''}>${esc(it.name)} (${esc(it.unit)})</option>`).join('')}</select></label><p class="hint stock-hint" id="stock-hint"></p>
+      <label class="check"><input type="checkbox" id="f-stock" ${stocked ? 'checked' : ''}> اخصم اللحم والمواد من المخزون</label>` : ''}
     </div>
-    <div class="fsec"><b>${ic('leaf')} التتبيلة والمواد</b>
-      ${hasItems ? `<div class="recipe" id="mats">${(x.mats || []).filter(r => S.items[r.i]).map(recipeRow).join('')}</div><button type="button" class="btn btn-sm" id="m-add" style="justify-self:start">${ic('plus')} مادة من المخزون</button>` : ''}
-      <label>مواد أخرى (د.ع)<input id="f-other" inputmode="numeric" value="${v(x.other)}" placeholder="بهارات، لبن، خل، فحم…"><small>كلفة المواد غير المسجّلة في المخزون، للشيش كله</small></label>
+    ${recipeSection(shRecipe(x.type), x, old, hasItems, 'شيش')}
+    <div class="fsec" data-ph="2"><b>${ic('pos')} اللفات</b>
+      <div class="row2"><label>عدد اللفات المباعة${uin('f-wraps', v(x.wraps), 'لفة', '0', 'numeric', 'class="big-in"')}</label>
+        <label>لفات العمال (عشاء)${uin('f-staff', v(x.staff), 'لفة', '0', 'numeric')}<small>كلفة بدون إيراد</small></label></div>
+      <details class="mini-set" ${!+x.gpw || !+x.price ? 'open' : ''}><summary>اللفة: <b id="wrap-sum"></b> <span>تعديل</span></summary>
+        <div class="row3"><label>غرام اللحم باللفة${uin('f-gpw', v(x.gpw), 'غرام', '120')}</label>
+          <label>سعر اللفة${uin('f-price', v(x.price), 'د.ع', '0', 'numeric')}</label>
+          <label>خبز وصوص للفة${uin('f-extra', v(x.extra), 'د.ع', '0', 'numeric')}</label></div></details>
     </div>
-    <div class="fsec"><b>${ic('pos')} اللفات</b>
-      <div class="row3"><label>غرام اللفة<input id="f-gpw" inputmode="decimal" value="${v(x.gpw)}" placeholder="مثال: 120"></label>
-        <label>سعر اللفة (د.ع)<input id="f-price" inputmode="numeric" value="${v(x.price)}" placeholder="0"></label>
-        <label>خبز وصوص للفة<input id="f-extra" inputmode="numeric" value="${v(x.extra)}" placeholder="د.ع"></label></div>
-      <label>عدد اللفات المباعة<input id="f-wraps" inputmode="numeric" value="${v(x.wraps)}" placeholder="اتركه فارغاً إذا الشيش بعده على النار" style="font-size:20px;font-weight:700"></label>
-      <label>لفات العمال (عشاء)<input id="f-staff" inputmode="numeric" value="${v(x.staff)}" placeholder="0"><small>تُحسب كلفتها على الشيش بدون إيراد</small></label>
-    </div>
-    <div class="fsec"><b>${ic('pizza')} لأبو البيتزا</b>
+    <div class="fsec" data-ph="2"><b>${ic('pizza')} لأبو البيتزا</b>
       <div class="row2"><label>الكمية<span class="inunit"><input id="f-pz" inputmode="decimal" value="${+x.pz ? (pzG ? fmt(x.pz * 1000) : fmtQ(x.pz)) : ''}" placeholder="0"><select id="f-pzu" aria-label="الوحدة"><option value="kg" ${pzG ? '' : 'selected'}>كغم</option><option value="g" ${pzG ? 'selected' : ''}>غرام</option></select></span></label>
-        <label>سعر الكيلو له (د.ع)<input id="f-pzp" inputmode="numeric" value="${v(x.pzp)}" placeholder="فارغ = بسعر الكلفة"></label></div>
+        <label>سعر الكيلو له${uin('f-pzp', v(x.pzp), 'د.ع', 'فارغ = بالكلفة', 'numeric')}</label></div>
     </div>
-    <div class="fsec"><b>${ic('scale')} آخر اليوم</b>
-      <div class="row2"><label>الباقي على الشيش (كغم)<input id="f-left" inputmode="decimal" value="${v(x.left)}" placeholder="0"><small>ينتقل لليوم الثاني ولا يُحسب خسارة</small></label>
-        <label>الفقد المتوقع %<input id="f-exl" inputmode="decimal" value="${x.exl === '' ? '' : esc(x.exl)}" placeholder="${shExl(Object.assign({}, x, {exl:''}), id)}"><small id="exl-src"></small></label></div>
+    <div class="fsec" data-ph="2"><b>${ic('scale')} الباقي والملاحظات</b>
+      <div class="row2"><label>الباقي على الشيش${uin('f-left', v(x.left), 'كغم', '0')}<small>ينتقل لليوم الثاني</small></label>
+        <label>الفقد المتوقع${uin('f-exl', x.exl === '' ? '' : String(x.exl), '%', String(shExl(Object.assign({}, x, {exl:''}), id)))}<small id="exl-src"></small></label></div>
       <label>ملاحظة<input id="f-note" maxlength="80" value="${esc(x.note || '')}" placeholder="اختياري"></label>
-      ${hasItems ? `<label class="check"><input type="checkbox" id="f-stock" ${stocked ? 'checked' : ''}> اخصم اللحم والمواد من المخزون</label>` : ''}
     </div>
     <div class="sk-calc"><div class="sk-hint" id="sk-hint"></div><div class="calc" id="calc"></div>
       <details class="how"><summary>كيف انحسب؟ (خطوة بخطوة)</summary><ol id="how"></ol></details></div>
@@ -1431,12 +1458,18 @@ function openSkewer(id, date){
         c.open ? '' : `<b>الربح</b> = ${D(c.rev)} − ${D(c.cost)} = <b>${D(c.profit)}</b>${c.staff ? ' <small>(بعد كلفة ' + c.staff + ' لفات للعمال بدون إيراد)</small>' : ''}`,
         '<small>هذا ربح المواد فقط. الرواتب والإيجار والكهرباء والغاز العام تظهر في المصاريف.</small>'
       ].filter(Boolean).map(x => `<li>${x}</li>`).join('');
+      $f('#wrap-sum').textContent = (y.gpw ? fmt(y.gpw) + ' غ' : 'بدون غرام') + ' · ' + (y.price ? fmt(y.price) + ' د.ع' : 'بدون سعر') + (y.extra ? ' + ' + fmt(y.extra) + ' خبز' : '');
+      if (ph) ph.sum();
       $f('#calc').innerHTML = `<div><span>${c.open ? 'كلفة الشيش' : 'التكلفة'}</span><b>${IQD(c.open ? c.base : c.cost)}</b></div><div><span>${c.open ? 'يسوى' : 'الإيراد'}</span><b>${IQD(c.open ? ex.worth : c.rev)}</b></div><div><span>${c.open ? 'الربح المتوقع' : 'الربح'}</span><b class="${p < 0 ? 'neg-v' : 'pos-v'}">${IQD(p)}</b></div>
         <div><span>كلفة اللفة</span><b>${IQD(c.wrapCost)}</b></div><div><span>الفقد</span><b>${c.open ? '—' : fmtKg(c.loss) + ' · ' + NUM(Math.round(c.lossPct) + '%')}</b></div><div><span>${c.staff ? 'عشاء العمال' : 'البيتزا'}</span><b>${IQD(c.staff ? c.staffCost : c.pzRev)}</b></div>`;
     };
     const fill = t => { if (old) return; const d = def(t); [['f-gpw', d.gpw], ['f-price', d.price], ['f-extra', d.extra], ['f-pzp', d.pzp], ['f-kgp', d.kgp], ['f-other', d.other]].forEach(([k, val]) => { $f('#' + k).value = val ? fmtQ(val) : ''; });
       if ($f('#f-item')) $f('#f-item').value = d.item && S.items[d.item] ? d.item : '';
-      if (mats) mats.innerHTML = (d.mats || []).filter(r => S.items[r.i]).map(recipeRow).join(''); };
+      if (mats) mats.innerHTML = (d.mats || []).filter(r => S.items[r.i]).map(recipeRow).join('');
+      rw.auto = hasRecipe(shRecipe(t)); };
+    const rw = wireRecipe(body, {rec:() => shRecipe($f('#f-type').value.trim()), save:r => saveShRecipe($f('#f-type').value.trim(), r), w:() => round(nn($f('#f-w').value)), word:'لحم', onChange:() => calc()});
+    $f('#f-w').addEventListener('input', () => { if (rw.auto) rw.refresh(); });
+    let ph = null;
     const markT = () => body.querySelectorAll('[data-t]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.t === $f('#f-type').value.trim())));
     $f('#type-chips').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; $f('#f-type').value = b.dataset.t; markT(); fill(b.dataset.t); calc(); });
     $f('#f-type').addEventListener('change', () => { markT(); if (shDefaults()[$f('#f-type').value.trim()]) fill($f('#f-type').value.trim()); calc(); });
@@ -1447,11 +1480,13 @@ function openSkewer(id, date){
       mats.addEventListener('click', e => { const b = e.target.closest('.r-del'); if (b){ b.closest('.rrow').remove(); calc(); } });
     }
     body.addEventListener('input', calc); body.addEventListener('change', calc);
+    ph = wirePhases(body, old ? 2 : 1, {1:old ? 'حفظ' : 'حفظ · الشيش على النار 🔥', 2:'حفظ الحساب'}, () => { const y = read(), c = shCalc(y), ex = shExpect(y, c, shExl(y, id));
+      return `<span class="av av1">${ic('shawarma')}</span><div class="li-main"><b>شيش ${esc(y.type)} · ${fmtKg(y.w)}</b><small>كلّف ${IQD(c.base)}${c.gpw ? ' · المتوقع ' + lafa(ex.wraps) : ''}</small></div><button type="button" class="btn btn-sm btn-ghost" data-ph-jump>تعديل</button>`; });
     calc();
     bindForm(body, async f => {
       const y = read(), dt = $f('#f-date').value || dayKey();
-      if (!y.type) return setErr(f, 'اكتب نوع الشيش، مثلاً دجاج أو لحم.');
-      if (y.w <= 0) return setErr(f, 'اكتب وزن الشيش بالكيلو.');
+      if (!y.type){ ph.set(1); return setErr(f, 'اكتب نوع الشيش، مثلاً دجاج أو لحم.'); }
+      if (y.w <= 0){ ph.set(1); return setErr(f, 'اكتب وزن الشيش بالكيلو.'); }
       if (y.wraps + y.staff > 0 && y.gpw <= 0) return setErr(f, 'اكتب كم غرام باللفة الواحدة.');
       if (y.wraps > 0 && y.price <= 0) return setErr(f, 'اكتب سعر اللفة.');
       if (dt > dayKey()) return setErr(f, 'لا يمكن التسجيل بتاريخ قادم.');
@@ -1460,7 +1495,7 @@ function openSkewer(id, date){
       const stockOn = $f('#f-stock') ? $f('#f-stock').checked : false;
       const stk = {};
       if (stockOn){ if (y.item && S.items[y.item]) stk[y.item] = round(kgOf(S.items[y.item], y.w)); y.mats.forEach(r => { stk[r.i] = round((stk[r.i] || 0) + r.q); }); }
-      const data = Object.assign({}, y, {stk, t:(old && old.t) || Date.now(), by:myRole() || ''});
+      const data = Object.assign({}, y, {stk, auto:rw.auto, t:(old && old.t) || Date.now(), by:myRole() || ''});
       closeSheet();
       const jobs = [];
       if (old && date !== dt) jobs.push(skWrite(date, sid, null));
@@ -1481,6 +1516,123 @@ function openSkewer(id, date){
     });
   });
 }
+/* ---------- recipes (shawarma skewers & KFC batches) ----------
+   A recipe says what goes into each kg of meat — or once per skewer/batch (oil, charcoal) —
+   so the materials of a new skewer fill themselves from its weight.
+   Stored as settings/shawarma.recipes[type] and settings/kfc.recipe: {rows:[{i, q, per:'kg'|'batch'}], other (IQD per kg), otherB (IQD per batch)} */
+const shRecipe = t => ((S.settings.shawarma || {}).recipes || {})[t] || null;
+const kfcRecipe = () => kfcSet().recipe || null;
+const hasRecipe = r => !!r && (toArr(r.rows).some(x => S.items[x.i] && +x.q > 0) || +r.other > 0 || +r.otherB > 0);
+function recipeQty(rec, w){
+  const mats = toArr(rec && rec.rows).filter(r => S.items[r.i] && +r.q > 0).map(r => ({i:r.i, q:round(r.per === 'batch' ? +r.q : +r.q * w)})).filter(r => r.q > 0);
+  return {mats, other:Math.round((+(rec && rec.other) || 0) * w + (+(rec && rec.otherB) || 0))};
+}
+function recBox(q, w, unitWord){
+  if (!w) return `<p class="hint" style="margin:0">اكتب الوزن حتى تنحسب كميات الوصفة.</p>`;
+  const rows = q.mats.map(r => { const it = S.items[r.i]; return `<div class="rb-row"><span>${esc(it.name)}</span><span>${NUM(fmtQ(r.q))} ${esc(it.unit)}</span><b>${IQD(r.q * (+it.cost || 0))}</b></div>`; });
+  if (q.other) rows.push(`<div class="rb-row"><span>مواد أخرى</span><span></span><b>${IQD(q.other)}</b></div>`);
+  const tot = sum(q.mats, r => r.q * (+S.items[r.i].cost || 0)) + q.other;
+  return `<div class="rb">${rows.join('') || '<p class="hint" style="margin:0">الوصفة فارغة.</p>'}<div class="rb-row rb-tot"><span>المجموع لـ ${fmtKg(w)} ${unitWord}</span><span></span><b>${IQD(tot)}</b></div></div>`;
+}
+/* the materials block shared by the skewer and batch forms: automatic from the recipe, or written by hand for this one only */
+function recipeSection(rec, x, old, hasItems, word){
+  const auto = hasRecipe(rec) && (!old || old.auto !== false);
+  return `<div class="fsec" data-ph="1"><b>${ic('leaf')} التتبيلة والمواد</b>
+    <div id="rec-auto" ${auto ? '' : 'hidden'}><p class="hint" style="margin:0 0 8px">${ic('check')} تنحسب وحدها من الوزن حسب الوصفة:</p><div id="rec-box"></div>
+      <div class="fe-acts" style="margin-top:8px"><button type="button" class="btn btn-sm" id="rec-manual">${ic('edit')} غيّر الكميات لهذا ${word} فقط</button></div></div>
+    <div id="rec-man" ${auto ? 'hidden' : ''}>
+      ${hasRecipe(rec) ? '' : `<p class="tipbox">💡 اكتب مواد ${word} مرة وحدة واضغط <b>«احفظها كوصفة»</b>. بعدها كل ${word} تنحسب مواده وحدها من الوزن.</p>`}
+      ${hasItems ? `<div class="recipe" id="mats">${(x.mats || []).filter(r => S.items[r.i]).map(recipeRow).join('')}</div><button type="button" class="btn btn-sm" id="m-add" style="justify-self:start;margin-top:8px">${ic('plus')} مادة من المخزون</button>` : ''}
+      <label style="margin-top:10px">مواد أخرى غير مسجّلة بالمخزون${uin('f-other', x.other && +x.other ? fmtQ(x.other) : '', 'د.ع', 'بهارات، فحم، غاز…', 'numeric')}<small>للـ${word} كله</small></label>
+      <div class="fe-acts" style="margin-top:10px"><button type="button" class="btn btn-sm btn-primary" id="rec-save">${ic('check')} احفظها كوصفة لكل كيلو</button><button type="button" class="btn btn-sm btn-ghost" id="rec-back" ${hasRecipe(rec) ? '' : 'hidden'}>رجوع للوصفة</button></div>
+    </div></div>`;
+}
+function wireRecipe(body, o){        // o: {rec(), save(rec), w(), word, onChange()}
+  const $f = s => body.querySelector(s), mats = $f('#mats');
+  let auto = !$f('#rec-auto').hidden;
+  const show = () => { $f('#rec-auto').hidden = !auto; $f('#rec-man').hidden = auto; $f('#rec-back').hidden = !hasRecipe(o.rec()); };
+  const refresh = () => {
+    const rec = o.rec();
+    if (!hasRecipe(rec)) auto = false;
+    if (auto){ const q = recipeQty(rec, o.w()); if (mats) mats.innerHTML = q.mats.map(recipeRow).join(''); $f('#f-other').value = q.other ? fmtQ(q.other) : ''; $f('#rec-box').innerHTML = recBox(q, o.w(), o.word); }
+    show();
+  };
+  $f('#rec-manual').addEventListener('click', () => { auto = false; show(); o.onChange(); });
+  $f('#rec-back').addEventListener('click', () => { auto = true; refresh(); o.onChange(); });
+  $f('#rec-save').addEventListener('click', async () => {
+    const w = o.w(); if (!(w > 0)) { toast('اكتب الوزن أولاً حتى أقسم الكميات على الكيلو', true); return; }
+    const prev = o.rec(), basis = i => { const r = toArr(prev && prev.rows).find(x => x.i === i); return r && r.per === 'batch' ? 'batch' : 'kg'; };
+    const rows = mats ? [...mats.querySelectorAll('.rrow')].map(r => ({i:r.querySelector('.r-i').value, q:nn(r.querySelector('.r-q').value)})).filter(r => r.i && r.q > 0)
+      .map(r => ({i:r.i, per:basis(r.i), q:round(basis(r.i) === 'batch' ? r.q : r.q / w, 4)})) : [];
+    const rec = {rows, other:round(nn($f('#f-other').value) / w, 2), otherB:0};
+    if (!hasRecipe(rec)){ toast('اكتب مادة واحدة على الأقل', true); return; }
+    await o.save(rec); auto = true; refresh(); o.onChange(); toast('حُفظت الوصفة · من الآن تنحسب وحدها');
+  });
+  refresh();
+  return {get auto(){ return auto; }, set auto(v){ auto = v; refresh(); }, refresh};
+}
+function saveShRecipe(type, rec){
+  const cur = S.settings.shawarma, full = Object.assign({}, cur || {}, {recipes:Object.assign({}, (cur && cur.recipes) || {}, {[type]:rec})});
+  S.settings = Object.assign({}, S.settings, {shawarma:full});
+  return cur ? upd('settings/shawarma', {recipes:{[type]:rec}}, full) : ups('settings/shawarma', full, full);
+}
+function saveKfcRecipe(rec){
+  const cur = S.settings.kfc, full = Object.assign({}, cur || {}, {recipe:rec});
+  S.settings = Object.assign({}, S.settings, {kfc:full});
+  return cur ? upd('settings/kfc', {recipe:rec}, full) : ups('settings/kfc', full, full);
+}
+/* the recipe editor, opened from the section header */
+function openRecipe(kind, type){
+  const isSh = kind === 'sh', names = isSh ? shTypeNames() : [];
+  type = isSh ? (type || (S.settings.shawarma && S.settings.shawarma.last) || names[0]) : '';
+  const rec = (isSh ? shRecipe(type) : kfcRecipe()) || {rows:[], other:'', otherB:''}, word = isSh ? 'شيش' : 'دفعة';
+  const items = sortByName(S.items);
+  const row = r => `<div class="rec-row"><select class="r-i" aria-label="المادة"><option value="">اختر مادة…</option>${items.map(([id, it]) => `<option value="${id}" ${r && r.i === id ? 'selected' : ''}>${esc(it.name)} (${esc(it.unit)})</option>`).join('')}</select>
+    <input class="r-q" inputmode="decimal" placeholder="الكمية" value="${r && +r.q ? fmtQ(r.q) : ''}" aria-label="الكمية"><select class="r-per" aria-label="لكل"><option value="kg" ${!r || r.per !== 'batch' ? 'selected' : ''}>لكل كيلو</option><option value="batch" ${r && r.per === 'batch' ? 'selected' : ''}>لكل ${word}</option></select>
+    <button type="button" class="icon-btn r-del" aria-label="حذف">${ic('x')}</button></div>`;
+  openSheet(isSh ? 'وصفة الشيش' : 'وصفة الكنتاكي', `<form class="form" novalidate>
+    ${isSh ? `<div class="chips" id="rt">${names.map(t => `<button type="button" class="chip-s" data-rt="${esc(t)}" aria-pressed="${t === type}">شيش ${esc(t)}</button>`).join('')}</div>` : ''}
+    <p class="tipbox">اكتب كمية كل مادة <b>لكل كيلو ${isSh ? 'لحم' : 'دجاج'}</b>، مثلاً 0.05 كغم بهارات لكل كيلو. والمواد التي تُستعمل مرة وحدة مهما كان الوزن، مثل الزيت أو الفحم، اختر لها «لكل ${word}».</p>
+    ${items.length ? `<div class="recipe" id="rows">${toArr(rec.rows).filter(r => S.items[r.i]).map(row).join('') || row(null)}</div><button type="button" class="btn btn-sm" id="r-add" style="justify-self:start">${ic('plus')} مادة</button>` : '<p class="hint">أضف المواد في المخزون أولاً حتى تربطها بالوصفة.</p>'}
+    <div class="row2"><label>مواد أخرى لكل كيلو${uin('f-o', +rec.other ? fmtQ(rec.other) : '', 'د.ع', '0', 'numeric')}</label><label>مواد أخرى لكل ${word}${uin('f-ob', +rec.otherB ? fmtQ(rec.otherB) : '', 'د.ع', '0', 'numeric')}</label></div>
+    <label>جرّب على وزن${uin('f-try', '20', 'كغم', '20')}</label>
+    <div id="try"></div>
+    ${formActions(hasRecipe(rec) ? 'مسح الوصفة' : '')}</form>`, body => {
+    const $f = s => body.querySelector(s), box = $f('#rows');
+    const read = () => ({rows:box ? [...box.querySelectorAll('.rec-row')].map(r => ({i:r.querySelector('.r-i').value, q:round(nn(r.querySelector('.r-q').value), 4), per:r.querySelector('.r-per').value})).filter(r => r.i && r.q > 0) : [],
+      other:round(nn($f('#f-o').value), 2), otherB:Math.round(nn($f('#f-ob').value))});
+    const calc = () => { const r = read(), w = nn($f('#f-try').value) || 0, q = recipeQty(r, w), perKg = recipeQty(r, 1);
+      $f('#try').innerHTML = recBox(q, w, isSh ? 'لحم' : 'دجاج') + `<p class="hint" style="margin-top:6px">كلفة الوصفة لكل كيلو تقريباً: <b>${IQD(sum(perKg.mats.filter(m => toArr(r.rows).find(x => x.i === m.i && x.per !== 'batch')), m => m.q * (+S.items[m.i].cost || 0)) + (+r.other || 0))}</b></p>`; };
+    if (box){ $f('#r-add').addEventListener('click', () => { box.insertAdjacentHTML('beforeend', row(null)); calc(); });
+      box.addEventListener('click', e => { const b = e.target.closest('.r-del'); if (b){ b.closest('.rec-row').remove(); calc(); } }); }
+    if ($f('#rt')) $f('#rt').addEventListener('click', e => { const b = e.target.closest('[data-rt]'); if (b){ closeSheet(); openRecipe('sh', b.dataset.rt); } });
+    body.addEventListener('input', calc); body.addEventListener('change', calc); calc();
+    bindForm(body, async f => {
+      const r = read(); if (!hasRecipe(r)) return setErr(f, 'اكتب مادة واحدة على الأقل مع كميتها.');
+      closeSheet(); if (await (isSh ? saveShRecipe(type, r) : saveKfcRecipe(r))) toast('حُفظت ' + (isSh ? 'وصفة شيش ' + type : 'وصفة الكنتاكي'));
+    });
+    sheetDelete(body, 'المسح', async () => { closeSheet(); if (await (isSh ? saveShRecipe(type, null) : saveKfcRecipe(null))) toast('مُسحت الوصفة'); });
+  });
+}
+/* an input with its unit written inside it, so nobody types grams where kilos are expected */
+const uin = (id, value, unit, ph = '', mode = 'decimal', extra = '') => `<span class="uin"><input id="${id}" inputmode="${mode}" value="${esc(value)}" placeholder="${esc(ph)}" ${extra}><i>${unit}</i></span>`;
+function phaseTabs(t1, s1, t2, s2){
+  return `<div class="phases" role="group" aria-label="المرحلة"><button type="button" data-ph-go="1"><b>① ${t1}</b><small>${s1}</small></button><button type="button" data-ph-go="2"><b>② ${t2}</b><small>${s2}</small></button></div><div class="ph-sum" id="ph-sum" hidden></div>`;
+}
+function wirePhases(body, start, labels, summary){
+  const btn = body.querySelector('button[type=submit]');
+  let cur = start;
+  const set = n => { cur = n;
+    body.querySelectorAll('[data-ph]').forEach(el => { el.hidden = el.dataset.ph !== String(n); });
+    body.querySelectorAll('[data-ph-go]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.phGo === String(n))));
+    btn.textContent = labels[n]; const s = body.querySelector('#ph-sum'); s.hidden = n !== 2; if (n === 2) s.innerHTML = summary();
+    const p = body.closest('.sheet-panel'); if (p) p.scrollTop = 0; };
+  body.querySelector('.phases').addEventListener('click', e => { const b = e.target.closest('[data-ph-go]'); if (b) set(+b.dataset.phGo); });
+  body.addEventListener('click', e => { if (e.target.closest('[data-ph-jump]')) set(1); });
+  set(start);
+  return {set, get cur(){ return cur; }, sum(){ if (cur === 2) body.querySelector('#ph-sum').innerHTML = summary(); }};
+}
+
 function skWrite(date, sid, data){
   const cur = S.shawarma[date], path = 'shawarma/' + date;
   let body, p;
@@ -1498,7 +1650,7 @@ function skWrite(date, sid, data){
 function saveShDefaults(y){
   const d = {gpw:y.gpw, price:y.price, extra:y.extra, pzp:y.pzp, kgp:y.kgp, item:y.item, mats:y.mats.map(r => ({i:r.i, q:r.q})), other:y.other, exl:y.exl};
   const cur = S.settings.shawarma;
-  const full = {types:Object.assign({}, (cur && cur.types) || {}, {[y.type]:d}), last:y.type};
+  const full = Object.assign({}, cur || {}, {types:Object.assign({}, (cur && cur.types) || {}, {[y.type]:d}), last:y.type});
   S.settings = Object.assign({}, S.settings, {shawarma:full});
   return cur ? upd('settings/shawarma', {types:{[y.type]:d}, last:y.type}, full) : ups('settings/shawarma', full, full);
 }
@@ -1550,7 +1702,7 @@ function kfcView(){
   const all = days.flatMap(d => batchesOf(d).map(([id, x]) => ({id, x, date:d.date, c:kfcCalc(x)}))).sort((a, b) => (b.x.t || 0) - (a.x.t || 0));
   const done = all.filter(r => !r.c.open), T = f => sum(done, r => f(r.c));
   const meals = kfcMeals();
-  const top = head('الكنتاكي', 'الدجاج بالكيلو، القطع، والوجبات', `<div class="chips"><button class="btn" data-act="kfc-meals">${ic('meal')} الوجبات والأسعار</button><button class="btn btn-primary" data-act="add-kfc">${ic('plus')} دفعة جديدة</button></div>`);
+  const top = head('الكنتاكي', 'الدجاج بالكيلو، القطع، والوجبات', `<div class="chips"><button class="btn" data-act="kfc-recipe">${ic('leaf')} الوصفة</button><button class="btn" data-act="kfc-meals">${ic('meal')} الوجبات والأسعار</button><button class="btn btn-primary" data-act="add-kfc">${ic('plus')} دفعة جديدة</button></div>`);
   const store = kfcSet().item && S.items[kfcSet().item] ? storeCard(kfcSet().item, 'مخزن دجاج الكنتاكي', 'kfc') : linkCard('kfc', 'مخزن دجاج الكنتاكي', 'أضف دجاج كنتاكي');
   const setup = !meals.length ? `<div class="banner"><p>أولاً حدّد <b>وجباتك</b>: كم قطعة بكل وجبة وسعرها، مثل وجبة 2 قطع، 4 قطع، بوكس عائلي.</p><button class="btn btn-sm btn-primary" data-act="kfc-meals">تحديد الوجبات</button></div>` : '';
   if (!all.length) return top + setup + store + `<div>${monthNav()}</div><div class="panel empty"><span class="av av3" style="width:56px;height:56px;border-radius:16px">${ic('kfc')}</span><strong>لا توجد دفعات كنتاكي في ${monthLabel(S.month)}</strong>
@@ -1621,30 +1773,27 @@ function openKfc(id, date){
   const items = sortByName(S.items), hasItems = items.length > 0;
   const v = n => (n === '' || n == null || !+n) ? '' : fmtQ(n);
   const stocked = old ? Object.keys(old.stk || {}).length > 0 : true;
-  openSheet(old ? 'تعديل دفعة كنتاكي' : 'دفعة كنتاكي جديدة', `<form class="form" novalidate>
-    ${old ? '' : `<div class="steps"><div><i>1</i><span><b>الآن:</b> وزن الدجاج وسعره، وعدد الدجاجات وكم قطعة تقطّع كل دجاجة، ثم احفظ.</span></div><div><i>2</i><span><b>آخر اليوم:</b> افتح نفس الدفعة واكتب كم وجبة بعت من كل نوع، وقطع العمال والباقي.</span></div><div><i>3</i><span>التطبيق يحسب كلفة القطعة والربح، ويقول لك إذا في قطع ناقصة.</span></div></div>`}
-    <div class="fsec"><b>${ic('kfc')} الدجاج</b>
-      <div class="row2"><label>وزن الدجاج (كغم)<input id="f-w" inputmode="decimal" value="${v(x.w)}" placeholder="مثال: 10"></label>
-        <label>سعر الكيلو (د.ع)<input id="f-kgp" inputmode="numeric" value="${v(x.kgp)}" placeholder="0"></label></div>
-      <div class="row3"><label>عدد الدجاجات<input id="f-hens" inputmode="numeric" value="${v(x.hens)}" placeholder="مثال: 10"></label>
-        <label>قطع الدجاجة الواحدة<input id="f-per" inputmode="numeric" value="${v(x.per)}" placeholder="مثال: 8"></label>
-        <label>العدد الكلي للقطع<input id="f-pcs" inputmode="numeric" value="${v(x.pcs)}" placeholder="يُحسب وحده"></label></div>
+  openSheet(old ? 'دفعة كنتاكي' + (kfcCalc(x).open ? ' · بالقلي' : '') : 'دفعة كنتاكي جديدة', `<form class="form" novalidate>
+    ${phaseTabs('بداية الدفعة', 'الدجاج والقطع والوصفة', 'آخر اليوم', 'الوجبات المباعة والباقي')}
+    <div class="fsec" data-ph="1"><b>${ic('kfc')} الدجاج</b>
+      <div class="row2"><label>وزن الدجاج${uin('f-w', v(x.w), 'كغم', 'مثال: 10', 'decimal', 'class="big-in"')}</label>
+        <label>سعر الكيلو${uin('f-kgp', v(x.kgp), 'د.ع', '0', 'numeric')}</label></div>
+      <div class="row3"><label>عدد الدجاجات${uin('f-hens', v(x.hens), 'دجاجة', '10', 'numeric')}</label>
+        <label>قطع كل دجاجة${uin('f-per', v(x.per), 'قطعة', '8', 'numeric')}</label>
+        <label>مجموع القطع${uin('f-pcs', v(x.pcs), 'قطعة', 'يُحسب وحده', 'numeric')}</label></div>
       <p class="hint" id="yield-hint" style="margin-top:-4px"></p>
       <label>التاريخ<input id="f-date" type="date" value="${d0}" min="${minM}-01" max="${dayKey()}"></label>
-      ${hasItems ? `<label>الدجاج من المخزون<select id="f-item"><option value="">بدون، لا تخصم من المخزون</option>${items.map(([iid, it]) => `<option value="${iid}" ${x.item === iid ? 'selected' : ''}>${esc(it.name)} (${esc(it.unit)})</option>`).join('')}</select></label><p class="hint stock-hint" id="stock-hint"></p>` : ''}
+      ${hasItems ? `<label>الدجاج من المخزون<select id="f-item"><option value="">بدون، لا تخصم من المخزون</option>${items.map(([iid, it]) => `<option value="${iid}" ${x.item === iid ? 'selected' : ''}>${esc(it.name)} (${esc(it.unit)})</option>`).join('')}</select></label><p class="hint stock-hint" id="stock-hint"></p>
+      <label class="check"><input type="checkbox" id="f-stock" ${stocked ? 'checked' : ''}> اخصم الدجاج والمواد من المخزون</label>` : ''}
     </div>
-    <div class="fsec"><b>${ic('leaf')} التتبيلة والطحين والزيت</b>
-      ${hasItems ? `<div class="recipe" id="mats">${(x.mats || []).filter(r => S.items[r.i]).map(recipeRow).join('')}</div><button type="button" class="btn btn-sm" id="m-add" style="justify-self:start">${ic('plus')} مادة من المخزون</button>` : ''}
-      <label>مواد أخرى (د.ع)<input id="f-other" inputmode="numeric" value="${v(x.other)}" placeholder="زيت، طحين، بهارات، غاز…"><small>كلفة المواد غير المسجّلة في المخزون، للدفعة كلها</small></label>
-    </div>
-    <div class="fsec"><b>${ic('meal')} الوجبات المباعة</b>
+    ${recipeSection(kfcRecipe(), x, old, hasItems, 'دفعة')}
+    <div class="fsec" data-ph="2"><b>${ic('meal')} الوجبات المباعة</b>
       <div class="meal-sold">${list.map(m => `<div class="ms-row" data-mid="${esc(m.id)}" data-pcs="${m.pcs}" data-price="${m.price}" data-extra="${+m.extra || 0}" data-name="${esc(m.name)}">
         <div class="li-main"><div class="li-title">${esc(m.name)}</div><div class="li-meta">${pcsW(m.pcs)} · ${IQD(m.price)}</div></div>
         <div class="stepper"><button type="button" data-step="-1" aria-label="إنقاص">−</button><input class="ms-n" inputmode="numeric" value="${soldBy[m.id] ? soldBy[m.id].n : ''}" placeholder="0" aria-label="عدد ${esc(m.name)}"><button type="button" data-step="1" aria-label="زيادة">+</button></div></div>`).join('')}</div>
-      <div class="row2"><label>قطع العمال (عشاء)<input id="f-staff" inputmode="numeric" value="${v(x.staff)}" placeholder="0"><small>كلفة بدون إيراد</small></label>
-        <label>القطع الباقية<input id="f-left" inputmode="numeric" value="${v(x.left)}" placeholder="0"><small>تنتقل لليوم الثاني</small></label></div>
+      <div class="row2"><label>قطع العمال (عشاء)${uin('f-staff', v(x.staff), 'قطعة', '0', 'numeric')}<small>كلفة بدون إيراد</small></label>
+        <label>القطع الباقية${uin('f-left', v(x.left), 'قطعة', '0', 'numeric')}<small>تنتقل لليوم الثاني</small></label></div>
       <label>ملاحظة<input id="f-note" maxlength="80" value="${esc(x.note || '')}" placeholder="اختياري"></label>
-      ${hasItems ? `<label class="check"><input type="checkbox" id="f-stock" ${stocked ? 'checked' : ''}> اخصم الدجاج والمواد من المخزون</label>` : ''}
     </div>
     <div class="sk-calc"><div class="sk-hint" id="sk-hint"></div><div class="calc" id="calc"></div></div>
     ${formActions(old ? 'حذف الدفعة' : '')}</form>`, body => {
@@ -1666,6 +1815,7 @@ function openKfc(id, date){
         : `كل قطعة كلّفت <b>${IQD(c.pcCost)}</b>، و${NUM(fmtQ(c.yield))} ${Math.round(c.yield) >= 3 && Math.round(c.yield) <= 10 && c.yield % 1 === 0 ? 'قطع' : 'قطعة'} لكل كيلو.`
           + (c.open ? '' : c.missing > 0 ? `<br>المباع ${pcsW(c.soldPcs)}${c.staff ? ' + ' + pcsW(c.staff) + ' للعمال' : ''}${c.left ? ' + ' + pcsW(c.left) + ' باقية' : ''}، يعني <b style="color:var(--bad)">ناقص ${pcsW(c.missing)}${c.pcPrice ? ' ≈ ' + IQD(c.missing * c.pcPrice) : ''}</b>.`
             : c.missing < 0 ? `<br><span style="color:var(--bad)">القطع المباعة أكثر من قطع الدفعة بـ ${pcsW(-c.missing)}. راجع الأرقام.</span>` : '<br>كل القطع محسوبة ✓');
+      if (ph) ph.sum();
       $f('#calc').innerHTML = `<div><span>التكلفة</span><b>${IQD(c.open ? c.base : c.cost)}</b></div><div><span>الإيراد</span><b>${IQD(c.rev)}</b></div><div><span>الربح</span><b class="${c.profit < 0 && !c.open ? 'neg-v' : 'pos-v'}">${c.open ? '—' : IQD(c.profit)}</b></div>
         <div><span>الوجبات</span><b>${NUM(fmt(c.meals))}</b></div><div><span>كلفة القطعة</span><b>${IQD(c.pcCost)}</b></div><div><span>عشاء العمال</span><b>${IQD(c.staffCost)}</b></div>`;
     };
@@ -1677,18 +1827,23 @@ function openKfc(id, date){
     body.addEventListener('click', e => { const b = e.target.closest('[data-step]'); if (!b) return; const inp = b.parentElement.querySelector('.ms-n'); inp.value = Math.max(0, Math.round(num(inp.value)) + (+b.dataset.step)) || ''; calc(); });
     const autoPcs = () => { const h = Math.round(nn($f('#f-hens').value)), pr = Math.round(nn($f('#f-per').value)); if (h > 0 && pr > 0) $f('#f-pcs').value = h * pr; };
     $f('#f-hens').addEventListener('input', autoPcs); $f('#f-per').addEventListener('input', autoPcs);
+    let ph = null;
+    const rw = wireRecipe(body, {rec:() => kfcRecipe(), save:r => saveKfcRecipe(r), w:() => round(nn($f('#f-w').value)), word:'دجاج', onChange:() => calc()});
+    $f('#f-w').addEventListener('input', () => { if (rw.auto) rw.refresh(); });
     body.addEventListener('input', calc); body.addEventListener('change', calc);
+    ph = wirePhases(body, old ? 2 : 1, {1:old ? 'حفظ' : 'حفظ · الدفعة بالقلي 🔥', 2:'حفظ الحساب'}, () => { const y = read(), c = kfcCalc(y);
+      return `<span class="av av3">${ic('kfc')}</span><div class="li-main"><b>${+y.hens ? fmt(y.hens) + ' دجاجة · ' : ''}${fmtKg(y.w)} · ${pcsW(y.pcs)}</b><small>كلّفت ${IQD(c.base)}${c.pcs ? ' · القطعة ' + IQD(c.pcCost) : ''}</small></div><button type="button" class="btn btn-sm btn-ghost" data-ph-jump>تعديل</button>`; });
     calc();
     bindForm(body, async f => {
       const y = read(), dt = $f('#f-date').value || dayKey();
-      if (y.w <= 0) return setErr(f, 'اكتب وزن الدجاج بالكيلو.');
-      if ((y.sold.length || y.staff) && y.pcs <= 0) return setErr(f, 'اكتب عدد القطع التي طلعت من الدجاج.');
+      if (y.w <= 0){ ph.set(1); return setErr(f, 'اكتب وزن الدجاج بالكيلو.'); }
+      if ((y.sold.length || y.staff) && y.pcs <= 0){ ph.set(1); return setErr(f, 'اكتب عدد القطع التي طلعت من الدجاج.'); }
       if (dt > dayKey()) return setErr(f, 'لا يمكن التسجيل بتاريخ قادم.');
       if (!covered('kfc', dt)) return setErr(f, 'اختر تاريخاً من هذا الشهر أو الشهر الذي قبله.');
       const bid = id || uid();
       const stk = {};
       if ($f('#f-stock') && $f('#f-stock').checked){ if (y.item && S.items[y.item]) stk[y.item] = round(kgOf(S.items[y.item], y.w)); y.mats.forEach(r => { stk[r.i] = round((stk[r.i] || 0) + r.q); }); }
-      const data = Object.assign({}, y, {stk, t:(old && old.t) || Date.now(), by:myRole() || ''});
+      const data = Object.assign({}, y, {stk, auto:rw.auto, t:(old && old.t) || Date.now(), by:myRole() || ''});
       closeSheet();
       const jobs = [];
       if (old && date !== dt) jobs.push(kfcWrite(date, bid, null));
@@ -2732,6 +2887,7 @@ const ACT = {
   'kfc-unlink': () => { const cur = S.settings.kfc; if (!cur) return; const full = Object.assign({}, cur, {item:''}); S.settings = Object.assign({}, S.settings, {kfc:full}); render(); upd('settings/kfc', {item:''}, full); },
   'kfc-newitem': () => openItem(null, {name:'دجاج كنتاكي', unit:'كغم'}, key => ACT['kfc-link']({id:key})),
   'add-drink': d => openDrink(null, d.name), 'edit-drink': d => openDrink(d.id), 'drink-day': d => openDrinkDay(d.date),
+  'sh-recipe': () => openRecipe('sh'), 'kfc-recipe': () => openRecipe('kfc'),
   'add-kfc': () => openKfc(), 'edit-kfc': d => openKfc(d.id, d.date), 'kfc-meals': () => openKfcMeals()
 };
 
