@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1B5C4B">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-OHPz3xIKXyxWKoXoX0w0W34DpfjiV3oTimdikmhBEDM=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data: blob:; media-src blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XBGDjBwaAUfOOSn/Z2Rgisi1koXDZhqqQOCzDPBOkvg=' 'sha256-J/uLsN5YjaNp31UYTkmbN+O4YVAw0jD7pTsllP/FkDk=' 'sha256-2oB42Jsm8fDBefI2zuCw+YeB8p7kjNF3luWttW2ZukA=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.supabase.co wss://*.supabase.co; img-src 'self' data: blob:; media-src blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -613,6 +613,14 @@ table.sched{border-collapse:separate;border-spacing:0;width:100%;min-width:720px
 .cal-d i{position:absolute;top:-5px;left:-4px;min-width:17px;height:17px;border-radius:999px;background:var(--bad);color:#fff;font-size:10px;font-style:normal;font-weight:700;display:grid;place-items:center}
 
 /* ---------- drinks ---------- */
+.kind-pick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kind-pick label{display:block!important;cursor:pointer}
+.kind-pick input{position:absolute;opacity:0;width:1px;height:1px;min-height:0!important}
+.kind-pick span{display:grid;gap:2px;border:2px solid var(--line);border-radius:14px;padding:12px;background:var(--bg);text-align:right}
+.kind-pick b{font-size:15px;color:var(--ink)} .kind-pick small{font-size:11.5px;color:var(--muted);font-weight:500}
+.kind-pick input:checked + span{border-color:var(--accent);background:var(--accent-soft)}
+.kind-pick input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+.dk.hot{background:linear-gradient(160deg,color-mix(in srgb,#8B5A2B 9%,var(--surface)),var(--surface) 60%)}
 .dk-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 .dk{display:grid;gap:6px;text-align:right;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow-sm);transition:border-color .15s,transform .08s}
 .dk:hover{border-color:var(--accent)} .dk:active{transform:scale(.99)}
@@ -756,7 +764,7 @@ const GROUP_OF = {pos:'prod', shawarma:'prod', kfc:'prod', drinks:'prod', feasts
 const GROUPS = [['prod','الإنتاج والبيع'],['orders','الطلبات والتسويق'],['admin','الإدارة']];
 const MD_TABS = ['drinks','feasts'];   // extra bottom-bar tabs on tablets
 /* on phones the bar shows the first four; the rest open from «المزيد» */
-const MORE = {feasts:'العزائم والأعراس والطلبيات', social:'منشورات وفيديوهات جاهزة', drinks:'الببسي والعصائر بالكارتون', staff:'الحضور والجدول والرواتب', inv:'الكميات والشراء', dishes:'الأسعار والوصفات', exp:'كل ما يخرج من الصندوق', notes:'بين المدير والمسؤول'};
+const MORE = {feasts:'العزائم والأعراس والطلبيات', social:'منشورات وفيديوهات جاهزة', drinks:'الباردة بالكارتون والحارة بالظروف', staff:'الحضور والجدول والرواتب', inv:'الكميات والشراء', dishes:'الأسعار والوصفات', exp:'كل ما يخرج من الصندوق', notes:'بين المدير والمسؤول'};
 
 /* ================= state ================= */
 const S = {
@@ -1012,7 +1020,7 @@ function homeView(){
     <div class="prod">
       ${sk.length ? `<button class="prod-card" data-tab="shawarma" style="--k:var(--c-shawarma)"><span class="av av1">${ic('shawarma')}</span><span class="li-main"><b>الشاورما</b><small>${lafa(sum(sk, c => c.wraps))} · ${NUM(sk.length)} شيش</small></span><b class="${sum(sk, c => c.profit) < 0 ? 'neg-v' : 'pos-v'}">${IQD(sum(sk, c => c.profit))}</b></button>` : ''}
       ${kb.length ? `<button class="prod-card" data-tab="kfc" style="--k:var(--c-kfc)"><span class="av av3">${ic('kfc')}</span><span class="li-main"><b>الكنتاكي</b><small>${NUM(fmt(sum(kb, c => c.meals)))} وجبة · ${pcsW(sum(kb, c => c.soldPcs))}</small></span><b class="${sum(kb, c => c.profit) < 0 ? 'neg-v' : 'pos-v'}">${IQD(sum(kb, c => c.profit))}</b></button>` : ''}
-      ${dr.length ? `<button class="prod-card" data-tab="drinks" style="--k:var(--c-drinks)"><span class="av av8">${ic('drinks')}</span><span class="li-main"><b>المشروبات</b><small>${cansW(sum(dr, r => r.sold))}${sum(dr, r => Math.max(0, +r.missing || 0)) ? ' · <span style="color:var(--bad)">ناقص ' + fmt(sum(dr, r => Math.max(0, +r.missing || 0))) + '</span>' : ''}</small></span><b class="pos-v">${IQD(sum(dr, drinkProfit))}</b></button>` : ''}
+      ${dr.length ? `<button class="prod-card" data-tab="drinks" style="--k:var(--c-drinks)"><span class="av av8">${ic('drinks')}</span><span class="li-main"><b>المشروبات</b><small>${NUM(fmt(sum(dr, r => r.sold)))} مشروب${sum(dr, r => Math.max(0, +r.missing || 0)) ? ' · <span style="color:var(--bad)">ناقص ' + fmt(sum(dr, r => Math.max(0, +r.missing || 0))) + '</span>' : ''}</small></span><b class="pos-v">${IQD(sum(dr, drinkProfit))}</b></button>` : ''}
     </div>
   </section>` : ''}
 
@@ -1881,24 +1889,44 @@ function kfcWrite(date, bid, data){
 }
 
 /* ---------- drinks ----------
-   drinks/{id} {name, per (cans per carton), cartonCost, price (per can), qty (cans), min}
+   drinks/{id} {name, kind ('can' | 'hot'), per (units per pack), cartonCost (pack price), price (per sale), qty (units), min, extra (hot: cup+sugar per cup)}
+   A cold drink is cans in a carton; a hot drink is sachets in a box, one sachet per cup.
    drinklog/YYYY-MM-DD {date, month, rows:{drinkId:{start, sold, cartons, bought, count|null, end, missing, price, unit}}}
    A day row moves stock from start to end; editing a day shifts the drink's stock by the change in end. */
 const drinkList = () => sortByName(S.drinks);
-const unitCost = d => (+d.per || 0) ? (+d.cartonCost || 0) / (+d.per) : 0;
-const cansW = n => { n = Math.round(+n || 0); const a = Math.abs(n); return a === 1 ? 'قوطية' : a === 2 ? 'قوطيتين' : NUM(fmt(n)) + (a >= 3 && a <= 10 ? ' قوطيات' : ' قوطية'); };
-const cartonsLabel = (q, per) => { q = Math.round(+q || 0); per = +per || 0; if (!per || q < per || q < 0) return cansW(q); const c = Math.floor(q / per), r = q % per; return NUM(fmt(c)) + ' كارتون' + (r ? ' + ' + cansW(r) : ''); };
+const isHot = d => !!d && d.kind === 'hot';
+const plural = (n, [one, two, few]) => { n = Math.round(+n || 0); const a = Math.abs(n); return a === 1 ? one : a === 2 ? two : NUM(fmt(n)) + ' ' + (a >= 3 && a <= 10 ? few : one); };
+const WORDS = {can:['قوطية','قوطيتين','قوطيات'], hot:['ظرف','ظرفين','ظروف'], cup:['كوب','كوبين','أكواب']};
+const cansW = n => plural(n, WORDS.can);
+const unitW = (n, d) => plural(n, isHot(d) ? WORDS.hot : WORDS.can);      // what sits in stock
+const saleW = (n, d) => plural(n, isHot(d) ? WORDS.cup : WORDS.can);      // what is sold
+const unitName = d => isHot(d) ? 'ظرف' : 'قوطية';
+const saleName = d => isHot(d) ? 'كوب' : 'قوطية';
+const packName = d => isHot(d) ? 'علبة' : 'كارتون';
+const unitCost = d => (+d.per || 0) ? (+d.cartonCost || 0) / (+d.per) : 0;      // one can, or one sachet
+const saleCost = d => unitCost(d) + (isHot(d) ? (+d.extra || 0) : 0);          // a hot cup also costs the cup, sugar and stirrer
+const cartonsLabel = (q, per, d) => { q = Math.round(+q || 0); per = +per || 0; if (!per || q < per || q < 0) return unitW(q, d); const c = Math.floor(q / per), r = q % per; return NUM(fmt(c)) + ' ' + packName(d) + (r ? ' + ' + unitW(r, d) : ''); };
 const logRows = d => Object.entries((d && d.rows) || {}).filter(([, r]) => r);
 const drinkRev = r => (+r.sold || 0) * (+r.price || 0);
 const drinkProfit = r => (+r.sold || 0) * ((+r.price || 0) - (+r.unit || 0));
 const DRINK_SUGG = ['ببسي','سفن أب','ميرندا','ماونتن ديو','كولا','ماء','عصير','لبن','مشروب طاقة'];
+const HOT_SUGG = ['كابتشينو','نسكافيه','نسكافيه 3 في 1','شاي','قهوة','هوت شوكليت'];
 
+function drinkCard(id, d, today){
+  const q = +d.qty || 0, st = q <= 0 ? 'out' : q < (+d.min || 0) ? 'low' : 'ok', per = +d.per || 0, pr = (+d.price || 0) - saleCost(d);
+  const tr = S.drinklog[today] && S.drinklog[today].rows && S.drinklog[today].rows[id];
+  return `<button class="dk ${isHot(d) ? 'hot' : ''}" data-act="edit-drink" data-id="${id}"><span class="dk-top"><span class="${avc(d.name)}">${isHot(d) ? '☕' : ini(d.name)}</span><span class="li-main"><b>${esc(d.name)}</b><small>${per ? packName(d) + ' ' + unitW(per, d) + ' · ' : ''}${IQD(d.price)} لل${saleName(d)}</small></span><span class="pill ${st}">${STATUS[st]}</span></span>
+    <span class="dk-qty">${cartonsLabel(q, per, d)}</span><span class="dk-sub">${per && q >= per ? unitW(q, d) + ' · ' : ''}ربح ال${saleName(d)} ${IQD(pr)}${isHot(d) && +d.extra ? ' <small>(بعد الكوب والسكر)</small>' : ''}</span>
+    <span class="meter ${st}"><i style="width:${Math.max(0, Math.min(100, (+d.min ? q / (d.min * 3) : q > 0 ? 1 : 0) * 100))}%"></i></span>
+    ${tr ? `<span class="dk-sub">اليوم: بيع ${saleW(tr.sold, d)}${+tr.missing > 0 ? ` · <b style="color:var(--bad)">ناقص ${unitW(tr.missing, d)}</b>` : ''}</span>` : ''}</button>`;
+}
 function drinksView(){
   const list = drinkList(), today = dayKey();
-  const top = head('المشروبات', 'بالكارتون والقوطية: البيع والمخزون والنقص', `<div class="chips">${list.length ? `<button class="btn" data-act="add-drink">${ic('plus')} مشروب</button><button class="btn btn-primary" data-act="drink-day" data-date="${today}">${ic('check')} تسجيل اليوم</button>` : ''}</div>`);
+  const top = head('المشروبات', 'الباردة بالكارتون والحارة بالظروف: البيع والمخزون والنقص', `<div class="chips">${list.length ? `<button class="btn" data-act="add-drink">${ic('plus')} مشروب</button><button class="btn btn-primary" data-act="drink-day" data-date="${today}">${ic('check')} تسجيل اليوم</button>` : ''}</div>`);
   if (!list.length) return top + `<div class="panel empty"><span class="av av8" style="width:56px;height:56px;border-radius:16px">${ic('drinks')}</span><strong>أضف مشروباتك أولاً</strong>
-    <span>لكل مشروب: كم قوطية بالكارتون، سعر الكارتون، وسعر بيع القوطية. وبعدها كل يوم تكتب كم بعت وكم موجود، فيطلع لك النقص والربح.</span>
-    <div class="chips" style="justify-content:center">${DRINK_SUGG.map(n => `<button class="chip-s" data-act="add-drink" data-name="${esc(n)}">${ic('plus')} ${esc(n)}</button>`).join('')}</div></div>`;
+    <span>المشروبات الباردة: كم قوطية بالكارتون وسعره. والحارة مثل الكابتشينو والنسكافيه: كم ظرف بالعلبة وسعرها، وسعر الكوب. وبعدها كل يوم تكتب كم بعت وكم موجود، فيطلع لك النقص والربح.</span>
+    <p class="more-h" style="margin:4px 0 0">🥤 باردة</p><div class="chips" style="justify-content:center">${DRINK_SUGG.map(n => `<button class="chip-s" data-act="add-drink" data-name="${esc(n)}" data-kind="can">${ic('plus')} ${esc(n)}</button>`).join('')}</div>
+    <p class="more-h" style="margin:4px 0 0">☕ حارة (ظروف)</p><div class="chips" style="justify-content:center">${HOT_SUGG.map(n => `<button class="chip-s" data-act="add-drink" data-name="${esc(n)}" data-kind="hot">${ic('plus')} ${esc(n)}</button>`).join('')}</div></div>`;
   const days = Object.values(S.drinklog).filter(d => d && d.month === S.month && d.date).sort((a, b) => b.date.localeCompare(a.date));
   const tRows = logRows(S.drinklog[today]).map(([, r]) => r);
   const mRows = days.flatMap(d => logRows(d).map(([, r]) => r));
@@ -1908,56 +1936,60 @@ function drinksView(){
   return top + `
   <section class="hero" aria-label="ملخص المشروبات">
     <div><div class="lbl">ربح المشروبات اليوم</div><div class="big">${IQD(T(tRows, drinkProfit))}</div>
-      <div class="hero-stats" style="margin-top:14px"><div><span class="lbl">المبيع</span><b>${IQD(T(tRows, drinkRev))}</b></div><div><span class="lbl">القوطيات</span><b>${NUM(fmt(T(tRows, r => r.sold)))}</b></div><div><span class="lbl">النقص</span><b>${NUM(fmt(T(tRows, r => Math.max(0, +r.missing || 0))))}</b></div></div></div>
+      <div class="hero-stats" style="margin-top:14px"><div><span class="lbl">المبيع</span><b>${IQD(T(tRows, drinkRev))}</b></div><div><span class="lbl">المباع</span><b>${NUM(fmt(T(tRows, r => r.sold)))}</b></div><div><span class="lbl">النقص</span><b>${NUM(fmt(T(tRows, r => Math.max(0, +r.missing || 0))))}</b></div></div></div>
     <div class="hero-stats"><div><span class="lbl">ربح ${MONTHS[+S.month.slice(5) - 1]}</span><b>${IQD(T(mRows, drinkProfit))}</b></div><div><span class="lbl">مبيع الشهر</span><b>${IQD(T(mRows, drinkRev))}</b></div><div><span class="lbl">قيمة المخزون</span><b>${IQD(stockValue)}</b></div>
-      <div><span class="lbl">قوطيات الشهر</span><b>${NUM(fmt(T(mRows, r => r.sold)))}</b></div><div><span class="lbl">نقص الشهر</span><b>${cansW(missM)}</b></div><div><span class="lbl">قيمة النقص</span><b>${IQD(T(mRows, r => Math.max(0, +r.missing || 0) * (+r.price || 0)))}</b></div></div>
+      <div><span class="lbl">مباع الشهر</span><b>${NUM(fmt(T(mRows, r => r.sold)))}</b></div><div><span class="lbl">نقص الشهر</span><b>${NUM(fmt(missM))}</b></div><div><span class="lbl">قيمة النقص</span><b>${IQD(T(mRows, r => Math.max(0, +r.missing || 0) * (+r.price || 0)))}</b></div></div>
   </section>
-  <section><div class="sec-head"><h2>${ic('inv')} المخزون الآن</h2><span class="muted">اضغط على المشروب لتعديله</span></div>
-    <div class="dk-grid">${list.map(([id, d]) => {
-      const q = +d.qty || 0, st = q <= 0 ? 'out' : q < (+d.min || 0) ? 'low' : 'ok', per = +d.per || 0, pr = (+d.price || 0) - unitCost(d);
-      const tr = S.drinklog[today] && S.drinklog[today].rows && S.drinklog[today].rows[id];
-      return `<button class="dk" data-act="edit-drink" data-id="${id}"><span class="dk-top"><span class="${avc(d.name)}">${ini(d.name)}</span><span class="li-main"><b>${esc(d.name)}</b><small>${per ? 'كارتون ' + NUM(per) + ' · ' : ''}${IQD(d.price)} للقوطية</small></span><span class="pill ${st}">${STATUS[st]}</span></span>
-        <span class="dk-qty">${cartonsLabel(q, per)}</span><span class="dk-sub">${q !== Math.round(q) || per && q >= per ? cansW(q) + ' · ' : ''}ربح القوطية ${IQD(pr)}</span>
-        <span class="meter ${st}"><i style="width:${Math.max(0, Math.min(100, (+d.min ? q / (d.min * 3) : q > 0 ? 1 : 0) * 100))}%"></i></span>
-        ${tr ? `<span class="dk-sub">اليوم: بيع ${cansW(tr.sold)}${+tr.missing > 0 ? ` · <b style="color:var(--bad)">ناقص ${cansW(tr.missing)}</b>` : ''}</span>` : ''}</button>`;
-    }).join('')}</div></section>
+  ${[['can', '🥤 الباردة'], ['hot', '☕ الحارة']].map(([k, lbl]) => { const xs = list.filter(([, d]) => (isHot(d) ? 'hot' : 'can') === k); if (!xs.length) return '';
+    return `<section><div class="sec-head"><h2>${ic('inv')} ${lbl}</h2><span class="muted">اضغط على المشروب لتعديله</span></div>
+    <div class="dk-grid">${xs.map(([id, d]) => drinkCard(id, d, today)).join('')}</div></section>`; }).join('')}
   <section><div class="sec-head"><h2>${ic('notes')} السجل اليومي</h2>${monthNav()}</div>
     ${days.length ? `<div class="list">${days.map(d => { const rs = logRows(d).map(([, r]) => r), miss = sum(rs, r => Math.max(0, +r.missing || 0));
       return `<button class="day-row" data-act="drink-day" data-date="${d.date}"><span class="day-date"><b>${+d.date.slice(8)}</b><span>${DAYNAME[JSDAY[dateOf(d.date).getDay()]]}</span></span>
-        <span class="day-people">${logRows(d).map(([id, r]) => `<span class="mini" style="background:var(--sunken)">${esc(r.name || (S.drinks[id] && S.drinks[id].name) || '')} ${NUM(fmt(r.sold))}${+r.cartons ? ' · +' + r.cartons + ' كارتون' : ''}</span>`).join('')}</span>
-        <span class="li-end" style="flex-direction:column;align-items:flex-end;gap:2px"><b>${IQD(sum(rs, drinkRev))}</b>${miss ? `<span class="small" style="color:var(--bad)">ناقص ${cansW(miss)}</span>` : '<span class="small" style="color:var(--good)">مضبوط ✓</span>'}</span></button>`; }).join('')}</div>`
+        <span class="day-people">${logRows(d).map(([id, r]) => `<span class="mini" style="background:var(--sunken)">${esc(r.name || (S.drinks[id] && S.drinks[id].name) || '')} ${NUM(fmt(r.sold))}${+r.cartons ? ' · +' + r.cartons + ' ' + packName(S.drinks[id] || r) : ''}</span>`).join('')}</span>
+        <span class="li-end" style="flex-direction:column;align-items:flex-end;gap:2px"><b>${IQD(sum(rs, drinkRev))}</b>${miss ? `<span class="small" style="color:var(--bad)">ناقص ${NUM(fmt(miss))}</span>` : '<span class="small" style="color:var(--good)">مضبوط ✓</span>'}</span></button>`; }).join('')}</div>`
       : `<div class="panel empty"><span>لا يوجد تسجيل في ${monthLabel(S.month)}. اضغط «تسجيل اليوم».</span></div>`}
   </section>`;
 }
 
-function openDrink(id, name){
-  const d = id ? S.drinks[id] : {name:name || '', per:24, cartonCost:'', price:'', qty:0, min:''};
+function openDrink(id, name, kind){
+  const d = id ? S.drinks[id] : {name:name || '', kind:kind === 'hot' ? 'hot' : 'can', per:kind === 'hot' ? '' : 24, cartonCost:'', price:'', qty:0, min:'', extra:''};
   if (id && !d) return;
   const per = +d.per || 0, q = +d.qty || 0;
   openSheet(id ? 'تعديل ' + d.name : 'مشروب جديد', `<form class="form" novalidate>
-    <label>اسم المشروب<input id="f-name" maxlength="40" value="${esc(d.name)}" placeholder="مثال: ببسي 400 مل"></label>
-    <div class="row3"><label>قوطية بالكارتون<input id="f-per" inputmode="numeric" value="${per || ''}" placeholder="24"></label>
-      <label>سعر الكارتون (د.ع)<input id="f-cc" inputmode="numeric" value="${+d.cartonCost || ''}" placeholder="شراء"></label>
-      <label>سعر بيع القوطية<input id="f-price" inputmode="numeric" value="${+d.price || ''}" placeholder="د.ع"></label></div>
+    <div class="kind-pick" role="radiogroup" aria-label="نوع المشروب">
+      <label><input type="radio" name="kind" value="can" ${isHot(d) ? '' : 'checked'}><span><b>🥤 بارد</b><small>قوطية أو قنينة بالكارتون</small></span></label>
+      <label><input type="radio" name="kind" value="hot" ${isHot(d) ? 'checked' : ''}><span><b>☕ حار</b><small>ظروف بالعلبة، ظرف لكل كوب</small></span></label></div>
+    <label>اسم المشروب<input id="f-name" maxlength="40" value="${esc(d.name)}" placeholder="مثال: ببسي 400 مل، كابتشينو"></label>
+    <div class="row3"><label><span id="l-per"></span>${uin('f-per', per || '', '', '24', 'numeric')}</label>
+      <label><span id="l-cc"></span>${uin('f-cc', +d.cartonCost || '', 'د.ع', 'شراء', 'numeric')}</label>
+      <label><span id="l-price"></span>${uin('f-price', +d.price || '', 'د.ع', 'بيع', 'numeric')}</label></div>
+    <label id="extra-wrap">كلفة الكوب الورق والسكر وعود التحريك${uin('f-extra', +d.extra || '', 'د.ع', 'مثال: 150', 'numeric')}<small>تنحسب على كل كوب مع كلفة الظرف</small></label>
     <div class="fsec"><b>${ic('inv')} الموجود الآن</b>
-      <div class="row2"><label>كراتين كاملة<input id="f-qc" inputmode="numeric" value="${per && q >= per ? Math.floor(q / per) : ''}" placeholder="0"></label>
-        <label>قوطيات مفردة<input id="f-qs" inputmode="numeric" value="${per ? (q >= per ? q % per : q) || '' : q || ''}" placeholder="0"></label></div>
-      <label>نبّهني لما يبقى أقل من (كارتون)<input id="f-min" inputmode="decimal" value="${+d.min && per ? fmtQ(d.min / per) : ''}" placeholder="مثال: 1"><small id="min-hint">يظهر «منخفض» وتطلع علامة حمراء حتى تشتري قبل ما يخلص</small></label></div>
+      <div class="row2"><label><span id="l-qc"></span>${uin('f-qc', per && q >= per ? Math.floor(q / per) : '', '', '0', 'numeric')}</label>
+        <label><span id="l-qs"></span>${uin('f-qs', per ? (q >= per ? q % per : q) || '' : q || '', '', '0', 'numeric')}</label></div>
+      <label><span id="l-min"></span>${uin('f-min', +d.min && per ? fmtQ(d.min / per) : '', '', 'مثال: 1')}<small id="min-hint"></small></label></div>
     <div class="calc" id="calc"></div>
     ${formActions(id ? 'حذف المشروب' : '')}</form>`, body => {
     const $f = s => body.querySelector(s);
-    const read = () => { const pr = Math.round(nn($f('#f-per').value)); return {name:$f('#f-name').value.trim(), per:pr, cartonCost:Math.round(nn($f('#f-cc').value)), price:Math.round(nn($f('#f-price').value)),
-      qty:Math.round(nn($f('#f-qc').value)) * pr + Math.round(nn($f('#f-qs').value)), min:Math.round(nn($f('#f-min').value) * pr)}; };
-    const calc = () => { const y = read(), u = unitCost(y), pr = y.price - u;
-      $f('#min-hint').innerHTML = y.min > 0 ? `لما يبقى أقل من ${cansW(y.min)} يظهر «منخفض» وتطلع علامة حمراء` : 'يظهر «منخفض» وتطلع علامة حمراء حتى تشتري قبل ما يخلص';
-      $f('#calc').innerHTML = `<div><span>كلفة القوطية</span><b>${IQD(u)}</b></div><div><span>ربح القوطية</span><b class="${pr < 0 ? 'neg-v' : 'pos-v'}">${IQD(pr)}</b></div><div><span>ربح الكارتون</span><b class="${pr < 0 ? 'neg-v' : 'pos-v'}">${IQD(pr * y.per)}</b></div>
-        <div><span>المجموع</span><b>${cansW(y.qty)}</b></div><div><span>قيمته</span><b>${IQD(y.qty * u)}</b></div><div><span>نسبة الربح</span><b>${NUM((y.price ? Math.round(pr / y.price * 100) : 0) + '%')}</b></div>`; };
-    body.addEventListener('input', calc); calc();
+    const kindOf = () => body.querySelector('input[name=kind]:checked').value;
+    const read = () => { const pr = Math.round(nn($f('#f-per').value)), k = kindOf(); return {name:$f('#f-name').value.trim(), kind:k, per:pr, cartonCost:Math.round(nn($f('#f-cc').value)), price:Math.round(nn($f('#f-price').value)),
+      extra:k === 'hot' ? Math.round(nn($f('#f-extra').value)) : 0, qty:Math.round(nn($f('#f-qc').value)) * pr + Math.round(nn($f('#f-qs').value)), min:Math.round(nn($f('#f-min').value) * pr)}; };
+    const words = () => { const y = read(), P = packName(y), U = unitName(y), Sx = saleName(y), hot = isHot(y);
+      const L = {'l-per':U + ' بال' + P, 'l-cc':'سعر ال' + P, 'l-price':'سعر بيع ال' + Sx, 'l-qc':(hot ? 'علب' : 'كراتين') + ' كاملة', 'l-qs':(hot ? 'ظروف' : 'قوطيات') + ' مفردة', 'l-min':'نبّهني لما يبقى أقل من (' + P + ')'};
+      Object.entries(L).forEach(([k, v]) => { $f('#' + k).textContent = v; });
+      [['f-per', U], ['f-qc', P], ['f-qs', U], ['f-min', P]].forEach(([k, v]) => { $f('#' + k).nextElementSibling.textContent = v; });
+      $f('#extra-wrap').hidden = !hot; $f('#f-per').placeholder = hot ? '20' : '24'; };
+    const calc = () => { words(); const y = read(), u = saleCost(y), pr = y.price - u, S1 = saleName(y);
+      $f('#min-hint').innerHTML = y.min > 0 ? `لما يبقى أقل من ${unitW(y.min, y)} يظهر «منخفض» وتطلع علامة حمراء` : 'يظهر «منخفض» وتطلع علامة حمراء حتى تشتري قبل ما يخلص';
+      $f('#calc').innerHTML = `<div><span>كلفة ال${S1}</span><b>${IQD(u)}</b></div><div><span>ربح ال${S1}</span><b class="${pr < 0 ? 'neg-v' : 'pos-v'}">${IQD(pr)}</b></div><div><span>ربح ال${packName(y)}</span><b class="${pr < 0 ? 'neg-v' : 'pos-v'}">${IQD(pr * y.per)}</b></div>
+        <div><span>الموجود</span><b>${unitW(y.qty, y)}</b></div><div><span>قيمته</span><b>${IQD(y.qty * unitCost(y))}</b></div><div><span>نسبة الربح</span><b>${NUM((y.price ? Math.round(pr / y.price * 100) : 0) + '%')}</b></div>`; };
+    body.addEventListener('input', calc); body.addEventListener('change', calc); calc();
     bindForm(body, async f => {
       const y = read();
       if (!y.name) return setErr(f, 'اكتب اسم المشروب.');
-      if (y.per <= 0) return setErr(f, 'اكتب كم قوطية بالكارتون.');
-      if (y.price <= 0) return setErr(f, 'اكتب سعر بيع القوطية.');
+      if (y.per <= 0) return setErr(f, 'اكتب كم ' + unitName(y) + ' بال' + packName(y) + '.');
+      if (y.price <= 0) return setErr(f, 'اكتب سعر بيع ال' + saleName(y) + '.');
       const data = Object.assign({}, d, y), key = id || uid();
       closeSheet(); S.drinks = Object.assign({}, S.drinks, {[key]:data}); render();
       if (await put('drinks/' + key, data)) toast('تم حفظ ' + y.name);
@@ -1975,13 +2007,13 @@ function openDrinkDay(date){
   const expId = 'drink-' + date, hadExp = !!S.expenses[expId];
   openSheet('مشروبات ' + dayLabel(date), `<form class="form" novalidate>
     <div class="row2"><label>اليوم<input id="f-date" type="date" value="${date}" min="${minM}-01" max="${dayKey()}"></label><p class="hint" style="align-self:end;margin:0 0 8px">اكتب البيع والشراء، واكتب العدد الموجود إذا عددته حتى يطلع النقص.</p></div>
-    ${list.map(([id, d]) => { const r = rows[id], per = +d.per || 0;
-      return `<div class="fsec dd" data-id="${id}"><b><span class="${avc(d.name)}" style="width:28px;height:28px;border-radius:9px">${ini(d.name)}</span> ${esc(d.name)} <span class="muted small" style="margin-inline-start:auto;font-weight:500">البداية ${cartonsLabel(r ? r.start : d.qty, per)}</span></b>
-        <div class="row3"><label>بعت (قوطية)<input class="d-sold" inputmode="numeric" value="${r && +r.sold ? r.sold : ''}" placeholder="0"></label>
-          <label>اشتريت (كارتون)<input class="d-buy" inputmode="decimal" value="${r && +r.cartons ? r.cartons : ''}" placeholder="0"></label>
-          <label>العدد الموجود<input class="d-count" inputmode="numeric" value="${r && r.count != null ? r.count : ''}" placeholder="اختياري"></label></div>
+    ${list.slice().sort((a, b) => (isHot(a[1]) ? 1 : 0) - (isHot(b[1]) ? 1 : 0)).map(([id, d]) => { const r = rows[id], per = +d.per || 0;
+      return `<div class="fsec dd" data-id="${id}"><b><span class="${avc(d.name)}" style="width:28px;height:28px;border-radius:9px">${ini(d.name)}</span> ${isHot(d) ? '☕ ' : ''}${esc(d.name)} <span class="muted small" style="margin-inline-start:auto;font-weight:500">البداية ${cartonsLabel(r ? r.start : d.qty, per, d)}</span></b>
+        <div class="row3"><label>بعت<span class="uin"><input class="d-sold" inputmode="numeric" value="${r && +r.sold ? r.sold : ''}" placeholder="0"><i>${saleName(d)}</i></span></label>
+          <label>اشتريت<span class="uin"><input class="d-buy" inputmode="decimal" value="${r && +r.cartons ? r.cartons : ''}" placeholder="0"><i>${packName(d)}</i></span></label>
+          <label>الموجود بالعد<span class="uin"><input class="d-count" inputmode="numeric" value="${r && r.count != null ? r.count : ''}" placeholder="اختياري"><i>${unitName(d)}</i></span></label></div>
         <p class="hint d-res"></p></div>`; }).join('')}
-    <label class="check"><input type="checkbox" id="f-exp" ${hadExp || !log ? 'checked' : ''}> سجّل مبلغ الكراتين المشتراة في المصاريف</label>
+    <label class="check"><input type="checkbox" id="f-exp" ${hadExp || !log ? 'checked' : ''}> سجّل مبلغ المشتريات (الكراتين والعلب) في المصاريف</label>
     <div class="calc" id="calc"></div>
     ${formActions()}</form>`, body => {
     const $f = s => body.querySelector(s);
@@ -1992,16 +2024,16 @@ function openDrinkDay(date){
       const sold = Math.round(nn(el.querySelector('.d-sold').value)), cartons = round(nn(el.querySelector('.d-buy').value), 2), bought = Math.round(cartons * per);
       const cRaw = el.querySelector('.d-count').value.trim(), count = cRaw === '' ? null : Math.round(nn(cRaw));
       const expected = start + bought - sold, end = count == null ? expected : count;
-      return {id, d, el, old, row:{name:d.name, per, start, sold, cartons, bought, count, expected, end, missing: count == null ? 0 : expected - count, price:+d.price || 0, unit:Math.round(unitCost(d))},
+      return {id, d, el, old, row:{name:d.name, kind:isHot(d) ? 'hot' : 'can', per, start, sold, cartons, bought, count, expected, end, missing: count == null ? 0 : expected - count, price:+d.price || 0, unit:Math.round(saleCost(d))},
         used: sold > 0 || cartons > 0 || count != null};
     });
     const calc = () => {
       const xs = read();
       xs.forEach(x => { const r = x.row; x.el.querySelector('.d-res').innerHTML = !x.used ? '' :
-        `المفروض يكون ${cartonsLabel(r.expected, r.per)}` + (r.count == null ? '' : r.missing > 0 ? ` · العد ${cansW(r.count)} · <b style="color:var(--bad)">ناقص ${cansW(r.missing)} ≈ ${IQD(r.missing * r.price)}</b>` : r.missing < 0 ? ` · العد ${cansW(r.count)} · <b style="color:var(--warn)">زايد ${cansW(-r.missing)}</b>` : ' · <b style="color:var(--good)">مضبوط ✓</b>'); });
+        `المفروض يكون ${cartonsLabel(r.expected, r.per, x.d)}` + (r.count == null ? '' : r.missing > 0 ? ` · العد ${unitW(r.count, x.d)} · <b style="color:var(--bad)">ناقص ${unitW(r.missing, x.d)} ≈ ${IQD(r.missing * r.price)}</b>` : r.missing < 0 ? ` · العد ${unitW(r.count, x.d)} · <b style="color:var(--warn)">زايد ${unitW(-r.missing, x.d)}</b>` : ' · <b style="color:var(--good)">مضبوط ✓</b>'); });
       const u = xs.filter(x => x.used).map(x => x.row);
       $f('#calc').innerHTML = `<div><span>المبيع</span><b>${IQD(sum(u, drinkRev))}</b></div><div><span>الربح</span><b class="pos-v">${IQD(sum(u, drinkProfit))}</b></div><div><span>النقص</span><b class="${sum(u, r => Math.max(0, r.missing)) ? 'neg-v' : ''}">${IQD(sum(u, r => Math.max(0, r.missing) * r.price))}</b></div>
-        <div><span>القوطيات</span><b>${NUM(fmt(sum(u, r => r.sold)))}</b></div><div><span>المشتريات</span><b>${IQD(sum(xs.filter(x => x.used), x => x.row.cartons * (+x.d.cartonCost || 0)))}</b></div><div><span>الكراتين</span><b>${NUM(fmtQ(sum(u, r => r.cartons)))}</b></div>`;
+        <div><span>المباع</span><b>${NUM(fmt(sum(u, r => r.sold)))}</b></div><div><span>المشتريات</span><b>${IQD(sum(xs.filter(x => x.used), x => x.row.cartons * (+x.d.cartonCost || 0)))}</b></div><div><span>كراتين وعلب</span><b>${NUM(fmtQ(sum(u, r => r.cartons)))}</b></div>`;
     };
     body.addEventListener('input', calc); calc();
     bindForm(body, async f => {
@@ -2025,11 +2057,11 @@ function openDrinkDay(date){
       else p = Promise.resolve(true);
       const buy = Math.round(sum(xs.filter(x => x.used), x => x.row.cartons * (+x.d.cartonCost || 0)));
       if (wantExp && buy > 0){
-        const ex = {date, month:date.slice(0, 7), cat:'مشروبات', amount:buy, note:xs.filter(x => x.used && x.row.cartons).map(x => x.d.name + ' ' + fmtQ(x.row.cartons) + ' كارتون').join('، '), t:(S.expenses[expId] && S.expenses[expId].t) || Date.now(), drinks:true};
+        const ex = {date, month:date.slice(0, 7), cat:'مشروبات', amount:buy, note:xs.filter(x => x.used && x.row.cartons).map(x => x.d.name + ' ' + fmtQ(x.row.cartons) + ' ' + packName(x.d)).join('، '), t:(S.expenses[expId] && S.expenses[expId].t) || Date.now(), drinks:true};
         S.expenses = Object.assign({}, S.expenses, {[expId]:ex}); put('expenses/' + expId, ex);
       } else if (hadExp){ const c = Object.assign({}, S.expenses); delete c[expId]; S.expenses = c; del('expenses/' + expId); }
       render();
-      if (await p){ const u = Object.values(keep); const miss = sum(u, r => Math.max(0, +r.missing || 0)); toast(miss ? 'تم الحفظ · ناقص ' + miss + (miss >= 3 && miss <= 10 ? ' قوطيات' : ' قوطية') : 'تم الحفظ · ربح ' + fmt(sum(u, drinkProfit)) + ' د.ع'); }
+      if (await p){ const u = Object.values(keep); const miss = sum(u, r => Math.max(0, +r.missing || 0)); toast(miss ? 'تم الحفظ · ناقص ' + miss + ' بالعد' : 'تم الحفظ · ربح ' + fmt(sum(u, drinkProfit)) + ' د.ع'); }
     });
   });
 }
@@ -2046,7 +2078,7 @@ function feastCatalog(){
   Object.entries(shDefaults()).forEach(([t, d]) => { if (d && +d.price) c.push({k:'sh', ref:t, name:'لفة شاورما ' + t, price:+d.price}); });
   kfcMeals().forEach(([id, m]) => c.push({k:'kfc', ref:id, name:m.name, price:+m.price}));
   sortByName(S.dishes).forEach(([id, d]) => c.push({k:'dish', ref:id, name:d.name, price:+d.price || 0}));
-  drinkList().forEach(([id, d]) => c.push({k:'drink', ref:id, name:d.name + ' (قوطية)', price:+d.price || 0}));
+  drinkList().forEach(([id, d]) => c.push({k:'drink', ref:id, name:d.name + ' (' + saleName(d) + ')', price:+d.price || 0}));
   return c;
 }
 /* what the kitchen has to prepare, checked against the stores */
@@ -2064,7 +2096,7 @@ function feastPlan(f){
       P.push({ic:'kfc', k:'kfc', t:`${fmt(hens)} دجاجة (${fmt(pcs)} قطعة)`, m:`${fmt(q)} × ${m.name}${hw ? ' · ~' + fmtQ(hens * hw) + ' كغم' : ''}`, short: it && hw && kgOf(it, hens * hw) > (+it.qty || 0) ? `بالمخزن ${fmtQ(it.qty)} ${it.unit} فقط` : ''});
     } else if (i.k === 'drink'){
       const d = S.drinks[i.ref]; if (!d) return;
-      P.push({ic:'drinks', k:'drinks', t:`${fmt(q)} ${d.name}`, m:+d.per ? `≈ ${fmtQ(Math.ceil(q / d.per * 10) / 10)} كارتون` : '', short: f.status !== 'done' && q > (+d.qty || 0) ? `الموجود ${fmt(d.qty)} قوطية فقط` : ''});
+      P.push({ic:'drinks', k:'drinks', t:`${fmt(q)} ${d.name}`, m:+d.per ? `≈ ${fmtQ(Math.ceil(q / d.per * 10) / 10)} ${packName(d)}` : '', short: f.status !== 'done' && q > (+d.qty || 0) ? `الموجود ${fmt(d.qty)} ${unitName(d)} فقط` : ''});
     }
   });
   return P;
@@ -2407,7 +2439,7 @@ function allAlerts(){
   });
   drinkList().forEach(([id, d]) => {
     const q = +d.qty || 0, du = drinkUse(id), dl = du > 0 ? q / du : Infinity, low = q > 0 && q < (+d.min || 0);
-    const meta = `باقي ${cartonsLabel(q, d.per).replace(/<[^>]+>/g, '')}` + (du ? ` · تبيع ~${Math.round(du)} قوطية باليوم` : '');
+    const meta = `باقي ${cartonsLabel(q, d.per, d).replace(/<[^>]+>/g, '')}` + (du ? ` · تبيع ~${Math.round(du)} ${saleName(d)} باليوم` : '');
     if (q <= 0) A.push({lvl:3, k:'drinks', t:d.name + ' خلص', m:meta, act:'drink-day', b:'تسجيل شراء'});
     else if (low || dl < 3) A.push({lvl:dl < 1 ? 3 : 2, k:'drinks', t:d.name + ' · ' + (dl < 3 ? daysText(dl) : 'قليل'), m:meta, act:'drink-day', b:'تسجيل شراء'});
   });
@@ -2886,7 +2918,7 @@ const ACT = {
   'kfc-link': d => { const cur = S.settings.kfc, full = Object.assign({}, cur || {}, {item:d.id}); S.settings = Object.assign({}, S.settings, {kfc:full}); render(); (cur ? upd('settings/kfc', {item:d.id}, full) : ups('settings/kfc', full, full)); toast('رُبط الكنتاكي بـ ' + S.items[d.id].name); },
   'kfc-unlink': () => { const cur = S.settings.kfc; if (!cur) return; const full = Object.assign({}, cur, {item:''}); S.settings = Object.assign({}, S.settings, {kfc:full}); render(); upd('settings/kfc', {item:''}, full); },
   'kfc-newitem': () => openItem(null, {name:'دجاج كنتاكي', unit:'كغم'}, key => ACT['kfc-link']({id:key})),
-  'add-drink': d => openDrink(null, d.name), 'edit-drink': d => openDrink(d.id), 'drink-day': d => openDrinkDay(d.date),
+  'add-drink': d => openDrink(null, d.name, d.kind), 'edit-drink': d => openDrink(d.id), 'drink-day': d => openDrinkDay(d.date),
   'sh-recipe': () => openRecipe('sh'), 'kfc-recipe': () => openRecipe('kfc'),
   'add-kfc': () => openKfc(), 'edit-kfc': d => openKfc(d.id, d.date), 'kfc-meals': () => openKfcMeals()
 };
